@@ -13,3 +13,5 @@ Makefile*
 *.bak
 *.tmp
 *~
+
+*.autosave

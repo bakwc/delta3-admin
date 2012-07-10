@@ -1,13 +1,14 @@
 #pragma once
 #include <QObject>
 #include <QString>
+#include <QDebug>
 
 class Client: public QObject
 {
     Q_OBJECT
 public:
-
+    Client(QObject *parent,const QString& _clientHash,qint32 _id);
 private:
-    QString clientIdHash;
-    qint32 clientId;
+    QString clientIdHash_;
+    qint32 clientId_;
 };
