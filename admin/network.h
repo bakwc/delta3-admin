@@ -7,7 +7,7 @@
 #include <QStringList>
 #include "client.h"
 
-typedef QMap<qint32,Client*> Clients;
+typedef QMap<qint32, Client *> Clients;
 
 class Network: public QObject
 {

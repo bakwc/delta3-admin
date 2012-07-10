@@ -36,24 +36,24 @@ void Network::parseData(const QByteArray &data)
 bool Network::parseList(const QByteArray &data)
 {
     QRegExp re("l:(.+):");
-    if (re.indexIn(data)==-1)
+    if (re.indexIn(data) == -1)
         return false;
 
     qDebug("parseList()");
 
-    QStringList clients=re.cap(1).split(";");
+    QStringList clients = re.cap(1).split(";");
 
     clients_.clear();
-    for (auto i=clients.begin();(i+1)<clients.end();i+=2)
+    for (auto i = clients.begin();(i + 1) < clients.end(); i += 2)
     {
         qint32 id = (*i).toInt();
-        QString hash= *(i+1);
+        QString hash = *(i + 1);
         //qDebug() << id << hash;
-        if (hash.size()!=32) continue;
-        Client *client= new Client(this,hash,id);
-        clients_.insert(id,client);
+        if (hash.size() != 32) continue;
+        Client *client = new Client(this, hash, id);
+        clients_.insert(id, client);
     }
-    emit listUpdated;
+    emit listUpdated();
     return true;
 }
 void Network::onConnected()
@@ -63,7 +63,7 @@ void Network::onConnected()
     socket_->flush();
 }
 
- const Clients& getClients()
+ const Clients& Network::getClients()
  {
      return clients_;
  }

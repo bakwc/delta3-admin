@@ -23,8 +23,8 @@ void MainWindow::on_actionConnect_activated()
 
 void MainWindow::onRedraw()
 {
-    for(auto i=network_->getClients().begin(),
-             i!=network_->getClients().end(), i++)
+    for(auto i  = network_->getClients().begin();
+             i != network_->getClients().end(); i++)
     {
     }
 }
