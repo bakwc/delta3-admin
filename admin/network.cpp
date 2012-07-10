@@ -53,6 +53,7 @@ bool Network::parseList(const QByteArray &data)
         Client *client= new Client(this,hash,id);
         clients_.insert(id,client);
     }
+    emit listUpdated;
     return true;
 }
 void Network::onConnected()
@@ -61,3 +62,8 @@ void Network::onConnected()
     socket_->write("l:");
     socket_->flush();
 }
+
+ const Clients& getClients()
+ {
+     return clients_;
+ }

@@ -17,6 +17,7 @@ public:
     
 private slots:
     void on_actionConnect_activated();
+    void onRedraw();
 
 private:
     Ui::MainWindow *ui;
