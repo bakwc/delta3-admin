@@ -10,3 +10,8 @@ QString Client::getHash() const
 {
     return clientIdHash_;
 }
+
+qint32 Client::getId() const
+{
+    return clientId_;
+}

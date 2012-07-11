@@ -23,7 +23,8 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     network.h \
     client.h \
-    telnetform.h
+    telnetform.h \
+    defines.h
 
 FORMS    += mainwindow.ui \
     telnetform.ui

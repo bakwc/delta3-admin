@@ -9,6 +9,7 @@ class Client: public QObject
 public:
     Client(QObject *parent,const QString& _clientHash,qint32 _id);
     QString getHash() const;
+    qint32 getId() const;
 private:
     QString clientIdHash_;
     qint32 clientId_;
