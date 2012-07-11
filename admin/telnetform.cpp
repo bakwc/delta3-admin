@@ -14,6 +14,15 @@ TelnetForm::TelnetForm(
     this->setFixedSize(this->size());
     connect(network_,SIGNAL(dataIncome()),
             this,SLOT(onDataReceived()));
+
+    QPalette p = ui->textEdit->palette();
+    p.setColor(QPalette::Base, Qt::black);
+    p.setColor(QPalette::Text, Qt::green);
+    ui->textEdit->setPalette(p);
+    ui->lineEdit->setPalette(p);
+
+    //ui->textEdit->setTextColor(Qt::green);
+    //ui->lineEdit->
 }
 
 TelnetForm::~TelnetForm()
@@ -39,4 +48,8 @@ void TelnetForm::onDataReceived()
     QString message=QString::fromUtf8(network_->receivedData().data);
 
     ui->textEdit->append(message);
+
+    QTextCursor c =  ui->textEdit->textCursor();
+    c.movePosition(QTextCursor::End);
+    ui->textEdit->setTextCursor(c);
 }

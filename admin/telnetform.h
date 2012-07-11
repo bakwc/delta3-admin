@@ -1,6 +1,9 @@
 #pragma once
 
 #include <QDialog>
+#include <QTextCursor>
+#include <QColor>
+#include <QPalette>
 #include "network.h"
 #include "defines.h"
 

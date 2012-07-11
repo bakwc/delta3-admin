@@ -6,21 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>254</width>
-    <height>313</height>
+    <width>250</width>
+    <height>311</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Delta3</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>231</width>
-      <height>271</height>
+      <x>0</x>
+      <y>0</y>
+      <width>251</width>
+      <height>291</height>
      </rect>
     </property>
    </widget>
@@ -30,7 +30,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>254</width>
+     <width>250</width>
      <height>21</height>
     </rect>
    </property>
