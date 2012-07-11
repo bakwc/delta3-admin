@@ -36,5 +36,7 @@ void TelnetForm::onDataReceived()
         return;
     qDebug() << "onDataReceived:" << network_->receivedData().data;
 
-    ui->textEdit->append(network_->receivedData().data);
+    QString message=QString::fromUtf8(network_->receivedData().data);
+
+    ui->textEdit->append(message);
 }
