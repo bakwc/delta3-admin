@@ -23,8 +23,14 @@ void MainWindow::on_actionConnect_activated()
 
 void MainWindow::onRedraw()
 {
+    qDebug() << "onRedraw()";
+    QListWidget *list=ui->listWidget;
+    QListWidgetItem *item;
+    list->clear();
     for(auto i  = network_->getClients().begin();
              i != network_->getClients().end(); i++)
     {
+        item = new QListWidgetItem(i.value()->getHash());
+        list->addItem(item);
     }
 }

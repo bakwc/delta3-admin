@@ -17,10 +17,13 @@ QMAKE_CXXFLAGS += -std=c++0x
 SOURCES += main.cpp\
         mainwindow.cpp \
     network.cpp \
-    client.cpp
+    client.cpp \
+    telnetform.cpp
 
 HEADERS  += mainwindow.h \
     network.h \
-    client.h
+    client.h \
+    telnetform.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    telnetform.ui
