@@ -31,7 +31,6 @@ void TelnetForm::on_lineEdit_returnPressed()
 
 void TelnetForm::onDataReceived()
 {
-
     if (!(network_->receivedData().from==clientId_ &&
             network_->receivedData().mode==MOD_TELNET))
         return;

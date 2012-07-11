@@ -95,7 +95,10 @@ bool Network::parseMessage(qint32 from, const QByteArray &data)
 
     income_.mode=mode;
     income_.from=from;
-    income_.data=data.left(len);
+    income_.data=re.cap(3).left(len).toLocal8Bit();
+
+    qDebug() << "parseMessage():";
+
     emit dataIncome();
 
     return true;
