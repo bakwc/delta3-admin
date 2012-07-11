@@ -78,11 +78,28 @@ bool Network::parseResponse(const QByteArray &data)
 
 void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 {
-    qDebug("parseProtoTwo()");
+    qDebug() << "parseProtoTwo():" << data;
 
-    //TODO: make parse here
+    parseMessage(from, data);
 }
 
+bool Network::parseMessage(qint32 from, const QByteArray &data)
+{
+    QRegExp re("(\\d+):(\\d+):(.+)");
+
+    if (re.indexIn(data)==-1)
+        return false;
+
+    ProtocolMode mode=ProtocolMode(re.cap(1).toInt());
+    qint32 len=re.cap(2).toInt();
+
+    income_.mode=mode;
+    income_.from=from;
+    income_.data=data.left(len);
+    emit dataIncome();
+
+    return true;
+}
 
 void Network::onConnected()
 {
@@ -114,6 +131,16 @@ void Network::sendLevelOne(qint32 dest, const QByteArray& data)
     socket_->write(packet);
 }
 
+void Network::sendLevelTwo(qint32 dest, ProtocolMode mode, const QByteArray& data)
+{
+    QByteArray packet;
+    packet=(QString("%1:%2:")
+            .arg(mode)
+            .arg(data.size())).toLocal8Bit();
+    packet+=data+':';
+    sendLevelOne(dest,packet);
+}
+
 void Network::activateMode(qint32 client, ProtocolMode mode)
 {
     QString cmd=QString("a:%1:").arg(mode);
@@ -124,4 +151,9 @@ void Network::deactivateMode(qint32 client, ProtocolMode mode)
 {
     QString cmd=QString("d:%1:").arg(mode);
     sendLevelOne(client,cmd.toLocal8Bit());
+}
+
+const Network::Income& Network::receivedData() const
+{
+    return income_;
 }

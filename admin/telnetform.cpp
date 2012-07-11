@@ -11,6 +11,9 @@ TelnetForm::TelnetForm(
     ui->setupUi(this);
     this->setWindowTitle(tr("telnet - ")+network_->getClientName(clientId_));
     network_->activateMode(clientId_,MOD_TELNET);
+    this->setFixedSize(this->size());
+    connect(network_,SIGNAL(dataIncome()),
+            this,SLOT(onDataReceived()));
 }
 
 TelnetForm::~TelnetForm()
@@ -21,5 +24,16 @@ TelnetForm::~TelnetForm()
 
 void TelnetForm::on_lineEdit_returnPressed()
 {
-    //TODO: send cmd to server
+    network_->sendLevelTwo(clientId_,MOD_TELNET,
+                           ui->lineEdit->text().toLocal8Bit());
+    ui->lineEdit->clear();
+}
+
+void TelnetForm::onDataReceived()
+{
+
+    if (!(network_->receivedData().from==clientId_ &&
+            network_->receivedData().mode==MOD_TELNET))
+        return;
+    ui->textEdit->insertPlainText(network_->receivedData().data);
 }

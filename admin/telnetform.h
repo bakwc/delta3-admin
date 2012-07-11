@@ -21,6 +21,7 @@ public:
     
 private slots:
     void on_lineEdit_returnPressed();
+    void onDataReceived();
 
 private:
     Network *network_;

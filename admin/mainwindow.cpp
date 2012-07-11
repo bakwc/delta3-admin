@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     network_ = new Network(this);
     connect(network_,SIGNAL(listUpdated()),
             this,SLOT(onRedraw()));
+    this->setFixedSize(this->size());
 }
 
 MainWindow::~MainWindow()
@@ -46,6 +47,5 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
                 network_,
                 item->whatsThis().toInt());
             // REVIEW: potential memory leak?
-
     telnet->show();
 }
