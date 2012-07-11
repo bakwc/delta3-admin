@@ -34,5 +34,7 @@ void TelnetForm::onDataReceived()
     if (!(network_->receivedData().from==clientId_ &&
             network_->receivedData().mode==MOD_TELNET))
         return;
-    ui->textEdit->insertPlainText(network_->receivedData().data);
+    qDebug() << "onDataReceived:" << network_->receivedData().data;
+
+    ui->textEdit->append(network_->receivedData().data);
 }
