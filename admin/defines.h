@@ -9,3 +9,5 @@ enum ProtocolMode
     MOD_PROXY=5,
     MOD_REDIRECT=6
 };
+
+const qint16 TELNET_HISTORY_LENGTH=4200;
