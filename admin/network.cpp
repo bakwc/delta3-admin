@@ -31,6 +31,7 @@ void Network::parseData(const QByteArray &data)
 {
     parseList(data);
     parseResponse(data);
+    parsePing(data);
 }
 
 bool Network::parseList(const QByteArray &data)
@@ -53,6 +54,18 @@ bool Network::parseList(const QByteArray &data)
         clients_.insert(id, client);
     }
     emit listUpdated();
+    return true;
+}
+
+bool Network::parsePing(const QByteArray &data)
+{
+    QRegExp re("p:");
+    if (re.indexIn(data) == -1)
+        return false;
+
+    qDebug("parsePing()");
+
+    socket_->write("p:");
     return true;
 }
 

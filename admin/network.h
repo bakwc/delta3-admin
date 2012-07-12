@@ -42,6 +42,7 @@ private slots:
 private:
     void parseData(const QByteArray &data); // parsing level 1 proto
     bool parseList(const QByteArray &data);
+    bool parsePing(const QByteArray &data);
     bool parseResponse(const QByteArray &data);
     void parseProtoTwo(qint32 from, const QByteArray &data); // parsing level 2 proto
     bool parseMessage(qint32 from, const QByteArray &data);
