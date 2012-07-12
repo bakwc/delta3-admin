@@ -48,7 +48,6 @@ bool Network::parseList(const QByteArray &data)
     {
         qint32 id = (*i).toInt();
         QString hash = *(i + 1);
-        //qDebug() << id << hash;
         if (hash.size() != 32) continue;
         Client *client = new Client(this, hash, id);
         clients_.insert(id, client);
@@ -64,11 +63,11 @@ bool Network::parseResponse(const QByteArray &data)
     if (re.indexIn(data) == -1)
         return false;
 
-    qDebug("parseResponse()");
+    qDebug() << "parseResponse():";
 
     qint32 from=re.cap(1).toInt();
     qint32 len=re.cap(2).toInt();
-    QByteArray dataTwo=re.cap(3).toLocal8Bit();
+    QByteArray dataTwo=re.cap(3).toUtf8();
 
     dataTwo=dataTwo.left(len);
 
@@ -78,8 +77,7 @@ bool Network::parseResponse(const QByteArray &data)
 
 void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 {
-    qDebug() << "parseProtoTwo():" << data;
-
+    qDebug() << "parseProtoTwo()";
     parseMessage(from, data);
 }
 
@@ -95,10 +93,7 @@ bool Network::parseMessage(qint32 from, const QByteArray &data)
 
     income_.mode=mode;
     income_.from=from;
-    income_.data=re.cap(3).left(len).toLocal8Bit();
-
-    qDebug() << "parseMessage():";
-
+    income_.data=re.cap(3).left(len).toUtf8();
     emit dataIncome();
 
     return true;

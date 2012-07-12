@@ -43,7 +43,7 @@ void TelnetForm::onDataReceived()
     if (!(network_->receivedData().from==clientId_ &&
             network_->receivedData().mode==MOD_TELNET))
         return;
-    qDebug() << "onDataReceived:" << network_->receivedData().data;
+    qDebug() << "TelnetForm::onDataReceived()";
 
     QString message=QString::fromUtf8(network_->receivedData().data);
 
