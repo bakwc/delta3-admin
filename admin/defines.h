@@ -38,3 +38,16 @@ enum Cspyp2Command
     CMD2_DEACTIVATE = 4,
     CMD2_TRANSMIT   = 5
 };
+
+enum FILE_MOD
+{
+    ROOT   =1,
+    CD     =2,
+    MKDIR  =3,
+    RMDIR  =4,
+    GET    =5,
+    SEND   =6,
+    FILE   =7,
+    ABS_WAY=8
+
+};
