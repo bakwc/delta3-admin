@@ -65,8 +65,9 @@ void Network::parseList()
         return;     // not all data avaliable
 
     qDebug("parseList()");
+    qDebug() << buf_.size();
 
-    if (buf_.size()<5+getClientNumber(buf_)*18) // TODO: remove magic number
+    if (buf_.size()<5+getClientNumber(buf_)*CMD1_CLIENT_INFO_SIZE) // TODO: remove magic number
         return;     // not all data avaliable
 
     for (qint16 i=0;i<getClientNumber(buf_);i++)
@@ -78,7 +79,7 @@ void Network::parseList()
     }
     emit listUpdated();
 
-    buf_=buf_.right(buf_.size()-(5+getClientNumber(buf_)*18));
+    buf_=buf_.right(buf_.size()-(5+getClientNumber(buf_)*CMD1_CLIENT_INFO_SIZE));
     if (buf_.size()>0)
         onDataReceived();   // If something in buffer - parse again
 }
@@ -197,7 +198,7 @@ QString Network::getClientName(qint32 id) const
     return client.value()->getHash();
 }
 
-void Network::sendLevelOne(qint32 dest, const QByteArray& data)
+void Network::sendLevelOne(qint16 dest, const QByteArray& data)
 {   
     QByteArray cmd;
     cmd.append(CSPYP1_PROTOCOL_ID);

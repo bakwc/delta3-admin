@@ -29,7 +29,7 @@ public:
     void connectToServer();
     const Clients& getClients() const;
     QString getClientName(qint32 id) const;
-    void sendLevelOne(qint32 dest, const QByteArray& data);
+    void sendLevelOne(qint16 dest, const QByteArray& data);
     void sendLevelTwo(qint32 dest, ProtocolMode mode, const QByteArray& data);
     void activateMode(qint32 client, ProtocolMode mode);
     void deactivateMode(qint32 client, ProtocolMode mode);

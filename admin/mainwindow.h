@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QListWidgetItem>
 #include <QTextCodec>
+#include <QPoint>
 #include "network.h"
 #include "telnetform.h"
 
