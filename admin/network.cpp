@@ -224,8 +224,6 @@ void Network::sendLevelTwo(qint32 dest, ProtocolMode mode, const QByteArray& dat
 
 void Network::activateMode(qint32 client, ProtocolMode mode)
 {
-    //QString cmd=QString("a:%1:").arg(mode);
-
     QByteArray cmd;
     cmd.append(CSPYP2_PROTOCOL_ID);
     cmd.append(CSPYP2_PROTOCOL_VERSION);
