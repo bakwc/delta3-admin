@@ -3,9 +3,11 @@
 
 const qint16 TELNET_HISTORY_LENGTH=4200;
 const qint8 CSPYP1_PROTOCOL_ID = 1;
-const qint8 CSPYP1_PROTOCOL_VERSION = 2;
+const qint8 CSPYP1_PROTOCOL_VERSION = 3;
 const qint8 CSPYP2_PROTOCOL_ID = 1;
 const qint8 CSPYP2_PROTOCOL_VERSION = 2;
+
+const qint16 CMD1_CLIENT_INFO_SIZE = 92;    // Client info struct size
 
 enum ProtocolMode
 {

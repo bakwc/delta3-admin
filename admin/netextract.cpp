@@ -31,7 +31,7 @@ qint32 getPacketLength(const QByteArray& data)
 
 qint16 getClientId(qint16 client, const QByteArray& data)
 {
-    QByteArray clientId=data.mid(5+client*18,2);
+    QByteArray clientId=data.mid(5+client*CMD1_CLIENT_INFO_SIZE,2);
     return fromBytes<qint16>(clientId);
 }
 
@@ -43,7 +43,7 @@ qint16 getClientId(const QByteArray& data)
 
 QString getClientHash(qint16 client, const QByteArray& data)
 {
-    QByteArray clientHash=data.mid(5+client*18+2,16);
+    QByteArray clientHash=data.mid(5+client*CMD1_CLIENT_INFO_SIZE+2,16);
     QString hash;
     QTextStream myStream(&hash);
     for (auto i=clientHash.begin()+3;i<clientHash.begin()+19;i++)
