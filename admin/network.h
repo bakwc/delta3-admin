@@ -19,7 +19,7 @@ class Network: public QObject
 public:
     struct Income
     {
-        qint32 from;
+        qint16 from;
         ProtocolMode mode;
         QByteArray data;
     };

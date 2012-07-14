@@ -127,8 +127,8 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 {
     qDebug() << "parseProtoTwo()";
 
-    if (getProtoId(data)!=CSPYP1_PROTOCOL_ID ||
-            getProtoVerstion(data)!=CSPYP1_PROTOCOL_VERSION)
+    if (getProtoId(data)!=CSPYP2_PROTOCOL_ID ||
+            getProtoVerstion(data)!=CSPYP2_PROTOCOL_VERSION)
     {
         // wrong packet - disconnecting client
         qDebug() << "PROTOCOL ERROR!";
