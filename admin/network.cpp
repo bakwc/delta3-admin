@@ -126,8 +126,6 @@ void Network::parseResponse()
 void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 {
     qDebug() << "parseProtoTwo()";
-    qDebug() << getProtoId(data) << getProtoVerstion(data);
-    qDebug() << data.toHex();
     if (getProtoId(data) != CSPYP2_PROTOCOL_ID ||
             getProtoVerstion(data) != CSPYP2_PROTOCOL_VERSION)
     {
@@ -156,11 +154,15 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 void Network::parseMessage(qint32 from, const QByteArray &data)
 {
 
-    income_.mode=getMode2(data);
-    income_.from=from;
-    income_.data=getPacketData2(data);
+    income_.mode = getMode2(data);
+    income_.from = from;
+    income_.data = getPacketData2(data);
 
     emit dataIncome();
+//    buf_ = buf_.right(buf_.size() - 3);
+//    if (buf_.size() > 0)
+//        onDataReceived();   // If something in buffer - parse again
+    buf_.clear();
 }
 
 void Network::onConnected()
@@ -191,7 +193,7 @@ const Clients& Network::getClients() const
     return clients_;
 }
 
-QString Network::getClientName(qint32 id) const
+QString Network::getClientName(qint16 id) const
 {
     auto client=clients_.find(id);
     if (client==clients_.end())
@@ -208,11 +210,11 @@ void Network::sendLevelOne(qint16 dest, const QByteArray& data)
     cmd.append(toBytes(dest));
     cmd.append(toBytes(data.size()));
     cmd.append(data);
-
+    qDebug() << cmd.toHex();
     socket_->write(cmd);
 }
 
-void Network::sendLevelTwo(qint32 dest, ProtocolMode mode, const QByteArray& data)
+void Network::sendLevelTwo(qint16 dest, ProtocolMode mode, const QByteArray& data)
 {
     QByteArray cmd;
     cmd.append(CSPYP2_PROTOCOL_ID);
@@ -221,10 +223,10 @@ void Network::sendLevelTwo(qint32 dest, ProtocolMode mode, const QByteArray& dat
     cmd.append(mode);
     cmd.append(toBytes(data.size()));
     cmd.append(data);
-    sendLevelOne(dest,data);
+    sendLevelOne(dest, cmd);
 }
 
-void Network::activateMode(qint32 client, ProtocolMode mode)
+void Network::activateMode(qint16 client, ProtocolMode mode)
 {
     QByteArray cmd;
     cmd.append(CSPYP2_PROTOCOL_ID);
@@ -232,10 +234,10 @@ void Network::activateMode(qint32 client, ProtocolMode mode)
     cmd.append(CMD2_ACTIVATE);
     cmd.append(mode);
 
-    sendLevelOne(client,cmd);
+    sendLevelOne(client, cmd);
 }
 
-void Network::deactivateMode(qint32 client, ProtocolMode mode)
+void Network::deactivateMode(qint16 client, ProtocolMode mode)
 {
     QString cmd=QString("d:%1:").arg(mode);
     sendLevelOne(client,cmd.toLocal8Bit());

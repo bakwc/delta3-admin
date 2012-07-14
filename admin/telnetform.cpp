@@ -2,15 +2,15 @@
 #include "ui_telnetform.h"
 
 TelnetForm::TelnetForm(
-        Network *network, qint32 clientId, QWidget *parent) :
+        Network *network, qint16 clientId, QWidget *parent) :
     QWidget(parent),
     network_(network),
     clientId_(clientId),
     ui(new Ui::TelnetForm)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("telnet - ")+network_->getClientName(clientId_));
-    network_->activateMode(clientId_,MOD_TELNET);
+    this->setWindowTitle(tr("telnet - ") + network_->getClientName(clientId_));
+    network_->activateMode(clientId_, MOD_TELNET);
     this->setFixedSize(this->size());
     connect(network_,SIGNAL(dataIncome()),
             this,SLOT(onDataReceived()));
@@ -27,22 +27,22 @@ TelnetForm::TelnetForm(
 
 TelnetForm::~TelnetForm()
 {
-    network_->deactivateMode(clientId_,MOD_TELNET);
+    network_->deactivateMode(clientId_, MOD_TELNET);
     delete ui;
 }
 
 void TelnetForm::onDataReceived()
 {
-    if (!(network_->receivedData().from==clientId_ &&
-            network_->receivedData().mode==MOD_TELNET))
+    if (!(network_->receivedData().from == clientId_ &&
+            network_->receivedData().mode == MOD_TELNET))
         return;
     qDebug() << "TelnetForm::onDataReceived()";
 
-    QString message=QString::fromUtf8(network_->receivedData().data);
+    QString message = QString::fromUtf8(network_->receivedData().data);
 
-    history_+=message;
+    history_ += message;
 
-    if (history_.length()>TELNET_HISTORY_LENGTH)
+    if (history_.length() > TELNET_HISTORY_LENGTH)
         history_=history_.right(TELNET_HISTORY_LENGTH);
 
    // ui->textEdit->append(message);
@@ -64,7 +64,7 @@ bool TelnetForm::eventFilter(QObject* _o, QEvent* _e)
         if(eventKey->key() == Qt::Key_Return)
         {
             qDebug() << "pressed enter!";
-            network_->sendLevelTwo(clientId_,MOD_TELNET,
+            network_->sendLevelTwo(clientId_, MOD_TELNET,
                                    currentCmd_.toUtf8());
             currentCmd_.clear();
 
@@ -80,7 +80,7 @@ bool TelnetForm::eventFilter(QObject* _o, QEvent* _e)
             return true;
         }
 
-            qint32 key=eventKey->key();
+            qint32 key = eventKey->key();
 
             if ( ! (eventKey->modifiers() == Qt::ShiftModifier ))
                 key=tolower(key);

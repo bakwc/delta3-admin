@@ -21,7 +21,7 @@ class TelnetForm : public QWidget
 public:
     explicit TelnetForm(
             Network *network,
-            qint32 clientId,
+            qint16 clientId,
             QWidget* parent = 0);
     ~TelnetForm();
     
@@ -35,7 +35,7 @@ private:
     void textScrollDown();
 private:
     Network *network_;
-    qint32 clientId_;
+    qint16 clientId_;
     Ui::TelnetForm *ui;
     QString currentCmd_;
     QString history_;
