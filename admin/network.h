@@ -7,6 +7,7 @@
 #include <QStringList>
 #include <QByteArray>
 #include <QString>
+#include "utils.h"
 #include "client.h"
 #include "defines.h"
 
@@ -40,14 +41,15 @@ private slots:
     void onDataReceived();
     void onConnected();
 private:
-    void parseData(const QByteArray &data); // parsing level 1 proto
-    bool parseList(const QByteArray &data);
-    bool parsePing(const QByteArray &data);
-    bool parseResponse(const QByteArray &data);
+    void parseList();
+    void parsePing();
+    void parseResponse();
     void parseProtoTwo(qint32 from, const QByteArray &data); // parsing level 2 proto
-    bool parseMessage(qint32 from, const QByteArray &data);
+    void parseMessage(qint32 from, const QByteArray &data);
+
 private:
     QTcpSocket *socket_;
     Clients clients_;
     Income income_;
+    QByteArray buf_;
 };

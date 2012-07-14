@@ -18,13 +18,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     network.cpp \
     client.cpp \
-    telnetform.cpp
+    telnetform.cpp \
+    netextract.cpp
 
 HEADERS  += mainwindow.h \
     network.h \
     client.h \
     telnetform.h \
-    defines.h
+    defines.h \
+    utils.h \
+    netextract.h
 
 FORMS    += mainwindow.ui \
     telnetform.ui
