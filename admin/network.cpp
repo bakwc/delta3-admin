@@ -110,25 +110,26 @@ void Network::parseResponse()
     if (buf_.size()<9) // TODO: remove magic number
         return;     // not all data avaliable
 
-    if (buf_.size()<getPacketLength(buf_)+9) // TODO: remove magic number
+    if (buf_.size() < getPacketLength(buf_) + 9) // TODO: remove magic number
         return; // not all data avaliable
 
-    qint16 from=getClientId(buf_);
+    qint16 from = getClientId(buf_);
 
-    QByteArray cmd=getPacketData(buf_);
+    QByteArray cmd = getPacketData(buf_);
 
     qDebug() << "parseResponse():";
 
-    parseProtoTwo(from,cmd);
+    parseProtoTwo(from, cmd);
     return;
 }
 
 void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 {
     qDebug() << "parseProtoTwo()";
-
-    if (getProtoId(data)!=CSPYP2_PROTOCOL_ID ||
-            getProtoVerstion(data)!=CSPYP2_PROTOCOL_VERSION)
+    qDebug() << getProtoId(data) << getProtoVerstion(data);
+    qDebug() << data.toHex();
+    if (getProtoId(data) != CSPYP2_PROTOCOL_ID ||
+            getProtoVerstion(data) != CSPYP2_PROTOCOL_VERSION)
     {
         // wrong packet - disconnecting client
         qDebug() << "PROTOCOL ERROR!";

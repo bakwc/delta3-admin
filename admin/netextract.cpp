@@ -53,7 +53,7 @@ QString getClientHash(qint16 client, const QByteArray& data)
 
 QByteArray getPacketData(const QByteArray& data)
 {
-    return data.mid(5,getPacketLength(data));
+    return data.mid(9, getPacketLength(data));
 }
 
 
