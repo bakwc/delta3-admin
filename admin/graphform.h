@@ -2,7 +2,7 @@
 
 #include <QWidget>
 #include "network.h"
-
+#include <QGraphicsScene>
 namespace Ui {
 class GraphForm;
 }
@@ -19,8 +19,13 @@ public:
     ~GraphForm();
     
 private:
+    QByteArray bytePicIn;
+    QPixmap picIn;
+    QGraphicsScene scene;
     Network *network_;
     qint16 clientId_;
     Ui::GraphForm *ui;
+private slots:
+    void onDataReceived();
 };
 
