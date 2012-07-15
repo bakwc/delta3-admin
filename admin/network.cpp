@@ -55,6 +55,7 @@ void Network::onDataReceived()
         parsePing();
         break;
     default:
+        // for warning disable
         break;
     }
 }
@@ -147,6 +148,7 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
         //TODO: parse avaliable modes
         break;
     default:
+        // for warning disable
         break;
     }
 }
