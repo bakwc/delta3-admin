@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     telnetform.cpp \
     netextract.cpp \
     fileform.cpp \
-    graphform.cpp
+    graphform.cpp \
+    clientinfodialog.cpp
 
 HEADERS  += mainwindow.h \
     network.h \
@@ -31,9 +32,11 @@ HEADERS  += mainwindow.h \
     utils.h \
     netextract.h \
     fileform.h \
-    graphform.h
+    graphform.h \
+    clientinfodialog.h
 
 FORMS    += mainwindow.ui \
     telnetform.ui \
     fileform.ui \
-    graphform.ui
+    graphform.ui \
+    clientinfodialog.ui

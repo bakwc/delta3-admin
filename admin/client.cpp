@@ -18,7 +18,7 @@ qint32 Client::getId() const
 
 void Client::setHash(const QByteArray& hash)
 {
-    idHash_=hash;
+    idHash_=hash.toHex();
 }
 
 void Client::setId(qint16 id)
@@ -44,4 +44,14 @@ void Client::setCaption(const QString& caption)
 QString Client::getOs() const
 {
     return os_;
+}
+
+QString Client::getDevice() const
+{
+    return device_;
+}
+
+QString Client::getCaption() const
+{
+    return caption_;
 }

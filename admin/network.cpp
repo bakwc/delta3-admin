@@ -253,3 +253,8 @@ const Network::Income& Network::receivedData() const
     return income_;
 }
 
+const Client* Network::getClient(qint16 clientId) const
+{
+    auto i=clients_.find(clientId);
+    return i.value();
+}

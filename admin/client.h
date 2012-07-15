@@ -11,6 +11,9 @@ public:
     QString getHash() const;
     qint32 getId() const;
     QString getOs() const;
+    QString getDevice() const;
+    QString getCaption() const;
+
     void setHash(const QByteArray& hash);
     void setId(qint16 id);
     void setOs(const QString& os);

@@ -28,6 +28,12 @@ MainWindow::MainWindow(QWidget *parent) :
     act = new QAction(tr("Graphics mode"),this);
     connect(act,SIGNAL(triggered()),this,SLOT(runGraph()));
     modeMenu_->addAction(act);
+
+    modeMenu_->addSeparator();
+
+    act = new QAction(tr("Options"),this);
+    connect(act,SIGNAL(triggered()),this,SLOT(runOptions()));
+    modeMenu_->addAction(act);
 }
 
 MainWindow::~MainWindow()
@@ -112,4 +118,26 @@ void MainWindow::runFile()
                 item->whatsThis().toInt());
             // REVIEW: potential memory leak?
     file->show();
+}
+
+
+void MainWindow::runOptions()
+{
+    if (ui->listWidget->selectedItems().size()==0)
+        return;
+
+    QListWidgetItem *item=ui->listWidget->selectedItems()[0];
+
+
+
+    ClientInfoDialog dialog(item->whatsThis().toInt(),network_);
+    dialog.exec();
+
+    /*
+    FileForm *file = new FileForm(
+                network_,
+                item->whatsThis().toInt());
+            // REVIEW: potential memory leak?
+    file->show();
+    */
 }

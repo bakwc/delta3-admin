@@ -9,6 +9,7 @@
 #include "telnetform.h"
 #include "graphform.h"
 #include "fileform.h"
+#include "clientinfodialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,6 +34,7 @@ private slots:
     void runTelnet();
     void runGraph();
     void runFile();
+    void runOptions();
 
 private:
     Ui::MainWindow *ui;

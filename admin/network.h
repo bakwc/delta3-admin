@@ -28,6 +28,7 @@ public:
     Network(QObject *parent);
     void connectToServer();
     const Clients& getClients() const;
+    const Client *getClient(qint16 clientId) const;
     QString getClientName(qint16 id) const;
     void sendLevelOne(qint16 dest, const QByteArray& data);
     void sendLevelTwo(qint16 dest, ProtocolMode mode, const QByteArray& data);
