@@ -1,17 +1,47 @@
 #include "client.h"
 
-Client::Client(QObject *parent,const QString& _clientHash,qint32 _id):
-    QObject(parent), clientIdHash_(_clientHash),clientId_(_id)
+Client::Client(QObject *parent):
+    QObject(parent)
 {
-    qDebug() << clientId_ << clientIdHash_;
+    qDebug() << id_ << idHash_;
 }
 
 QString Client::getHash() const
 {
-    return clientIdHash_;
+    return idHash_;
 }
 
 qint32 Client::getId() const
 {
-    return clientId_;
+    return id_;
+}
+
+void Client::setHash(const QByteArray& hash)
+{
+    idHash_=hash;
+}
+
+void Client::setId(qint16 id)
+{
+    id_=id;
+}
+
+void Client::setOs(const QString& os)
+{
+    os_=os;
+}
+
+void Client::setDevice(const QString& device)
+{
+    device_=device;
+}
+
+void Client::setCaption(const QString& caption)
+{
+    caption_=caption;
+}
+
+QString Client::getOs() const
+{
+    return os_;
 }

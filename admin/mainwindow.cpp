@@ -49,7 +49,7 @@ void MainWindow::onRedraw()
     for(auto i  = network_->getClients().begin();
              i != network_->getClients().end(); i++)
     {
-        item = new QListWidgetItem(i.value()->getHash() );
+        item = new QListWidgetItem(i.value()->getOs() );
         item->setWhatsThis(QString("%1")
                         .arg( i.value()->getId() ));
         list->addItem(item);

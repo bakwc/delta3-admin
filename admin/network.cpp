@@ -73,10 +73,13 @@ void Network::parseList()
 
     for (qint16 i=0;i<getClientNumber(buf_);i++)
     {
-        qint16 id=getClientId(i,buf_);
-        QString hash=getClientHash(i,buf_);
-        Client *client = new Client(this, hash, id);
-        clients_.insert(id, client);
+        Client *client = new Client(this);
+        client->setId(getClientId(i,buf_));
+        client->setHash(getClientHash(i,buf_));
+        client->setOs(getClientOs(i,buf_));
+        client->setDevice(getClientDevice(i,buf_));
+        client->setCaption(getClientCaption(i,buf_));
+        clients_.insert(getClientId(i,buf_), client);
     }
     emit listUpdated();
 
