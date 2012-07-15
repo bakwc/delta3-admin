@@ -39,15 +39,14 @@ enum Cspyp2Command
     CMD2_TRANSMIT   = 5
 };
 
-enum FILE_MOD
+enum FileMode
 {
-    ROOT   =1,
-    CD     =2,
-    MKDIR  =3,
-    RMDIR  =4,
-    GET    =5,
-    SEND   =6,
-    FILE   =7,
-    ABS_WAY=8
-
+    FMOD_ROOT   =1,
+    FMOD_CD     =2,
+    FMOD_MKDIR  =3,
+    FMOD_RMDIR  =4,
+    FMOD_GET    =5,
+    FMOD_SEND   =6,
+    FMOD_FILE   =7,
+    FMOD_ABS_WAY=8
 };
