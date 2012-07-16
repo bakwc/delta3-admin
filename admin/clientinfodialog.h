@@ -1,7 +1,7 @@
-#ifndef CLIENTINFODIALOG_H
-#define CLIENTINFODIALOG_H
+#pragma once
 
 #include <QDialog>
+#include <QString>
 #include "client.h"
 #include "network.h"
 
@@ -16,10 +16,9 @@ class ClientInfoDialog : public QDialog
 public:
     explicit ClientInfoDialog(qint16 clientId, Network *net, QWidget *parent = 0);
     ~ClientInfoDialog();
+    QString getCaption();
     
 private:
-    Ui::ClientInfoDialog *ui;
     Network *network_;
+    Ui::ClientInfoDialog *ui;
 };
-
-#endif // CLIENTINFODIALOG_H

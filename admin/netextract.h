@@ -14,6 +14,7 @@ QByteArray getClientHash(qint16 client, const QByteArray& data);
 QString getClientOs(qint16 client, const QByteArray& data);
 QString getClientDevice(qint16 client, const QByteArray& data);
 QString getClientCaption(qint16 client, const QByteArray& data);
+qint32 getClientIp(qint16 client, const QByteArray& data);
 qint16 getClientNumber(const QByteArray& data);
 qint16 getClientId(const QByteArray& data);
 qint32 getPacketLength(const QByteArray& data);

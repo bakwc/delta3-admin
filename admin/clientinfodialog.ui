@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>272</width>
-    <height>205</height>
+    <height>201</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Client Info</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -91,10 +91,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>Caption</string>
+    <string>Caption:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="fieldHash">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -105,6 +108,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="fieldOS">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -115,6 +121,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="fieldDevice">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>110</x>
@@ -124,7 +133,10 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="fieldIP">
+  <widget class="QLineEdit" name="fieldIp">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>110</x>

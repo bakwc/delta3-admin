@@ -27,7 +27,8 @@ enum Cspyp1Command
     CMD1_PING       = 4,
     CMD1_RLIST      = 5,
     CMD1_TRANSMIT   = 6,
-    CMD1_DISCONNECT = 7
+    CMD1_DISCONNECT = 7,
+    CMD1_SETINFO = 8
 };
 
 enum Cspyp2Command

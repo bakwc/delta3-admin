@@ -68,6 +68,12 @@ QString getClientCaption(qint16 client, const QByteArray& data)
     return data.mid(5+client*CMD1_CLIENT_INFO_SIZE+62,30);
 }
 
+qint32 getClientIp(qint16 client, const QByteArray& data)
+{
+    QByteArray ip=data.mid(5+client*CMD1_CLIENT_INFO_SIZE+58,4);
+    return fromBytes<qint32>(ip);
+}
+
 QByteArray getPacketData(const QByteArray& data)
 {
     return data.mid(9, getPacketLength(data));

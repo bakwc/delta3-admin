@@ -16,6 +16,22 @@ qint32 Client::getId() const
     return id_;
 }
 
+QString Client::getOs() const
+{
+    return os_;
+}
+
+QString Client::getDevice() const
+{
+    return device_;
+}
+
+QString Client::getCaption() const
+{
+    return caption_;
+}
+
+
 void Client::setHash(const QByteArray& hash)
 {
     idHash_=hash.toHex();
@@ -41,17 +57,13 @@ void Client::setCaption(const QString& caption)
     caption_=caption;
 }
 
-QString Client::getOs() const
+void Client::setIp(qint32 ip)
 {
-    return os_;
+    ip_.setAddress(ip);
 }
 
-QString Client::getDevice() const
-{
-    return device_;
-}
 
-QString Client::getCaption() const
+QString Client::getIp() const
 {
-    return caption_;
+    return ip_.toString();
 }

@@ -28,12 +28,13 @@ public:
     Network(QObject *parent);
     void connectToServer();
     const Clients& getClients() const;
-    const Client *getClient(qint16 clientId) const;
+    Client *getClient(qint16 clientId) const;
     QString getClientName(qint16 id) const;
     void sendLevelOne(qint16 dest, const QByteArray& data);
     void sendLevelTwo(qint16 dest, ProtocolMode mode, const QByteArray& data);
     void activateMode(qint16 client, ProtocolMode mode);
     void deactivateMode(qint16 client, ProtocolMode mode);
+    void setClientCaption(qint16 client, const QString& info);
     const Income& receivedData() const;
 signals:
     void listUpdated();

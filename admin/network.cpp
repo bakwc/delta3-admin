@@ -79,6 +79,7 @@ void Network::parseList()
         client->setOs(getClientOs(i,buf_));
         client->setDevice(getClientDevice(i,buf_));
         client->setCaption(getClientCaption(i,buf_));
+        client->setIp(getClientIp(i,buf_));
         clients_.insert(getClientId(i,buf_), client);
     }
     emit listUpdated();
@@ -253,8 +254,24 @@ const Network::Income& Network::receivedData() const
     return income_;
 }
 
-const Client* Network::getClient(qint16 clientId) const
+Client *Network::getClient(qint16 clientId) const
 {
     auto i=clients_.find(clientId);
-    return i.value();
+    if (i!=clients_.end())
+        return i.value();
+    return NULL;
+}
+
+void Network::setClientCaption(qint16 client, const QString& info)
+{
+    if (getClient(client)!=NULL)
+        getClient(client)->setCaption(info);
+    QByteArray cmd;
+    cmd.append(CSPYP1_PROTOCOL_ID);
+    cmd.append(CSPYP1_PROTOCOL_VERSION);
+    cmd.append(CMD1_SETINFO);
+    cmd.append(toBytes(client));
+    cmd.append(toBytes(info,30),30);
+    qDebug() << "stClientInfo(): size" << cmd.size();
+    socket_->write(cmd);
 }

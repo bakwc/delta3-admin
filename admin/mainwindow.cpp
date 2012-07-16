@@ -128,10 +128,13 @@ void MainWindow::runOptions()
 
     QListWidgetItem *item=ui->listWidget->selectedItems()[0];
 
+    qint16 clientId=item->whatsThis().toInt();
 
-
-    ClientInfoDialog dialog(item->whatsThis().toInt(),network_);
-    dialog.exec();
+    ClientInfoDialog dialog(clientId,network_);
+    if (dialog.exec()!=ClientInfoDialog::Rejected)
+    {
+        network_->setClientCaption(clientId,dialog.getCaption());
+    }
 
     /*
     FileForm *file = new FileForm(

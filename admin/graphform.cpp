@@ -20,6 +20,7 @@ GraphForm::GraphForm(
 
 GraphForm::~GraphForm()
 {
+    network_->deactivateMode(clientId_, MOD_GRAPH);
     delete ui;
 }
 

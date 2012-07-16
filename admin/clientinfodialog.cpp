@@ -11,9 +11,15 @@ ClientInfoDialog::ClientInfoDialog(qint16 clientId, Network *net, QWidget *paren
     ui->fieldHash->setText(network_->getClient(clientId)->getHash());
     ui->fieldDevice->setText(network_->getClient(clientId)->getDevice());
     ui->fieldCaption->setText(network_->getClient(clientId)->getCaption());
+    ui->fieldIp->setText(network_->getClient(clientId)->getIp());
 }
 
 ClientInfoDialog::~ClientInfoDialog()
 {
     delete ui;
+}
+
+QString ClientInfoDialog::getCaption()
+{
+    return ui->fieldCaption->text();
 }
