@@ -55,7 +55,6 @@ bool TelnetForm::eventFilter(QObject* _o, QEvent* _e)
     if(_e->type() == QEvent::KeyPress)
     {
         QKeyEvent* eventKey = static_cast<QKeyEvent*>(_e);
-
         if(eventKey->key() == Qt::Key_Shift ||
            eventKey->key() == Qt::Key_Control ||
            eventKey->key() == Qt::Key_Alt)

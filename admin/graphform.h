@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include "network.h"
+#include "defines.h"
 #include <QGraphicsScene>
 namespace Ui {
 class GraphForm;
@@ -19,13 +20,21 @@ public:
     ~GraphForm();
     
 private:
+    bool eventFilter(QObject* _o, QEvent* _e);
+    // Хранит сжатую картинку в байтах.
     QByteArray bytePicIn;
+    // Содержит захваченый принтскрин экрана
     QPixmap picIn;
+    // На нее добавляется картинка перед отрисовкой.
     QGraphicsScene scene;
+    // Используется для посылок сообщений.
     Network *network_;
+    // Айди клиента
     qint16 clientId_;
+    // Сама формочка
     Ui::GraphForm *ui;
 private slots:
+    // Обрабатывает входящие данные.
     void onDataReceived();
 };
 

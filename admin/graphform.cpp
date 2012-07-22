@@ -1,6 +1,6 @@
 #include "graphform.h"
 #include "ui_graphform.h"
-
+#include <QKeyEvent>
 GraphForm::GraphForm(
         Network *network, qint16 clientId, QWidget *parent) :
     QWidget(parent),
@@ -9,6 +9,7 @@ GraphForm::GraphForm(
     ui(new Ui::GraphForm)
 {
     ui->setupUi(this);
+    this->setWindowTitle(tr("Graph - ") + network_->getClientName(clientId_));
    // network->sendLevelTwo(clientId, MOD_GRAPH, "test");
 
     network_->activateMode(clientId, MOD_GRAPH);
@@ -16,12 +17,28 @@ GraphForm::GraphForm(
                 this, SLOT(onDataReceived()));
 
     ui->graphicsView->setScene(&scene);
+    ui->graphicsView->installEventFilter(this);
 }
 
 GraphForm::~GraphForm()
 {
     network_->deactivateMode(clientId_, MOD_GRAPH);
     delete ui;
+}
+
+bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
+{
+    if(_e->type() == QEvent::KeyPress){
+        QKeyEvent* pKeyEvent = static_cast<QKeyEvent*>(_e);
+        qDebug() << pKeyEvent->key();
+        QByteArray buf;
+        buf.append(GMOD_KEYPRESSED);
+        buf.append((quint8)pKeyEvent->key());
+        network_->sendLevelTwo(clientId_, MOD_GRAPH,
+                                           buf);
+        return true;
+    }
+    return false;
 }
 
 void GraphForm::onDataReceived()
