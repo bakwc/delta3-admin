@@ -9,8 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
     network_ = new Network(this);
     connect(network_,SIGNAL(listUpdated()),
             this,SLOT(onRedraw()));
-    this->setFixedSize(this->size());
-    //QTextCodec::setCodecForLocale(QTextCodec::codecForName("CP-866"));
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
