@@ -27,6 +27,14 @@ GraphForm::~GraphForm()
 }
 
 void GraphForm::mouseMoveEvent(QMouseEvent * me){
+
+}
+
+void GraphForm::mouseDoubleClickEvent(QMouseEvent *){
+
+}
+
+void GraphForm::mouseReleaseEvent(QMouseEvent * me){
     qDebug() << "MOUSE release" << me->x() << me->y();
     QByteArray buf;
     buf.append(GMOD_MCLICK);
@@ -35,10 +43,6 @@ void GraphForm::mouseMoveEvent(QMouseEvent * me){
     buf.append(toBytes((quint16)(me->y() - 10)));
     network_->sendLevelTwo(clientId_, MOD_GRAPH,
                                        buf);
-}
-
-void GraphForm::mouseDoubleClickEvent(QMouseEvent *){
-
 }
 
 void GraphForm::mousePressEvent(QMouseEvent *me){

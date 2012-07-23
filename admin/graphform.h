@@ -23,7 +23,9 @@ public:
 
 
 
+
 private:
+    void mouseReleaseEvent(QMouseEvent *me);
     void mouseDoubleClickEvent(QMouseEvent *);
     void keyPressEvent(QKeyEvent *pKeyEvent);
     void mousePressEvent(QMouseEvent *me);
