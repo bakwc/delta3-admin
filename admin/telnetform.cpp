@@ -11,7 +11,7 @@ TelnetForm::TelnetForm(
     ui->setupUi(this);
     this->setWindowTitle(tr("telnet - ") + network_->getClientName(clientId_));
     network_->activateMode(clientId_, MOD_TELNET);
-    this->setFixedSize(this->size());
+	//this->setFixedSize(this->size());
     connect(network_,SIGNAL(dataIncome()),
             this,SLOT(onDataReceived()));
 
