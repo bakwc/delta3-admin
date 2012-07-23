@@ -1,5 +1,7 @@
 #include "client.h"
 
+using namespace delta3;
+
 Client::Client(QObject *parent):
     QObject(parent)
 {

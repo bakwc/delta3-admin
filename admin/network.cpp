@@ -1,6 +1,8 @@
 #include "network.h"
 #include "netextract.h"
 
+using namespace delta3;
+
 Network::Network(QObject *parent):
     QObject(parent)
 {
@@ -160,7 +162,7 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 void Network::parseMessage(qint32 from, const QByteArray &data)
 {
 
-    income_.mode = getMode2(data);
+	income_.mode = getMode2(data);
     income_.from = from;
     income_.data = getPacketData2(data);
 
