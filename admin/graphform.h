@@ -19,14 +19,20 @@ public:
             QWidget* parent = 0);
     ~GraphForm();
     
+
+
+
+
 private:
-    bool eventFilter(QObject* _o, QEvent* _e);
+    void mouseDoubleClickEvent(QMouseEvent *);
+    void keyPressEvent(QKeyEvent *pKeyEvent);
+    void mousePressEvent(QMouseEvent *me);
+    void mouseMoveEvent(QMouseEvent *me);
     // Хранит сжатую картинку в байтах.
     QByteArray bytePicIn;
     // Содержит захваченый принтскрин экрана
     QPixmap picIn;
     // На нее добавляется картинка перед отрисовкой.
-    QGraphicsScene scene;
     // Используется для посылок сообщений.
     Network *network_;
     // Айди клиента

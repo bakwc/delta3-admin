@@ -1,6 +1,7 @@
 #include "graphform.h"
 #include "ui_graphform.h"
 #include <QKeyEvent>
+#include <QMouseEvent>
 GraphForm::GraphForm(
         Network *network, qint16 clientId, QWidget *parent) :
     QWidget(parent),
@@ -15,9 +16,8 @@ GraphForm::GraphForm(
     network_->activateMode(clientId, MOD_GRAPH);
     connect(network_, SIGNAL(dataIncome()),
                 this, SLOT(onDataReceived()));
-
-    ui->graphicsView->setScene(&scene);
-    ui->graphicsView->installEventFilter(this);
+    setMouseTracking(true);
+    ui->label->installEventFilter(this);
 }
 
 GraphForm::~GraphForm()
@@ -26,19 +26,39 @@ GraphForm::~GraphForm()
     delete ui;
 }
 
-bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
-{
-    if(_e->type() == QEvent::KeyPress){
-        QKeyEvent* pKeyEvent = static_cast<QKeyEvent*>(_e);
-        qDebug() << pKeyEvent->key();
-        QByteArray buf;
-        buf.append(GMOD_KEYPRESSED);
-        buf.append((quint8)pKeyEvent->key());
-        network_->sendLevelTwo(clientId_, MOD_GRAPH,
-                                           buf);
-        return true;
-    }
-    return false;
+void GraphForm::mouseMoveEvent(QMouseEvent * me){
+    qDebug() << "MOUSE release" << me->x() << me->y();
+    QByteArray buf;
+    buf.append(GMOD_MCLICK);
+    buf.append((quint8)(me->button() + 20));
+    buf.append(toBytes((quint16)(me->x() - 10)));
+    buf.append(toBytes((quint16)(me->y() - 10)));
+    network_->sendLevelTwo(clientId_, MOD_GRAPH,
+                                       buf);
+}
+
+void GraphForm::mouseDoubleClickEvent(QMouseEvent *){
+
+}
+
+void GraphForm::mousePressEvent(QMouseEvent *me){
+    qDebug() << "MOUSE press" << me->x() << me->y();
+    QByteArray buf;
+    buf.append(GMOD_MCLICK);
+    buf.append((quint8)me->button());
+    buf.append(toBytes((quint16)(me->x() - 10)));
+    buf.append(toBytes((quint16)(me->y() - 10)));
+    network_->sendLevelTwo(clientId_, MOD_GRAPH,
+                                       buf);
+}
+
+void GraphForm::keyPressEvent(QKeyEvent * pKeyEvent){
+    qDebug() << pKeyEvent->key();
+    QByteArray buf;
+    buf.append(GMOD_KEYEV);
+    buf.append((quint8)pKeyEvent->key());
+    network_->sendLevelTwo(clientId_, MOD_GRAPH,
+                                       buf);
 }
 
 void GraphForm::onDataReceived()
@@ -49,7 +69,10 @@ void GraphForm::onDataReceived()
     qDebug() << "GraphForm::onDataReceived()";
     bytePicIn.clear();
     bytePicIn = network_->receivedData().data;
-    picIn.loadFromData(bytePicIn);
-    scene.clear();
-    scene.addPixmap(picIn);
+    picIn.loadFromData(bytePicIn);  
+    QSize size = QSize(picIn.size().width()/2,picIn.size().height()/2);
+    ui->label->resize(size);
+    ui->label->setPixmap(picIn.scaled(ui->label->size(),
+                                                    Qt::KeepAspectRatio,
+                                                    Qt::SmoothTransformation));
 }
