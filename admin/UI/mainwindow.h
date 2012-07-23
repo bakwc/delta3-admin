@@ -38,6 +38,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Network *network_;
+	delta3::Network *network_;
     QMenu *modeMenu_;
 };

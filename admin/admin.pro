@@ -15,28 +15,28 @@ QMAKE_CXXFLAGS += -std=c++0x
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+	UI/mainwindow.cpp \
     network.cpp \
     client.cpp \
-    telnetform.cpp \
+    UI/telnetform.cpp \
     netextract.cpp \
-    fileform.cpp \
-    graphform.cpp \
-    clientinfodialog.cpp
+    UI/fileform.cpp \
+    UI/graphform.cpp \
+    UI/clientinfodialog.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += UI/mainwindow.h \
     network.h \
     client.h \
-    telnetform.h \
+    UI/telnetform.h \
     defines.h \
     utils.h \
     netextract.h \
-    fileform.h \
-    graphform.h \
-    clientinfodialog.h
+    UI/fileform.h \
+    UI/graphform.h \
+    UI/clientinfodialog.h
 
-FORMS    += mainwindow.ui \
-    telnetform.ui \
-    fileform.ui \
-    graphform.ui \
-    clientinfodialog.ui
+FORMS    += UI/mainwindow.ui \
+    UI/telnetform.ui \
+    UI/fileform.ui \
+    UI/graphform.ui \
+    UI/clientinfodialog.ui

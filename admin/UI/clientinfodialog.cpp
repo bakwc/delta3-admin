@@ -1,7 +1,7 @@
 #include "clientinfodialog.h"
 #include "ui_clientinfodialog.h"
 
-ClientInfoDialog::ClientInfoDialog(qint16 clientId, Network *net, QWidget *parent) :
+ClientInfoDialog::ClientInfoDialog(qint16 clientId, delta3::Network *net, QWidget *parent) :
     QDialog(parent),
     network_(net),
     ui(new Ui::ClientInfoDialog)

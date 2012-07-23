@@ -1,5 +1,6 @@
 #pragma once
 
+namespace delta3 {
 
 const qint16 TELNET_HISTORY_LENGTH  = 4200;
 const qint8 CSPYP1_PROTOCOL_ID      = 1;
@@ -66,3 +67,6 @@ enum GraphMode
     GMOD_MRIGHT     = 10, // Команда нажатия правой кнопки мышки
     GMOD_MMID       = 11  // Команда нажатия средней кнопки мышки
 };
+
+
+}

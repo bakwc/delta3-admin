@@ -11,11 +11,14 @@
 #include "client.h"
 #include "defines.h"
 
+namespace delta3 {
+
 typedef QMap<qint32, Client *> Clients;
 
 class Network: public QObject
 {
     Q_OBJECT
+
 public:
     struct Income
     {
@@ -55,3 +58,5 @@ private:
     Income income_;
     QByteArray buf_;
 };
+
+}
