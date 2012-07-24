@@ -1,4 +1,7 @@
 #include "netextract.h"
+#include "utils.h"
+
+namespace delta3 {
 
 // -- Level One extracting functions
 
@@ -76,7 +79,7 @@ qint32 getClientIp(qint16 client, const QByteArray& data)
 
 QByteArray getPacketData(const QByteArray& data)
 {
-    return data.mid(9, getPacketLength(data));
+	return data.mid(9, getPacketLength(data));
 }
 
 
@@ -100,5 +103,7 @@ qint32 getPacketLength2(const QByteArray& data)
 
 QByteArray getPacketData2(const QByteArray& data)
 {
-    return data.right(getPacketLength2(data));
+	return data.right(getPacketLength2(data));
+}
+
 }

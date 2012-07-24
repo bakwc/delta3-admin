@@ -3,6 +3,8 @@
 #include <QByteArray>
 #include <QDebug>
 
+namespace delta3 {
+
 template <typename T>
 QByteArray toBytes(T num)
 {
@@ -28,4 +30,6 @@ inline QByteArray toBytes(const QString& str, quint16 len)
     QByteArray res=str.toLocal8Bit();
     res.leftJustified(len, 0, true);
     return res;
+}
+
 }

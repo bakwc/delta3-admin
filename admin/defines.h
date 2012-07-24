@@ -1,5 +1,6 @@
 #pragma once
 
+namespace delta3 {
 
 const qint16 TELNET_HISTORY_LENGTH  = 4200;
 const qint8 CSPYP1_PROTOCOL_ID      = 1;
@@ -12,7 +13,7 @@ const qint16 CMD1_CLIENT_INFO_SIZE = 92;    // Client info struct size
 enum ProtocolMode
 {
     MOD_TELNET   = 1,
-    MOD_GRAPH    = 2,
+	MOD_GRAPHICS = 2,
     MOD_FILE     = 3,
     MOD_MEDIA    = 4,
     MOD_PROXY    = 5,
@@ -42,14 +43,14 @@ enum Cspyp2Command
 
 enum FileMode
 {
-    FMOD_ROOT    = 1,
-    FMOD_CD      = 2,
-    FMOD_MKDIR   = 3,
-    FMOD_RMDIR   = 4,
-    FMOD_GET     = 5,
-    FMOD_SEND    = 6,
-    FMOD_FILE    = 7,
-    FMOD_ABS_WAY = 8
+    FMOD_ROOT   =1,
+    FMOD_CD     =2,
+	FMOD_MKDIR  =3,
+    FMOD_RMDIR  =4,
+    FMOD_GET    =5,
+    FMOD_SEND   =6,
+    FMOD_FILE   =7,
+    FMOD_ABS_WAY=8
 };
 
 enum GraphMode
@@ -61,3 +62,6 @@ enum GraphMode
     GMOD_MMOV    = 5,
     GMOD_MCLICK	 = 6
 };
+
+
+}
