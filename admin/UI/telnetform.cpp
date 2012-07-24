@@ -25,10 +25,10 @@ TelnetForm::~TelnetForm()
     delete ui;
 }
 
-void TelnetForm::onDataReceived(QString &data)
+void TelnetForm::onDataReceived(QString &str)
 {
 
-	history_ += data;
+	history_ += str;
 
 	if (history_.length() > delta3::TELNET_HISTORY_LENGTH)
 		history_=history_.right(delta3::TELNET_HISTORY_LENGTH);

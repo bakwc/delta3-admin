@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     UI/graphform.cpp \
     UI/clientinfodialog.cpp \
     Protocols/abstrproto.cpp \
-    Protocols/telnet.cpp
+    Protocols/telnet.cpp \
+    Protocols/graphics.cpp
 
 HEADERS  += UI/mainwindow.h \
     network.h \
@@ -37,7 +38,8 @@ HEADERS  += UI/mainwindow.h \
     UI/graphform.h \
     UI/clientinfodialog.h \
     Protocols/abstrproto.h \
-    Protocols/telnet.h
+    Protocols/telnet.h \
+    Protocols/graphics.h
 
 FORMS    += UI/mainwindow.ui \
     UI/telnetform.ui \

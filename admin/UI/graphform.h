@@ -3,7 +3,8 @@
 #include <QWidget>
 #include "network.h"
 #include "defines.h"
-#include <QGraphicsScene>
+#include "Protocols/graphics.h"
+
 namespace Ui {
 class GraphForm;
 }
@@ -13,28 +14,22 @@ class GraphForm : public QWidget
     Q_OBJECT
     
 public:
-    explicit GraphForm(
-			delta3::Network *network,
-            qint16 clientId,
-            QWidget* parent = 0);
+	explicit GraphForm(delta3::Graphics* graph, QWidget* parent = 0);
     ~GraphForm();
-    
-private:
-    bool eventFilter(QObject* _o, QEvent* _e);
-    // Хранит сжатую картинку в байтах.
-    QByteArray bytePicIn;
-    // Содержит захваченый принтскрин экрана
-    QPixmap picIn;
-    // На нее добавляется картинка перед отрисовкой.
-    QGraphicsScene scene;
-    // Используется для посылок сообщений.
-	delta3::Network *network_;
-    // Айди клиента
-    qint16 clientId_;
-    // Сама формочка
-    Ui::GraphForm *ui;
+
+signals:
+	void ready(QByteArray &arr);
+
 private slots:
-    // Обрабатывает входящие данные.
-    void onDataReceived();
+	void onDataReceived(QImage &img);
+
+protected:
+	void paintEvent(QPaintEvent *);
+	bool eventFilter(QObject* _o, QEvent* _e);
+
+private:
+	delta3::Graphics	*graph_;
+	QImage				image_; // mb it's a not very well idea ;|
+	Ui::GraphForm		*ui;
 };
 

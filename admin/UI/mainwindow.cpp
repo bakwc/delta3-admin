@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "Protocols/graphics.h"
 
 MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     QMainWindow(parent),
@@ -99,25 +100,21 @@ void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::runTelnet()
 {
-	(*runTelnet_)(network_, ui->listWidget->selectedItems()[0]->whatsThis().toInt());
+	static delta3::Telnet *tel = nullptr;
+	static TelnetForm *form = nullptr;
+
+	if(tel) {
+		delete tel;
+		delete form;
+	}
+
+	tel = new delta3::Telnet(network_,
+							 ui->listWidget->selectedItems()[0]->whatsThis().toInt(),
+							 this);
+	form = new TelnetForm(tel);
+	form->show();
 }
 
-/*
-
-void MainWindow::runTelnet()
-{
-    if (ui->listWidget->selectedItems().size()==0)
-        return;
-    QListWidgetItem *item=ui->listWidget->selectedItems()[0];
-
-	static TelnetForm* telnet = nullptr;
-
-	if(telnet)
-		delete telnet;
-
-//	telnet = new TelnetForm( network_, item->whatsThis().toInt());
-//    telnet->show();
-}
 
 void MainWindow::runGraph()
 {
@@ -125,15 +122,20 @@ void MainWindow::runGraph()
         return;
     QListWidgetItem *item=ui->listWidget->selectedItems()[0];
 
-	static GraphForm *graph = nullptr;
+	static delta3::Graphics *graph = nullptr;
+	static GraphForm *form = nullptr;
 
 	if(graph)
 		delete graph;
 
-	graph = new GraphForm( network_, item->whatsThis().toInt());
-    graph->show();
+	graph = new delta3::Graphics(network_,
+								 ui->listWidget->selectedItems()[0]->whatsThis().toInt(),
+								 this);
+	form = new GraphForm(graph);
+	form->show();
 }
 
+/*
 void MainWindow::runFile()
 {
     if (ui->listWidget->selectedItems().size()==0)

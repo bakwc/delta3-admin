@@ -1,31 +1,26 @@
 #include "graphform.h"
 #include "ui_graphform.h"
 #include <QKeyEvent>
+#include <QPaintEvent>
+#include <QPainter>
 
 using namespace delta3;
 
-GraphForm::GraphForm(
-		delta3::Network *network, qint16 clientId, QWidget *parent) :
+GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
     QWidget(parent),
-    network_(network),
-    clientId_(clientId),
+	graph_(graph),
     ui(new Ui::GraphForm)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("Graph - ") + network_->getClientName(clientId_));
+	this->setWindowTitle(tr("Graph - "));// + network_->getClientName(clientId_));
    // network->sendLevelTwo(clientId, MOD_GRAPH, "test");
 
-	network_->activateMode(clientId, MOD_GRAPHICS);
-    connect(network_, SIGNAL(dataIncome()),
-                this, SLOT(onDataReceived()));
-
-    ui->graphicsView->setScene(&scene);
-    ui->graphicsView->installEventFilter(this);
+	connect(graph_, SIGNAL(ready(QImage&)), SLOT(onDataReceived(QImage&)));
+	connect(this, SIGNAL(ready(QByteArray&)), graph_, SLOT(onReady(QString&)));
 }
 
 GraphForm::~GraphForm()
 {
-	network_->deactivateMode(clientId_, MOD_GRAPHICS);
     delete ui;
 }
 
@@ -37,22 +32,23 @@ bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
         QByteArray buf;
         buf.append(GMOD_KEYPRESSED);
         buf.append((quint8)pKeyEvent->key());
-		network_->sendLevelTwo(clientId_, MOD_GRAPHICS,
-                                           buf);
+
+		emit ready(buf);
+
         return true;
     }
     return false;
 }
 
-void GraphForm::onDataReceived()
+void GraphForm::onDataReceived(QImage &img)
 {
-    if (!(network_->receivedData().from == clientId_ &&
-			network_->receivedData().mode == MOD_GRAPHICS))
-        return;
-    qDebug() << "GraphForm::onDataReceived()";
-    bytePicIn.clear();
-    bytePicIn = network_->receivedData().data;
-    picIn.loadFromData(bytePicIn);
-    scene.clear();
-    scene.addPixmap(picIn);
+	image_ = img;
+	repaint();
+}
+
+void GraphForm::paintEvent(QPaintEvent *)
+{
+	QPainter p(this);
+
+	p.drawImage(0, 0, image_);
 }

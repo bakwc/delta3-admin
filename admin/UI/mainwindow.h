@@ -23,8 +23,6 @@ public:
 	explicit MainWindow(delta3::Network *net = nullptr,
 						QWidget *parent = 0);
     ~MainWindow();
-
-	void (*runTelnet_)(delta3::Network* n, qint16 c);
     
 public slots:
 	void setNetwork(delta3::Network *net);
@@ -38,7 +36,7 @@ private slots:
     void on_listWidget_customContextMenuRequested(const QPoint &pos);
 
 	void runTelnet();
-//    void runGraph();
+	void runGraph();
 //    void runFile();
 //    void runOptions();
 

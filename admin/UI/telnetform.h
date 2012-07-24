@@ -24,16 +24,15 @@ public:
     ~TelnetForm();
 
 signals:
-	void ready(QString &data);
+	void ready(QString &str);
 
 private slots:
-	void onDataReceived(QString &data);
+	void onDataReceived(QString &str);
 
 private:
     bool eventFilter(QObject* _o, QEvent* _e);
-
-private:
     void textScrollDown();
+
 private:
 	delta3::Telnet	*tel_;
 	Ui::TelnetForm	*ui;
