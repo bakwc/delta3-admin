@@ -6,7 +6,6 @@ TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
 {
     ui->setupUi(this);
 
-	//this->setFixedSize(this->size());
 	connect(tel_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
 	connect(this, SIGNAL(ready(QString&)), tel_, SLOT(onReady(QString&)));
 
@@ -16,8 +15,13 @@ TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
     ui->textEdit->setPalette(p);
 
     ui->textEdit->installEventFilter(this);
-    //ui->textEdit->setTextColor(Qt::green);
-    //ui->lineEdit->
+
+    auto fmt = ui->textEdit->currentCharFormat();
+    fmt.setFontFixedPitch(true);
+    fmt.setFontStyleHint(QFont::Monospace);
+    fmt.setFontFamily("monospace");
+    //fmt.setFontFamily("Liberation Mono");
+    ui->textEdit->setCurrentCharFormat(fmt);
 }
 
 TelnetForm::~TelnetForm()
