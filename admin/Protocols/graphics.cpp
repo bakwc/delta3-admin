@@ -1,5 +1,5 @@
 #include "graphics.h"
-#include "network.h"
+#include "../network.h"
 
 using namespace delta3;
 
