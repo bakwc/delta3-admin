@@ -1,8 +1,10 @@
 #include "network.h"
 #include "netextract.h"
 
-Network::Network(QObject *parent):
-    QObject(parent)
+using namespace delta3;
+
+Network::Network(QHostAddress adr, QObject *parent) :
+	QObject(parent), adr_(adr)
 {
     socket_ = new QTcpSocket(this);
     QObject::connect(socket_, SIGNAL(readyRead()),
@@ -12,6 +14,7 @@ Network::Network(QObject *parent):
                      this,SLOT(onConnected()));
 }
 
+
 void Network::connectToServer()
 {
     if (socket_->state()!=QTcpSocket::UnconnectedState)
@@ -20,6 +23,7 @@ void Network::connectToServer()
     socket_->connectToHost(QHostAddress("127.0.0.1"),1235);
                                     // TODO: request from user
 }
+
 
 void Network::onDataReceived()
 {
@@ -60,6 +64,7 @@ void Network::onDataReceived()
     }
 }
 
+
 void Network::parseList()
 {
     if (buf_.size()<5) // TODO: remove magic number
@@ -89,6 +94,7 @@ void Network::parseList()
         onDataReceived();   // If something in buffer - parse again
 }
 
+
 void Network::parsePing()
 {
     qDebug() << "Ping received!";
@@ -107,6 +113,7 @@ void Network::parsePing()
     if (buf_.size()>0)
         onDataReceived();   // If something in buffer - parse again
 }
+
 
 void Network::parseResponse()
 {
@@ -127,6 +134,7 @@ void Network::parseResponse()
     parseProtoTwo(from, cmd);
     return;
 }
+
 
 void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 {
@@ -157,10 +165,11 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
     }
 }
 
+
 void Network::parseMessage(qint32 from, const QByteArray &data)
 {
 
-    income_.mode = getMode2(data);
+	income_.mode = getMode2(data);
     income_.from = from;
     income_.data = getPacketData2(data);
 
@@ -170,6 +179,7 @@ void Network::parseMessage(qint32 from, const QByteArray &data)
 //        onDataReceived();   // If something in buffer - parse again
     buf_.clear();
 }
+
 
 void Network::onConnected()
 {
@@ -194,10 +204,12 @@ void Network::onConnected()
     socket_->write(cmd);
 }
 
+
 const Clients& Network::getClients() const
 {
     return clients_;
 }
+
 
 QString Network::getClientName(qint16 id) const
 {
@@ -206,6 +218,7 @@ QString Network::getClientName(qint16 id) const
         return "";
     return client.value()->getHash();
 }
+
 
 void Network::sendLevelOne(qint16 dest, const QByteArray& data)
 {   
@@ -220,6 +233,7 @@ void Network::sendLevelOne(qint16 dest, const QByteArray& data)
     socket_->write(cmd);
 }
 
+
 void Network::sendLevelTwo(qint16 dest, ProtocolMode mode, const QByteArray& data)
 {
     QByteArray cmd;
@@ -232,6 +246,7 @@ void Network::sendLevelTwo(qint16 dest, ProtocolMode mode, const QByteArray& dat
     sendLevelOne(dest, cmd);
 }
 
+
 void Network::activateMode(qint16 client, ProtocolMode mode)
 {
     QByteArray cmd;
@@ -243,16 +258,19 @@ void Network::activateMode(qint16 client, ProtocolMode mode)
     sendLevelOne(client, cmd);
 }
 
+
 void Network::deactivateMode(qint16 client, ProtocolMode mode)
 {
     QString cmd=QString("d:%1:").arg(mode);
     sendLevelOne(client,cmd.toLocal8Bit());
 }
 
+
 const Network::Income& Network::receivedData() const
 {
-    return income_;
+	return income_;
 }
+
 
 Client *Network::getClient(qint16 clientId) const
 {
@@ -261,6 +279,7 @@ Client *Network::getClient(qint16 clientId) const
         return i.value();
     return NULL;
 }
+
 
 void Network::setClientCaption(qint16 client, const QString& info)
 {

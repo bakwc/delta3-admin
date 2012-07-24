@@ -14,11 +14,11 @@ class ClientInfoDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit ClientInfoDialog(qint16 clientId, Network *net, QWidget *parent = 0);
+	explicit ClientInfoDialog(qint16 clientId, delta3::Network *net, QWidget *parent = 0);
     ~ClientInfoDialog();
     QString getCaption();
     
 private:
-    Network *network_;
+	delta3::Network *network_;
     Ui::ClientInfoDialog *ui;
 };

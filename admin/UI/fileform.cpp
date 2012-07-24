@@ -1,10 +1,9 @@
 #include "fileform.h"
 #include "ui_fileform.h"
 
-FileForm::FileForm(Network *network, qint16 clientId, QWidget *parent) :
+FileForm::FileForm(delta3::File *file, QWidget *parent) :
     QWidget(parent),
-    network_(network),
-    clientId_(clientId),
+	file_(file),
     ui(new Ui::FileForm)
 {
      ui->setupUi(this);
@@ -13,5 +12,10 @@ FileForm::FileForm(Network *network, qint16 clientId, QWidget *parent) :
 
 FileForm::~FileForm()
 {
-    delete ui;
+	delete ui;
+}
+
+
+void FileForm::onDataReceived(QString &d)
+{
 }
