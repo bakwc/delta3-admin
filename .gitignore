@@ -3,6 +3,9 @@
 admin-*/
 admin/debug*/
 admin/release*/
+admin/moc_*.cpp
+admin/admin
+
 
 ui_*.h
 *.qm
@@ -18,3 +21,10 @@ Makefile*
 
 *.Debug
 *.Release
+*.o
+
+latex
+html
+
+
+
