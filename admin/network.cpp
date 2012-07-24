@@ -76,6 +76,8 @@ void Network::parseList()
     if (buf_.size()<5+getClientNumber(buf_)*CMD1_CLIENT_INFO_SIZE) // TODO: remove magic number
         return;     // not all data avaliable
 
+    qDebug() << "Clients: " << getClientNumber(buf_);
+
     for (qint16 i=0;i<getClientNumber(buf_);i++)
     {
         Client *client = new Client(this);
