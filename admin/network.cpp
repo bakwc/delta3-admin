@@ -20,7 +20,7 @@ void Network::connectToServer()
     if (socket_->state()!=QTcpSocket::UnconnectedState)
         return;
 
-    socket_->connectToHost(QHostAddress("127.0.0.1"),1235);
+    socket_->connectToHost(adr_, 1235);
                                     // TODO: request from user
 }
 
