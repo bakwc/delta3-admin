@@ -100,6 +100,11 @@ void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::runTelnet()
 {
+	QListWidgetItem *item = nullptr;
+
+	if ((item = ui->listWidget->selectedItems()[0]) == nullptr)
+		return;
+
 	static delta3::Telnet *tel = nullptr;
 	static TelnetForm *form = nullptr;
 
@@ -108,9 +113,7 @@ void MainWindow::runTelnet()
 		delete form;
 	}
 
-	tel = new delta3::Telnet(network_,
-							 ui->listWidget->selectedItems()[0]->whatsThis().toInt(),
-							 this);
+	tel = new delta3::Telnet(network_, item->whatsThis().toInt(), this);
 	form = new TelnetForm(tel);
 	form->show();
 }
@@ -118,9 +121,10 @@ void MainWindow::runTelnet()
 
 void MainWindow::runGraph()
 {
-    if (ui->listWidget->selectedItems().size()==0)
+	QListWidgetItem *item = nullptr;
+
+	if ((item = ui->listWidget->selectedItems()[0]) == nullptr)
         return;
-    QListWidgetItem *item=ui->listWidget->selectedItems()[0];
 
 	static delta3::Graphics *graph = nullptr;
 	static GraphForm *form = nullptr;
@@ -128,9 +132,7 @@ void MainWindow::runGraph()
 	if(graph)
 		delete graph;
 
-	graph = new delta3::Graphics(network_,
-								 ui->listWidget->selectedItems()[0]->whatsThis().toInt(),
-								 this);
+	graph = new delta3::Graphics(network_,item->whatsThis().toInt(), this);
 	form = new GraphForm(graph);
 	form->show();
 }
@@ -147,30 +149,20 @@ void MainWindow::runFile()
             // REVIEW: potential memory leak?
     file->show();
 }
-
+*/
 
 void MainWindow::runOptions()
 {
-    if (ui->listWidget->selectedItems().size()==0)
-        return;
+	QListWidgetItem *item = nullptr;
 
-    QListWidgetItem *item=ui->listWidget->selectedItems()[0];
+	if ((item = ui->listWidget->selectedItems()[0]) == nullptr)
+		return;
 
-    qint16 clientId=item->whatsThis().toInt();
-
-    ClientInfoDialog dialog(clientId,network_);
-    if (dialog.exec()!=ClientInfoDialog::Rejected)
+	ClientInfoDialog dialog(item->whatsThis().toInt(), network_);
+	if (dialog.exec() != ClientInfoDialog::Rejected)
     {
-        network_->setClientCaption(clientId,dialog.getCaption());
+		network_->setClientCaption(item->whatsThis().toInt(), dialog.getCaption());
     }
-
-
-//    FileForm *file = new FileForm(
-//                network_,
-//                item->whatsThis().toInt());
-//            // REVIEW: potential memory leak?
-//    file->show();
-
 }
 
-*/
+

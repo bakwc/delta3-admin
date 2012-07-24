@@ -1,7 +1,7 @@
 #include "graphics.h"
 #include "network.h"
 
-namespace delta3 {
+using namespace delta3;
 
 Graphics::Graphics(Network *net, qint16 clientId, QObject *parent):
 	AbstrProto(MOD_GRAPHICS, net, clientId, parent)
@@ -26,4 +26,3 @@ void Graphics::onReady(QByteArray &arr)
 	network_->sendLevelTwo(clientId_, protoMode_, arr);
 }
 
-}

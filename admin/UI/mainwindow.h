@@ -38,7 +38,7 @@ private slots:
 	void runTelnet();
 	void runGraph();
 //    void runFile();
-//    void runOptions();
+	void runOptions();
 
 private:
     Ui::MainWindow *ui;
