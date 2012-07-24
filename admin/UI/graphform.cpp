@@ -17,6 +17,7 @@ GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
 
 	connect(graph_, SIGNAL(ready(QImage&)), SLOT(onDataReceived(QImage&)));
     connect(this, SIGNAL(ready(QByteArray&)), graph_, SLOT(onReady(QByteArray&)));
+    setAttribute(Qt::WA_DeleteOnClose);
     this->setMouseTracking(true);
     this->installEventFilter(this);
 }
@@ -57,10 +58,12 @@ void GraphForm::mousePressEvent(QMouseEvent *me){
 
 void GraphForm::keyPressEvent(QKeyEvent * pKeyEvent){
     qDebug() << pKeyEvent->key();
-    QByteArray buf;
-    buf.append(GMOD_KEYEV);
-    buf.append((quint8)pKeyEvent->key());
-    emit ready(buf);
+    if(pKeyEvent->key() < 0x05a && pKeyEvent->key() >= 0x30){
+        QByteArray buf;
+        buf.append(GMOD_KEYEV);
+        buf.append((quint8)pKeyEvent->key());
+        emit ready(buf);
+    }
 }
 
 void GraphForm::onDataReceived(QImage &img)
