@@ -12,11 +12,12 @@ GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
     ui(new Ui::GraphForm)
 {
     ui->setupUi(this);
-	this->setWindowTitle(tr("Graph - "));// + network_->getClientName(clientId_));
-   // network->sendLevelTwo(clientId, MOD_GRAPH, "test");
+	this->setWindowTitle(tr("Graphics - ") + graph_->clientId());
 
 	connect(graph_, SIGNAL(ready(QImage&)), SLOT(onDataReceived(QImage&)));
-	connect(this, SIGNAL(ready(QByteArray&)), graph_, SLOT(onReady(QString&)));
+	connect(this, SIGNAL(ready(QByteArray&)), graph_, SLOT(onReady(QByteArray&)));
+
+	setAttribute(Qt::WA_DeleteOnClose);
 }
 
 GraphForm::~GraphForm()
@@ -28,7 +29,9 @@ bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
 {
     if(_e->type() == QEvent::KeyPress){
         QKeyEvent* pKeyEvent = static_cast<QKeyEvent*>(_e);
+
         qDebug() << pKeyEvent->key();
+
         QByteArray buf;
         buf.append(GMOD_KEYPRESSED);
         buf.append((quint8)pKeyEvent->key());

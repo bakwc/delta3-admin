@@ -108,13 +108,14 @@ void MainWindow::runTelnet()
     static delta3::Telnet *tel = NULL;
     static TelnetForm *form = NULL;
 
-	if(tel) {
-		delete tel;
-		delete form;
-	}
+//	if(tel) {
+//		delete tel;
+//		delete form;
+//	}
 
-	tel = new delta3::Telnet(network_, item->whatsThis().toInt(), this);
+	tel = new delta3::Telnet(network_, item->whatsThis().toInt());
 	form = new TelnetForm(tel);
+	tel->setParent(form);
 	form->show();
 }
 
@@ -129,11 +130,12 @@ void MainWindow::runGraph()
     static delta3::Graphics *graph = NULL;
     static GraphForm *form = NULL;
 
-	if(graph)
-		delete graph;
+//	if(graph)
+//		delete graph;
 
-	graph = new delta3::Graphics(network_,item->whatsThis().toInt(), this);
+	graph = new delta3::Graphics(network_,item->whatsThis().toInt());
 	form = new GraphForm(graph);
+	graph->setParent(form);
 	form->show();
 }
 

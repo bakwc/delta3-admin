@@ -15,6 +15,8 @@ public:
     explicit AbstrProto(ProtocolMode mode, Network* net = NULL,
 						qint16 clientId = 0, QObject *parent = 0);
 	~AbstrProto();
+
+	qint16 clientId() const { return clientId_; }
 	
 signals:
 	

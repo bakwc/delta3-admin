@@ -18,6 +18,8 @@ TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
     ui->textEdit->installEventFilter(this);
     //ui->textEdit->setTextColor(Qt::green);
     //ui->lineEdit->
+
+	setAttribute(Qt::WA_DeleteOnClose);
 }
 
 TelnetForm::~TelnetForm()

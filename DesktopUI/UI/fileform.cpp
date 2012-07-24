@@ -7,6 +7,8 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
     ui(new Ui::FileForm)
 {
      ui->setupUi(this);
+
+	 setAttribute(Qt::WA_DeleteOnClose);
 }
 
 
