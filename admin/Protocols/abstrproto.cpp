@@ -15,3 +15,8 @@ AbstrProto::~AbstrProto()
 	disconnect(network_);
 	network_->deactivateMode(clientId_, protoMode_);
 }
+
+QString AbstrProto::getClientCaption()
+{
+    return network_->getClientCapt(clientId_);
+}

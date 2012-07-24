@@ -16,6 +16,8 @@ TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
 
     ui->textEdit->installEventFilter(this);
 
+    this->setWindowTitle("telnet - "+tel_->getClientCaption());
+
     auto fmt = ui->textEdit->currentCharFormat();
     fmt.setFontFixedPitch(true);
     fmt.setFontStyleHint(QFont::Monospace);

@@ -34,6 +34,7 @@ public:
 	const Clients&	getClients()	const;
 	Client			*getClient(qint16 clientId)	const;
 	QString			getClientName(qint16 id)	const;
+    QString			getClientCapt(qint16 id)	const;
 	void			sendLevelOne(qint16 dest, const QByteArray& data);
 	void			sendLevelTwo(qint16 dest, ProtocolMode mode, const QByteArray& data);
 	void			activateMode(qint16 client, ProtocolMode mode);
