@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QHostAddress>
 
+namespace delta3 {
+
 class Client: public QObject
 {
     Q_OBJECT
@@ -30,3 +32,5 @@ private:
     QString caption_;
     QHostAddress ip_;
 };
+
+}
