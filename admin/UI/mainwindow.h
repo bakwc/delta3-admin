@@ -20,9 +20,15 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit MainWindow(QWidget *parent = 0);
+	explicit MainWindow(delta3::Network *net = nullptr,
+						QWidget *parent = 0);
     ~MainWindow();
+
+	void (*runTelnet_)(delta3::Network* n, qint16 c);
     
+public slots:
+	void setNetwork(delta3::Network *net);
+
 private slots:
     void on_actionConnect_activated();
     void onRedraw();
@@ -31,10 +37,10 @@ private slots:
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
     void on_listWidget_customContextMenuRequested(const QPoint &pos);
 
-    void runTelnet();
-    void runGraph();
-    void runFile();
-    void runOptions();
+	void runTelnet();
+//    void runGraph();
+//    void runFile();
+//    void runOptions();
 
 private:
     Ui::MainWindow *ui;

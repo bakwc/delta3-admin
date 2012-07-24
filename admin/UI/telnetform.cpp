@@ -1,19 +1,14 @@
 #include "telnetform.h"
 #include "ui_telnetform.h"
 
-TelnetForm::TelnetForm(
-		delta3::Network *network, qint16 clientId, QWidget *parent) :
-    QWidget(parent),
-    network_(network),
-    clientId_(clientId),
-    ui(new Ui::TelnetForm)
+TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
+	QWidget(parent), tel_(tel), ui(new Ui::TelnetForm)
 {
     ui->setupUi(this);
-    this->setWindowTitle(tr("telnet - ") + network_->getClientName(clientId_));
-	network_->activateMode(clientId_, delta3::MOD_TELNET);
+
 	//this->setFixedSize(this->size());
-    connect(network_,SIGNAL(dataIncome()),
-            this,SLOT(onDataReceived()));
+	connect(tel_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
+	connect(this, SIGNAL(ready(QString&)), tel_, SLOT(onReady(QString&)));
 
     QPalette p = ui->textEdit->palette();
     p.setColor(QPalette::Base, Qt::black);
@@ -27,20 +22,13 @@ TelnetForm::TelnetForm(
 
 TelnetForm::~TelnetForm()
 {
-	network_->deactivateMode(clientId_, delta3::MOD_TELNET);
     delete ui;
 }
 
-void TelnetForm::onDataReceived()
+void TelnetForm::onDataReceived(QString &data)
 {
-    if (!(network_->receivedData().from == clientId_ &&
-			network_->receivedData().mode == delta3::MOD_TELNET))
-        return;
-    qDebug() << "TelnetForm::onDataReceived()";
 
-    QString message = QString::fromUtf8(network_->receivedData().data);
-
-    history_ += message;
+	history_ += data;
 
 	if (history_.length() > delta3::TELNET_HISTORY_LENGTH)
 		history_=history_.right(delta3::TELNET_HISTORY_LENGTH);
@@ -63,8 +51,11 @@ bool TelnetForm::eventFilter(QObject* _o, QEvent* _e)
         if(eventKey->key() == Qt::Key_Return)
         {
             qDebug() << "pressed enter!";
-			network_->sendLevelTwo(clientId_, delta3::MOD_TELNET,
-                                   currentCmd_.toUtf8());
+//			network_->sendLevelTwo(clientId_, delta3::MOD_TELNET,
+//                                   currentCmd_.toUtf8());
+
+			emit ready(currentCmd_);
+
             currentCmd_.clear();
 
             return true;

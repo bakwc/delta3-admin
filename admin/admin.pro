@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     netextract.cpp \
     UI/fileform.cpp \
     UI/graphform.cpp \
-    UI/clientinfodialog.cpp
+    UI/clientinfodialog.cpp \
+    Protocols/abstrproto.cpp \
+    Protocols/telnet.cpp
 
 HEADERS  += UI/mainwindow.h \
     network.h \
@@ -33,7 +35,9 @@ HEADERS  += UI/mainwindow.h \
     netextract.h \
     UI/fileform.h \
     UI/graphform.h \
-    UI/clientinfodialog.h
+    UI/clientinfodialog.h \
+    Protocols/abstrproto.h \
+    Protocols/telnet.h
 
 FORMS    += UI/mainwindow.ui \
     UI/telnetform.ui \

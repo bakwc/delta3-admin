@@ -19,16 +19,15 @@ class Network: public QObject
 {
     Q_OBJECT
 
-public:
-    struct Income
-    {
-        qint16 from;
-        ProtocolMode mode;
-        QByteArray data;
-    };
+	struct Income
+	{
+		qint16 from;
+		ProtocolMode mode;
+		QByteArray data;
+	};
 
 public:
-    Network(QObject *parent);
+	Network(QObject *parent = nullptr);
     void connectToServer();
     const Clients& getClients() const;
     Client *getClient(qint16 clientId) const;
@@ -55,8 +54,8 @@ private:
 private:
     QTcpSocket *socket_;
     Clients clients_;
-    Income income_;
-    QByteArray buf_;
+	Income income_;
+	QByteArray buf_;
 };
 
 }

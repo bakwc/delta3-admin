@@ -1,46 +1,62 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     QMainWindow(parent),
 	ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-	network_ = new delta3::Network(this);
-    connect(network_,SIGNAL(listUpdated()),
-            this,SLOT(onRedraw()));
+
+	if(net)
+		setNetwork(net);
+
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     ui->listWidget->setContextMenuPolicy(Qt::CustomContextMenu);
 
     QAction *act;
     modeMenu_ = new QMenu(this);
 
-    act = new QAction(tr("Telnet mode"),this);
-    connect(act,SIGNAL(triggered()),this,SLOT(runTelnet()));
-    modeMenu_->addAction(act);
+	act = new QAction(tr("Telnet mode"),this);
+	connect(act,SIGNAL(triggered()),this,SLOT(runTelnet()));
+	modeMenu_->addAction(act);
 
-    act = new QAction(tr("File mode"),this);
-    connect(act,SIGNAL(triggered()),this,SLOT(runFile()));
-    modeMenu_->addAction(act);
+	act = new QAction(tr("File mode"),this);
+	connect(act,SIGNAL(triggered()),this,SLOT(runFile()));
+	modeMenu_->addAction(act);
 
-    act = new QAction(tr("Graphics mode"),this);
-    connect(act,SIGNAL(triggered()),this,SLOT(runGraph()));
-    modeMenu_->addAction(act);
+	act = new QAction(tr("Graphics mode"),this);
+	connect(act,SIGNAL(triggered()),this,SLOT(runGraph()));
+	modeMenu_->addAction(act);
 
-    modeMenu_->addSeparator();
+	modeMenu_->addSeparator();
 
-    act = new QAction(tr("Options"),this);
-    connect(act,SIGNAL(triggered()),this,SLOT(runOptions()));
-    modeMenu_->addAction(act);
+	act = new QAction(tr("Options"),this);
+	connect(act,SIGNAL(triggered()),this,SLOT(runOptions()));
+	modeMenu_->addAction(act);
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+	delete ui;
+}
+
+void MainWindow::setNetwork(delta3::Network *net)
+{
+	if(network_)
+		disconnect(this);
+
+	network_ = net;
+
+	connect(network_,SIGNAL(listUpdated()),
+			this,SLOT(onRedraw()));
+
 }
 
 void MainWindow::on_actionConnect_activated()
 {
+	if(network_ == nullptr)
+		return;
+
     network_->connectToServer();
 }
 
@@ -68,7 +84,7 @@ void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     qDebug() << "Double Click!";
-    runTelnet();
+	runTelnet();
 }
 
 void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
@@ -78,8 +94,15 @@ void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
         return;
    // modeMenu_->raise();
     modeMenu_->move(QCursor::pos());
-    modeMenu_->show();
+	modeMenu_->show();
 }
+
+void MainWindow::runTelnet()
+{
+	(*runTelnet_)(network_, ui->listWidget->selectedItems()[0]->whatsThis().toInt());
+}
+
+/*
 
 void MainWindow::runTelnet()
 {
@@ -92,8 +115,8 @@ void MainWindow::runTelnet()
 	if(telnet)
 		delete telnet;
 
-	telnet = new TelnetForm( network_, item->whatsThis().toInt());
-    telnet->show();
+//	telnet = new TelnetForm( network_, item->whatsThis().toInt());
+//    telnet->show();
 }
 
 void MainWindow::runGraph()
@@ -139,11 +162,13 @@ void MainWindow::runOptions()
         network_->setClientCaption(clientId,dialog.getCaption());
     }
 
-    /*
-    FileForm *file = new FileForm(
-                network_,
-                item->whatsThis().toInt());
-            // REVIEW: potential memory leak?
-    file->show();
-    */
+
+//    FileForm *file = new FileForm(
+//                network_,
+//                item->whatsThis().toInt());
+//            // REVIEW: potential memory leak?
+//    file->show();
+
 }
+
+*/

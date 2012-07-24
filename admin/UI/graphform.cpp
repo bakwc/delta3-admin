@@ -15,7 +15,7 @@ GraphForm::GraphForm(
     this->setWindowTitle(tr("Graph - ") + network_->getClientName(clientId_));
    // network->sendLevelTwo(clientId, MOD_GRAPH, "test");
 
-    network_->activateMode(clientId, MOD_GRAPH);
+	network_->activateMode(clientId, MOD_GRAPHICS);
     connect(network_, SIGNAL(dataIncome()),
                 this, SLOT(onDataReceived()));
 
@@ -25,7 +25,7 @@ GraphForm::GraphForm(
 
 GraphForm::~GraphForm()
 {
-    network_->deactivateMode(clientId_, MOD_GRAPH);
+	network_->deactivateMode(clientId_, MOD_GRAPHICS);
     delete ui;
 }
 
@@ -37,7 +37,7 @@ bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
         QByteArray buf;
         buf.append(GMOD_KEYPRESSED);
         buf.append((quint8)pKeyEvent->key());
-        network_->sendLevelTwo(clientId_, MOD_GRAPH,
+		network_->sendLevelTwo(clientId_, MOD_GRAPHICS,
                                            buf);
         return true;
     }
@@ -47,7 +47,7 @@ bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
 void GraphForm::onDataReceived()
 {
     if (!(network_->receivedData().from == clientId_ &&
-            network_->receivedData().mode == MOD_GRAPH))
+			network_->receivedData().mode == MOD_GRAPHICS))
         return;
     qDebug() << "GraphForm::onDataReceived()";
     bytePicIn.clear();
