@@ -28,7 +28,7 @@ class Network: public QObject
 
 public:
 	Network(QHostAddress adr = QHostAddress("127.0.0.1"),
-			QObject *parent = nullptr);
+            QObject *parent = NULL);
 
 	void			connectToServer();
 	const Clients&	getClients()	const;

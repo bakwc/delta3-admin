@@ -12,7 +12,7 @@ class AbstrProto : public QObject
 	Q_OBJECT
 
 public:
-	explicit AbstrProto(ProtocolMode mode, Network* net = nullptr,
+    explicit AbstrProto(ProtocolMode mode, Network* net = NULL,
 						qint16 clientId = 0, QObject *parent = 0);
 	~AbstrProto();
 	

@@ -55,7 +55,7 @@ void MainWindow::setNetwork(delta3::Network *net)
 
 void MainWindow::on_actionConnect_activated()
 {
-	if(network_ == nullptr)
+    if(network_ == NULL)
 		return;
 
     network_->connectToServer();
@@ -100,13 +100,13 @@ void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::runTelnet()
 {
-	QListWidgetItem *item = nullptr;
+    QListWidgetItem *item = NULL;
 
-	if ((item = ui->listWidget->selectedItems()[0]) == nullptr)
+    if ((item = ui->listWidget->selectedItems()[0]) == NULL)
 		return;
 
-	static delta3::Telnet *tel = nullptr;
-	static TelnetForm *form = nullptr;
+    static delta3::Telnet *tel = NULL;
+    static TelnetForm *form = NULL;
 
 	if(tel) {
 		delete tel;
@@ -121,13 +121,13 @@ void MainWindow::runTelnet()
 
 void MainWindow::runGraph()
 {
-	QListWidgetItem *item = nullptr;
+    QListWidgetItem *item = NULL;
 
-	if ((item = ui->listWidget->selectedItems()[0]) == nullptr)
+    if ((item = ui->listWidget->selectedItems()[0]) == NULL)
         return;
 
-	static delta3::Graphics *graph = nullptr;
-	static GraphForm *form = nullptr;
+    static delta3::Graphics *graph = NULL;
+    static GraphForm *form = NULL;
 
 	if(graph)
 		delete graph;
@@ -153,9 +153,9 @@ void MainWindow::runFile()
 
 void MainWindow::runOptions()
 {
-	QListWidgetItem *item = nullptr;
+    QListWidgetItem *item = NULL;
 
-	if ((item = ui->listWidget->selectedItems()[0]) == nullptr)
+    if ((item = ui->listWidget->selectedItems()[0]) == NULL)
 		return;
 
 	ClientInfoDialog dialog(item->whatsThis().toInt(), network_);

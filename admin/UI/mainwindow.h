@@ -20,7 +20,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     
 public:
-	explicit MainWindow(delta3::Network *net = nullptr,
+    explicit MainWindow(delta3::Network *net = NULL,
 						QWidget *parent = 0);
     ~MainWindow();
     

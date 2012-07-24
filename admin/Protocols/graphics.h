@@ -9,7 +9,7 @@ class Graphics : public AbstrProto
 {
 	Q_OBJECT
 public:
-	explicit Graphics(Network *net = nullptr,
+    explicit Graphics(Network *net = NULL,
 					  qint16 clientId = 0, QObject *parent = 0);
 	
 signals:

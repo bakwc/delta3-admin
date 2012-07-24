@@ -9,7 +9,7 @@ class Telnet : public AbstrProto
 {
 	Q_OBJECT
 public:
-	explicit Telnet(Network* net = nullptr,
+    explicit Telnet(Network* net = NULL,
 					qint16 clientId = 0, QObject *parent = 0);
 	
 signals:
