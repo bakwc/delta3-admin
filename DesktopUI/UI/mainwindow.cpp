@@ -54,7 +54,7 @@ void MainWindow::createTrayIcon()
 
     QMenu *menu = new QMenu(this);
 
-    action = new QAction(QString::fromLocal8Bit("Показать"),this);http://www.lektorium.tv/lecture/?id=13406
+    action = new QAction(QString::fromLocal8Bit("Показать"),this);
     connect(action,SIGNAL(triggered()),this,SLOT(showNormal()));
     menu->addAction(action);
 
