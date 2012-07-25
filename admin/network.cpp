@@ -221,6 +221,14 @@ QString Network::getClientName(qint16 id) const
     return client.value()->getHash();
 }
 
+QString	Network::getClientCapt(qint16 id) const
+{
+    auto client=clients_.find(id);
+    if (client==clients_.end())
+        return "";
+    return client.value()->getCaption();
+}
+
 
 void Network::sendLevelOne(qint16 dest, const QByteArray& data)
 {   

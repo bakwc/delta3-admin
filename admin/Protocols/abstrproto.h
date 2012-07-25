@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QString>
 #include "../defines.h"
 
 namespace delta3 {
@@ -17,6 +18,7 @@ public:
 	~AbstrProto();
 
 	qint16 clientId() const { return clientId_; }
+    QString getClientCaption();
 	
 signals:
 	
