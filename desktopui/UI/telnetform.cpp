@@ -1,13 +1,11 @@
 #include "telnetform.h"
 #include "ui_telnetform.h"
 
-namespace delta3{
 TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
 	QWidget(parent), tel_(tel), ui(new Ui::TelnetForm)
 {
     ui->setupUi(this);
 
-	//this->setFixedSize(this->size());
 	connect(tel_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
 	connect(this, SIGNAL(ready(QString&)), tel_, SLOT(onReady(QString&)));
 
@@ -17,8 +15,16 @@ TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
     ui->textEdit->setPalette(p);
 
     ui->textEdit->installEventFilter(this);
-    //ui->textEdit->setTextColor(Qt::green);
-    //ui->lineEdit->
+
+	setAttribute(Qt::WA_DeleteOnClose);
+
+    this->setWindowTitle("telnet - "+tel_->getClientCaption());
+
+    auto fmt = ui->textEdit->currentCharFormat();
+    fmt.setFontFixedPitch(true);
+    fmt.setFontStyleHint(QFont::Monospace);
+    fmt.setFontFamily("monospace");
+    ui->textEdit->setCurrentCharFormat(fmt);
 }
 
 TelnetForm::~TelnetForm()
@@ -92,5 +98,4 @@ void TelnetForm::textScrollDown()
     QTextCursor c =  ui->textEdit->textCursor();
     c.movePosition(QTextCursor::End);
     ui->textEdit->setTextCursor(c);
-}
 }

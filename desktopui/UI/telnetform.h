@@ -15,8 +15,6 @@ namespace Ui {
 class TelnetForm;
 }
 
-namespace delta3{
-
 class TelnetForm : public QWidget
 {
     Q_OBJECT
@@ -41,5 +39,4 @@ private:
 	QString			currentCmd_;
 	QString			history_;
 };
-}
 

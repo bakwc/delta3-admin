@@ -4,7 +4,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 
-namespace delta3{
+using namespace delta3;
 
 GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
     QWidget(parent),
@@ -12,12 +12,12 @@ GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
     ui(new Ui::GraphForm)
 {
     ui->setupUi(this);
-	this->setWindowTitle(tr("Graph - "));// + network_->getClientName(clientId_));
-   // network->sendLevelTwo(clientId, MOD_GRAPH, "test");
+	this->setWindowTitle(tr("Graphics - ") + graph_->clientId());
 
 	connect(graph_, SIGNAL(ready(QImage&)), SLOT(onDataReceived(QImage&)));
-    connect(this, SIGNAL(ready(QByteArray&)), graph_, SLOT(onReady(QByteArray&)));
-    setAttribute(Qt::WA_DeleteOnClose);
+	connect(this, SIGNAL(ready(QByteArray&)), graph_, SLOT(onReady(QByteArray&)));
+
+	setAttribute(Qt::WA_DeleteOnClose);
     this->setMouseTracking(true);
     this->installEventFilter(this);
 }
@@ -77,5 +77,4 @@ void GraphForm::paintEvent(QPaintEvent *)
 	QPainter p(this);
 
 	p.drawImage(0, 0, image_);
-}
 }

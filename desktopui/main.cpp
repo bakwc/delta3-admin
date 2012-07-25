@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-	delta3::Network network;//(QHostAddress("193.169.33.254"));
+    delta3::Network network(QHostAddress::LocalHost);
 
 	MainWindow w(&network);
     w.show();

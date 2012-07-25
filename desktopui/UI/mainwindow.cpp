@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Protocols/graphics.h"
-namespace delta3{
+
 MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     QMainWindow(parent),
 	ui(new Ui::MainWindow)
@@ -22,7 +22,7 @@ MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
 	modeMenu_->addAction(act);
 
 	act = new QAction(tr("File mode"),this);
-	connect(act,SIGNAL(triggered()),this,SLOT(runFile()));
+    //connect(act,SIGNAL(triggered()),this,SLOT(runFile()));
 	modeMenu_->addAction(act);
 
 	act = new QAction(tr("Graphics mode"),this);
@@ -57,7 +57,7 @@ void MainWindow::on_actionConnect_activated()
 {
     if(network_ == NULL)
 		return;
-
+    qDebug() << "connecting to server";
     network_->connectToServer();
 }
 
@@ -67,6 +67,7 @@ void MainWindow::onRedraw()
     QListWidget *list=ui->listWidget;
     QListWidgetItem *item;
     list->clear();
+    qDebug() << "clients: " << network_->getClients().size();
 	for(auto i = network_->getClients().begin();
 			 i != network_->getClients().end(); i++)
     {
@@ -108,13 +109,14 @@ void MainWindow::runTelnet()
     static delta3::Telnet *tel = NULL;
     static TelnetForm *form = NULL;
 
-	if(tel) {
-		delete tel;
-		delete form;
-	}
+//	if(tel) {
+//		delete tel;
+//		delete form;
+//	}
 
-	tel = new delta3::Telnet(network_, item->whatsThis().toInt(), this);
+	tel = new delta3::Telnet(network_, item->whatsThis().toInt());
 	form = new TelnetForm(tel);
+	tel->setParent(form);
 	form->show();
 }
 
@@ -129,11 +131,12 @@ void MainWindow::runGraph()
     static delta3::Graphics *graph = NULL;
     static GraphForm *form = NULL;
 
-	if(graph)
-		delete graph;
+//	if(graph)
+//		delete graph;
 
-    graph = new Graphics(network_,item->whatsThis().toInt(), this);
+	graph = new delta3::Graphics(network_,item->whatsThis().toInt());
 	form = new GraphForm(graph);
+	graph->setParent(form);
 	form->show();
 }
 
@@ -163,7 +166,6 @@ void MainWindow::runOptions()
     {
 		network_->setClientCaption(item->whatsThis().toInt(), dialog.getCaption());
     }
-}
 }
 
 

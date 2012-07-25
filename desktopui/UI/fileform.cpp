@@ -1,13 +1,14 @@
 #include "fileform.h"
 #include "ui_fileform.h"
 
-namespace delta3{
 FileForm::FileForm(delta3::File *file, QWidget *parent) :
     QWidget(parent),
 	file_(file),
     ui(new Ui::FileForm)
 {
      ui->setupUi(this);
+
+	 setAttribute(Qt::WA_DeleteOnClose);
 }
 
 
@@ -19,5 +20,4 @@ FileForm::~FileForm()
 
 void FileForm::onDataReceived(QString &d)
 {
-}
 }

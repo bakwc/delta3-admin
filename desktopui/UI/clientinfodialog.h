@@ -8,7 +8,7 @@
 namespace Ui {
 class ClientInfoDialog;
 }
-namespace delta3{
+
 class ClientInfoDialog : public QDialog
 {
     Q_OBJECT
@@ -22,4 +22,3 @@ private:
 	delta3::Network *network_;
     Ui::ClientInfoDialog *ui;
 };
-}

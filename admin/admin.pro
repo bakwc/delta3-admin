@@ -4,47 +4,52 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network
+#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = admin
-TEMPLATE = app
+QT += core network gui
+TARGET = delta3admin
+TEMPLATE = lib
+DESTDIR = ..
 
 QMAKE_CXXFLAGS += -std=c++0x
 
 
-SOURCES += main.cpp\
-	UI/mainwindow.cpp \
-    network.cpp \
+SOURCES += network.cpp \
     client.cpp \
-    UI/telnetform.cpp \
     netextract.cpp \
-    UI/fileform.cpp \
-    UI/graphform.cpp \
-    UI/clientinfodialog.cpp \
     Protocols/abstrproto.cpp \
     Protocols/telnet.cpp \
     Protocols/graphics.cpp \
     Protocols/file.cpp
 
-HEADERS  += UI/mainwindow.h \
-    network.h \
+
+HEADERS  += network.h \
     client.h \
-    UI/telnetform.h \
     defines.h \
     utils.h \
     netextract.h \
-    UI/fileform.h \
-    UI/graphform.h \
-    UI/clientinfodialog.h \
     Protocols/abstrproto.h \
     Protocols/telnet.h \
     Protocols/graphics.h \
     Protocols/file.h
 
-FORMS    += UI/mainwindow.ui \
-    UI/telnetform.ui \
-    UI/fileform.ui \
-    UI/graphform.ui \
-    UI/clientinfodialog.ui
+#SOURCES +=  UI/fileform.cpp \
+#	    UI/graphform.cpp \
+#	    UI/clientinfodialog.cpp \
+#	    UI/telnetform.cpp \
+#	    UI/mainwindow.cpp \
+#	    main.cpp\
+
+#HEADERS +=  UI/mainwindow.h \
+#	    UI/fileform.h \
+#	    UI/graphform.h \
+#	    UI/clientinfodialog.h \
+#	    UI/telnetform.h \
+
+
+#FORMS += UI/mainwindow.ui \
+#	 UI/telnetform.ui \
+#	 UI/fileform.ui \
+#	 UI/graphform.ui \
+#	 UI/clientinfodialog.ui

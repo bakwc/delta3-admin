@@ -3,6 +3,7 @@
 namespace delta3 {
 
 const qint16 TELNET_HISTORY_LENGTH  = 4200;
+
 const qint8 CSPYP1_PROTOCOL_ID      = 1;
 const qint8 CSPYP1_PROTOCOL_VERSION = 3;
 const qint8 CSPYP2_PROTOCOL_ID      = 1;
@@ -55,7 +56,7 @@ enum FileMode
 
 enum GraphMode
 {
-    GMOD_INFO	 = 1,
+    GMOD_INFO    = 1,
     GMOD_IMGFULL = 2,
     GMOD_IMGDIFF = 3,
     GMOD_KEYEV   = 4,

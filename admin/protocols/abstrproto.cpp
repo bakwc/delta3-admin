@@ -1,18 +1,27 @@
 #include "abstrproto.h"
-#include "network.h"
+#include "../network.h"
 
-namespace delta3{
+using namespace delta3;
 
 AbstrProto::AbstrProto(ProtocolMode mode, Network *net, qint16 clientId, QObject *parent) :
 	QObject(parent), network_(net), clientId_(clientId), protoMode_(mode)
 {
 	network_->activateMode(clientId_, protoMode_);
 	connect(network_, SIGNAL(dataIncome()), SLOT(onDataReceived()));
+
+	qDebug("Protocol %i activate", protoMode_);
+
 }
 
 AbstrProto::~AbstrProto()
 {
 	disconnect(network_);
 	network_->deactivateMode(clientId_, protoMode_);
+
+	qDebug("Protocol %i deactivate", protoMode_);
 }
+
+QString AbstrProto::getClientCaption()
+{
+    return network_->getClientCapt(clientId_);
 }

@@ -1,7 +1,7 @@
 #include "telnet.h"
-#include "network.h"
+#include "../network.h"
 
-namespace delta3{
+using namespace delta3;
 
 Telnet::Telnet(Network *net, qint16 clientId, QObject *parent) :
 	AbstrProto(MOD_TELNET, net, clientId, parent)
@@ -24,5 +24,4 @@ void Telnet::onDataReceived()
 void Telnet::onReady(QString &data)
 {
 	network_->sendLevelTwo(clientId_, protoMode_, data.toUtf8());
-}
 }

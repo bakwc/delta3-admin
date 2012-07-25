@@ -3,7 +3,13 @@
 admin-*/
 admin/debug*/
 admin/release*/
+admin/moc_*.cpp
+admin/admin
 
+
+DesktopUI/debug*/
+desktopui-*/
+*.dll
 ui_*.h
 *.qm
 
@@ -18,3 +24,14 @@ Makefile*
 
 *.Debug
 *.Release
+<<<<<<< HEAD
+
+*Qt_SDK*
+*.dll
+*.a
+*so.*
+*.o
+
+latex
+html
+

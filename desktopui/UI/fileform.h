@@ -7,7 +7,7 @@
 namespace Ui {
 class FileForm;
 }
-namespace delta3{
+
 class FileForm : public QWidget
 {
     Q_OBJECT
@@ -26,4 +26,3 @@ private:
 	delta3::File	*file_;
 	Ui::FileForm	*ui;
 };
-}

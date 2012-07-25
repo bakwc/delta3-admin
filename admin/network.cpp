@@ -1,7 +1,7 @@
 #include "network.h"
 #include "netextract.h"
 
-namespace delta3{
+using namespace delta3;
 
 Network::Network(QHostAddress adr, QObject *parent) :
 	QObject(parent), adr_(adr)
@@ -27,13 +27,13 @@ void Network::connectToServer()
 
 void Network::onDataReceived()
 {
-    qDebug() << "onDataReceived()";
+    //qDebug() << "onDataReceived()";
     buf_+=socket_->readAll();
 
     if (buf_.size()<3) return; // if we don't read header
 
     if (getProtoId(buf_)!=CSPYP1_PROTOCOL_ID ||
-            getProtoVerstion(buf_)!=CSPYP1_PROTOCOL_VERSION)
+            getProtoVersion(buf_)!=CSPYP1_PROTOCOL_VERSION)
     {
         // wrong packet - disconnecting client
         qDebug() << "PROTOCOL ERROR!";
@@ -41,8 +41,8 @@ void Network::onDataReceived()
         return;
     }
 
-    qDebug() << "buf size" << buf_.size();
-    qDebug() << "cmd:" << getCommand(buf_);
+    //qDebug() << "buf size" << buf_.size();
+    //qDebug() << "cmd:" << getCommand(buf_);
 
     switch (getCommand(buf_))
     {
@@ -55,7 +55,7 @@ void Network::onDataReceived()
         parseResponse();
         break;
     case CMD1_PING:
-        qDebug() << "ping";
+        //qDebug() << "ping";
         parsePing();
         break;
     default:
@@ -75,6 +75,10 @@ void Network::parseList()
 
     if (buf_.size()<5+getClientNumber(buf_)*CMD1_CLIENT_INFO_SIZE) // TODO: remove magic number
         return;     // not all data avaliable
+
+    qDebug() << "Clients: " << getClientNumber(buf_);
+
+    clients_.clear();
 
     for (qint16 i=0;i<getClientNumber(buf_);i++)
     {
@@ -97,7 +101,7 @@ void Network::parseList()
 
 void Network::parsePing()
 {
-    qDebug() << "Ping received!";
+    //qDebug() << "Ping received!";
     if (buf_.size()<3) // TODO: remove magic number
         return;     // not all data avaliable
 
@@ -107,7 +111,7 @@ void Network::parsePing()
     cmd.append(CMD1_PING);
     socket_->write(cmd);
 
-    qDebug() << "Ping parsed and answere!";
+    //qDebug() << "Ping parsed and answere!";
 
     buf_=buf_.right(buf_.size()-3);
     if (buf_.size()>0)
@@ -140,7 +144,7 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 {
     qDebug() << "parseProtoTwo()";
     if (getProtoId(data) != CSPYP2_PROTOCOL_ID ||
-            getProtoVerstion(data) != CSPYP2_PROTOCOL_VERSION)
+            getProtoVersion(data) != CSPYP2_PROTOCOL_VERSION)
     {
         // wrong packet - disconnecting client
         qDebug() << "PROTOCOL ERROR!";
@@ -219,6 +223,14 @@ QString Network::getClientName(qint16 id) const
     return client.value()->getHash();
 }
 
+QString	Network::getClientCapt(qint16 id) const
+{
+    auto client=clients_.find(id);
+    if (client==clients_.end())
+        return "";
+    return client.value()->getCaption();
+}
+
 
 void Network::sendLevelOne(qint16 dest, const QByteArray& data)
 {   
@@ -261,12 +273,13 @@ void Network::activateMode(qint16 client, ProtocolMode mode)
 
 void Network::deactivateMode(qint16 client, ProtocolMode mode)
 {
-    QByteArray cmd;
-    cmd.append(CSPYP2_PROTOCOL_ID);
-    cmd.append(CSPYP2_PROTOCOL_VERSION);
-    cmd.append(CMD2_DEACTIVATE);
-    cmd.append(mode);
-    sendLevelOne(client, cmd);
+	QByteArray cmd;
+	cmd.append(CSPYP2_PROTOCOL_ID);
+	cmd.append(CSPYP2_PROTOCOL_VERSION);
+	cmd.append(CMD2_DEACTIVATE);
+	cmd.append(mode);
+
+	sendLevelOne(client, cmd);
 }
 
 
@@ -297,5 +310,4 @@ void Network::setClientCaption(qint16 client, const QString& info)
     cmd.append(toBytes(info,30),30);
     qDebug() << "stClientInfo(): size" << cmd.size();
     socket_->write(cmd);
-}
 }

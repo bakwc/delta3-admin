@@ -1,6 +1,6 @@
 #include "client.h"
 
-namespace delta3{
+using namespace delta3;
 
 Client::Client(QObject *parent):
     QObject(parent)
@@ -68,5 +68,4 @@ void Client::setIp(qint32 ip)
 QString Client::getIp() const
 {
     return ip_.toString();
-}
 }

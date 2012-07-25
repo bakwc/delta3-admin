@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QString>
 #include "../defines.h"
 
 namespace delta3 {
@@ -15,6 +16,9 @@ public:
     explicit AbstrProto(ProtocolMode mode, Network* net = NULL,
 						qint16 clientId = 0, QObject *parent = 0);
 	~AbstrProto();
+
+	qint16 clientId() const { return clientId_; }
+    QString getClientCaption();
 	
 signals:
 	
