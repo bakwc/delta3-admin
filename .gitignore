@@ -5,7 +5,7 @@ admin/debug*/
 admin/release*/
 
 DesktopUI/debug*/
-
+desktopui-*/
 ui_*.h
 *.qm
 
