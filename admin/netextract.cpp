@@ -10,7 +10,7 @@ qint8 getProtoId(const QByteArray& data)
     return (qint8)(data[0]);
 }
 
-qint8 getProtoVerstion(const QByteArray& data)
+qint8 getProtoVersion(const QByteArray& data)
 {
     return (qint8)(data[1]);
 }

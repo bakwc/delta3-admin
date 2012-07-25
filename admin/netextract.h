@@ -8,7 +8,7 @@ namespace delta3 {
 
 // -- Level One extracting functions
 qint8			getProtoId(const QByteArray& data);
-qint8			getProtoVerstion(const QByteArray& data);
+qint8			getProtoVersion(const QByteArray& data);
 Cspyp1Command	getCommand(const QByteArray& data);
 qint16			getClientId(qint16 client, const QByteArray& data);
 QByteArray		getClientHash(qint16 client, const QByteArray& data);
