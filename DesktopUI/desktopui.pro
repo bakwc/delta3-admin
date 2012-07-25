@@ -40,3 +40,4 @@ LIBS += -L.. -ldelta3admin
 
 RESOURCES += \
     Images/Images.qrc
+

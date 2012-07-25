@@ -29,7 +29,6 @@ public slots:
 	void setNetwork(delta3::Network *net);
 
 private slots:
-    void changeEvent(QEvent *event);
     void on_actionConnect_activated();
     void onRedraw();
 
@@ -41,8 +40,11 @@ private slots:
 	void runGraph();
 //    void runFile();
 	void runOptions();
+    void ShowHide();
+
 private:
     void createTrayIcon();
+
 
 private:
     Ui::MainWindow *ui;

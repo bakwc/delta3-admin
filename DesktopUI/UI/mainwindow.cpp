@@ -38,10 +38,12 @@ MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     createTrayIcon();
 }
 
+
 MainWindow::~MainWindow()
 {
 	delete ui;
 }
+
 
 void MainWindow::createTrayIcon()
 {
@@ -54,47 +56,34 @@ void MainWindow::createTrayIcon()
 
     QMenu *menu = new QMenu(this);
 
-    action = new QAction(QString::fromLocal8Bit("Показать"),this);
-    connect(action,SIGNAL(triggered()),this,SLOT(showNormal()));
+    action = new QAction("Show/Hide",this);
+    connect(action, SIGNAL(triggered()), this, SLOT(ShowHide()));
     menu->addAction(action);
 
     menu->addSeparator();
 
-    menu->addAction(QString::fromLocal8Bit("O программе Delta3"));
+    action = new QAction("About Delta3", this);
+    connect(action, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    menu->addAction(action);
+
     menu->addSeparator();
 
-    action = new QAction(QString::fromLocal8Bit("Выйти из Delta3"),this);
-    connect(action,SIGNAL(triggered()),this,SLOT(close()));
+    action = new QAction("Exit",this);
+    connect(action, SIGNAL(triggered()), qApp, SLOT(quit()));
     menu->addAction(action);
 
     trayIcon->setContextMenu(menu);
 }
 
-void MainWindow::changeEvent(QEvent *e)
+
+void MainWindow::ShowHide()
 {
-    QMainWindow::changeEvent(e);
-    switch (e->type()) {
-
-    //Сюда еще какие нибудь евенты
-
-    case QEvent::WindowStateChange:
-    {
-        if(isMinimized())
-        {
-            this->hide();
-            e->ignore();
-        }
-        else
-        {
-            //setFocus();
-            e->accept ();
-        }
-    }
-        break;
-    default:
-        break;
-    }
+    if(isHidden())
+        show();
+    else
+        hide();
 }
+
 
 void MainWindow::setNetwork(delta3::Network *net)
 {
@@ -161,16 +150,8 @@ void MainWindow::runTelnet()
     if ((item = ui->listWidget->selectedItems()[0]) == NULL)
 		return;
 
-    static delta3::Telnet *tel = NULL;
-    static TelnetForm *form = NULL;
-
-//	if(tel) {
-//		delete tel;
-//		delete form;
-//	}
-
-	tel = new delta3::Telnet(network_, item->whatsThis().toInt());
-	form = new TelnetForm(tel);
+    delta3::Telnet *tel = new delta3::Telnet(network_, item->whatsThis().toInt());
+    TelnetForm *form = new TelnetForm(tel);
 	tel->setParent(form);
 	form->show();
 }
@@ -183,14 +164,8 @@ void MainWindow::runGraph()
     if ((item = ui->listWidget->selectedItems()[0]) == NULL)
         return;
 
-    static delta3::Graphics *graph = NULL;
-    static GraphForm *form = NULL;
-
-//	if(graph)
-//		delete graph;
-
-	graph = new delta3::Graphics(network_,item->whatsThis().toInt());
-	form = new GraphForm(graph);
+    delta3::Graphics *graph = new delta3::Graphics(network_,item->whatsThis().toInt());
+    GraphForm *form = new GraphForm(graph);
 	graph->setParent(form);
 	form->show();
 }

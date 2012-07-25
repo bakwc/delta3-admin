@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 
 	MainWindow w(&network);
     w.show();
+
+    a.setQuitOnLastWindowClosed(false);
     
     return a.exec();
 }
