@@ -27,7 +27,7 @@ void Network::connectToServer()
 
 void Network::onDataReceived()
 {
-    qDebug() << "onDataReceived()";
+    //qDebug() << "onDataReceived()";
     buf_+=socket_->readAll();
 
     if (buf_.size()<3) return; // if we don't read header
@@ -41,8 +41,8 @@ void Network::onDataReceived()
         return;
     }
 
-    qDebug() << "buf size" << buf_.size();
-    qDebug() << "cmd:" << getCommand(buf_);
+    //qDebug() << "buf size" << buf_.size();
+    //qDebug() << "cmd:" << getCommand(buf_);
 
     switch (getCommand(buf_))
     {
@@ -55,7 +55,7 @@ void Network::onDataReceived()
         parseResponse();
         break;
     case CMD1_PING:
-        qDebug() << "ping";
+        //qDebug() << "ping";
         parsePing();
         break;
     default:
@@ -78,6 +78,8 @@ void Network::parseList()
 
     qDebug() << "Clients: " << getClientNumber(buf_);
 
+    clients_.clear();
+
     for (qint16 i=0;i<getClientNumber(buf_);i++)
     {
         Client *client = new Client(this);
@@ -99,7 +101,7 @@ void Network::parseList()
 
 void Network::parsePing()
 {
-    qDebug() << "Ping received!";
+    //qDebug() << "Ping received!";
     if (buf_.size()<3) // TODO: remove magic number
         return;     // not all data avaliable
 
@@ -109,7 +111,7 @@ void Network::parsePing()
     cmd.append(CMD1_PING);
     socket_->write(cmd);
 
-    qDebug() << "Ping parsed and answere!";
+    //qDebug() << "Ping parsed and answere!";
 
     buf_=buf_.right(buf_.size()-3);
     if (buf_.size()>0)
