@@ -22,18 +22,21 @@ SOURCES += main.cpp\
     UI/fileform.cpp \
     UI/graphform.cpp \
     UI/clientinfodialog.cpp \
+    UI/proxyform.cpp
 
 HEADERS  += UI/mainwindow.h \
     UI/telnetform.h \
     UI/fileform.h \
     UI/graphform.h \
     UI/clientinfodialog.h \
+    UI/proxyform.h
 
 
 FORMS    += UI/mainwindow.ui \
     UI/telnetform.ui \
     UI/fileform.ui \
     UI/graphform.ui \
-    UI/clientinfodialog.ui
+    UI/clientinfodialog.ui \
+    UI/proxyform.ui
 
 LIBS += -L.. -ldelta3admin

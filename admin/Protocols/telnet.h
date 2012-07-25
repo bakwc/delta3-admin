@@ -7,19 +7,20 @@ namespace delta3 {
 
 class Telnet : public AbstrProto
 {
-	Q_OBJECT
+    Q_OBJECT
 public:
-    explicit Telnet(Network* net = NULL,
-					qint16 clientId = 0, QObject *parent = 0);
-	
+    explicit Telnet(Network *net = NULL,
+                    qint16 clientId = 0,
+                    QObject *parent = 0);
+
 signals:
-	void ready(QString& data);
-	
+    void ready(QString &data);
+
 protected slots:
-	void onDataReceived();
+    void onDataReceived();
 
 public slots:
-	void onReady(QString &data);
+    void onReady(QString &data);
 };
 
 }
