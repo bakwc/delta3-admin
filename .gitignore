@@ -1,0 +1,35 @@
+# .gitignore
+
+admin-*/
+admin/debug*/
+admin/release*/
+admin/moc_*.cpp
+admin/admin
+
+
+DesktopUI/debug*/
+
+ui_*.h
+*.qm
+
+Makefile*
+*.user*
+
+*.bak
+*.tmp
+*~
+
+*.autosave
+
+*.Debug
+*.Release
+<<<<<<< HEAD
+
+*Qt_SDK*
+*.a
+*so.*
+*.o
+
+latex
+html
+
