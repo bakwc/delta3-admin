@@ -8,7 +8,7 @@ Proxy::Proxy(Network *net, qint16 clientId, QObject *parent) :
     AbstrProto(MOD_PROXY, net, clientId, parent)
 {
     _proxyServer = new QTcpServer;
-    _proxyServer->listen(QHostAddress::Any, 8080);
+    _proxyServer->listen(QHostAddress::LocalHost, 8080);
 
     _inSocket = new QTcpSocket;
 
