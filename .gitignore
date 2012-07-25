@@ -3,6 +3,9 @@
 admin-*/
 admin/debug*/
 admin/release*/
+admin/moc_*.cpp
+admin/admin
+
 
 DesktopUI/debug*/
 desktopui-*/
@@ -20,7 +23,13 @@ Makefile*
 
 *.Debug
 *.Release
+<<<<<<< HEAD
 
 *Qt_SDK*
 *.a
 *so.*
+*.o
+
+latex
+html
+

@@ -22,7 +22,7 @@ MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
 	modeMenu_->addAction(act);
 
 	act = new QAction(tr("File mode"),this);
-	connect(act,SIGNAL(triggered()),this,SLOT(runFile()));
+    //connect(act,SIGNAL(triggered()),this,SLOT(runFile()));
 	modeMenu_->addAction(act);
 
 	act = new QAction(tr("Graphics mode"),this);
@@ -57,7 +57,7 @@ void MainWindow::on_actionConnect_activated()
 {
     if(network_ == NULL)
 		return;
-
+    qDebug() << "connecting to server";
     network_->connectToServer();
 }
 
@@ -67,6 +67,7 @@ void MainWindow::onRedraw()
     QListWidget *list=ui->listWidget;
     QListWidgetItem *item;
     list->clear();
+    qDebug() << "clients: " << network_->getClients().size();
 	for(auto i = network_->getClients().begin();
 			 i != network_->getClients().end(); i++)
     {

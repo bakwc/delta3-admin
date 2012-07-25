@@ -20,3 +20,8 @@ AbstrProto::~AbstrProto()
 
 	qDebug("Protocol %i deactivate", protoMode_);
 }
+
+QString AbstrProto::getClientCaption()
+{
+    return network_->getClientCapt(clientId_);
+}
