@@ -9,5 +9,6 @@ ProxySocket::ProxySocket(int socketDescriptor, QObject *parent) :
 
 void ProxySocket::readyRead()
 {
+    //BUG: can't read from stream :(
     qDebug() << "ProxySocket::readyRead";
 }
