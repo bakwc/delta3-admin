@@ -39,4 +39,7 @@ Makefile*
 
 latex
 html
-
+# release dlls
+delta3admin.dll
+delta3admin.lib
+libdelta3admin.so*
