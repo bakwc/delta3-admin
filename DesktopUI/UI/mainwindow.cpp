@@ -81,7 +81,7 @@ void MainWindow::onRedraw()
 
     for (auto i = clients.begin(); i != clients.end(); i++)
         if ( !isClientExist(list, i.value()->getId()) ) {
-            item = new QListWidgetItem(i.value()->getOs());
+            item = new QListWidgetItem(i.value()->getCaption());
             item->setWhatsThis( QString::number(i.value()->getId()) );
             list->addItem(item);
         }
@@ -164,6 +164,7 @@ void MainWindow::runOptions()
 	if (dialog.exec() != ClientInfoDialog::Rejected)
     {
 		network_->setClientCaption(item->whatsThis().toInt(), dialog.getCaption());
+        item->setText(dialog.getCaption());
     }
 }
 

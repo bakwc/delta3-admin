@@ -32,6 +32,7 @@ Makefile*
 *Qt_SDK*
 *.a
 *.so
+*.so*
 *.o
 *.dll
 *.lib
