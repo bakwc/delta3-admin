@@ -43,12 +43,16 @@ private slots:
     void ShowHide();
 
 private:
+    bool isClientExist(QListWidget *wdg, qint32 id);
+    void smartClear(QListWidget* wdg, delta3::Clients clients);
+    bool isIdExist(const QListWidgetItem *item, delta3::Clients &clients);
     void createTrayIcon();
+    void timerEvent(QTimerEvent *);
 
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow  *ui;
 	delta3::Network *network_;
-    QMenu *modeMenu_;
+    QMenu           *modeMenu_;
     QSystemTrayIcon *trayIcon;
 };
