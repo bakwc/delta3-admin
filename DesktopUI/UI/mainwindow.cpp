@@ -1,7 +1,8 @@
+#include <QLabel>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Protocols/graphics.h"
-#include "Protocols/Proxy/proxy.h"
+#include "Protocols/proxy.h"
 
 MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     QMainWindow(parent),
@@ -180,11 +181,10 @@ void MainWindow::runProxy()
     if ((item = ui->listWidget->selectedItems()[0]) == NULL)
         return;
 
-    /*static delta3::Proxy *proxy = NULL;
-    static ProxyForm *form = NULL;*/
-
     delta3::Proxy *proxy = new delta3::Proxy(network_, item->whatsThis().toInt());
-    ProxyForm *form = new ProxyForm(proxy);
-    proxy->setParent(form);
-    form->show();
+    QLabel *label_ = new QLabel;
+    label_->setText(trUtf8("Включите в браузере режим прокси прокси\n"
+                          "127.0.0.1:8080"));
+    proxy->setParent(label_);
+    label_->show();
 }

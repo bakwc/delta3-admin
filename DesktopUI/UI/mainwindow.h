@@ -9,7 +9,6 @@
 #include "telnetform.h"
 #include "graphform.h"
 #include "fileform.h"
-#include "proxyform.h"
 #include "clientinfodialog.h"
 
 namespace Ui {
