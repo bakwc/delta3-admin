@@ -1,11 +1,8 @@
 #pragma once
 
-#include <QTcpServer>
-#include <QString>
-#include "abstrproto.h"
+#include "../abstrproto.h"
 
-class QTcpSocket;
-class QTcpServer;
+class ProxyServer;
 
 namespace delta3 {
 
@@ -21,13 +18,7 @@ protected slots:
     void onDataReceived();
 
 private:
-    QTcpServer *_proxyServer;
-    QTcpSocket *_inSocket;
-    int _socketDescriptor;
-
-private slots:
-    void slotReadyRead();
-    void slotNewConnection();
+    ProxyServer *_proxyServer;
 };
 
 }

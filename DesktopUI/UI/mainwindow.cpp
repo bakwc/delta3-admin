@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Protocols/graphics.h"
-#include "Protocols/proxy.h"
+#include "Protocols/Proxy/proxy.h"
 
 MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     QMainWindow(parent),
