@@ -7,7 +7,7 @@
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 
-QT += core network gui
+QT += core network
 TARGET = delta3admin
 TEMPLATE = lib
 DESTDIR = ..
