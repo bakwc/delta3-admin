@@ -1,9 +1,8 @@
 #pragma once
 
 #include "../abstrproto.h"
-
-class ProxyServer;
-class QThread;
+#include <QTcpServer>
+#include <QHostAddress>
 
 namespace delta3 {
 
@@ -19,7 +18,7 @@ protected slots:
     void onDataReceived();
 
 private:
-    ProxyServer *proxyServer_;
+    QTcpServer *_proxyServer;
 private slots:
     void slotReadyRead(const QString &data);
 };

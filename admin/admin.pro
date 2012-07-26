@@ -22,9 +22,7 @@ SOURCES += network.cpp \
     Protocols/telnet.cpp \
     Protocols/graphics.cpp \
     Protocols/file.cpp \
-    Protocols/Proxy/proxyserver.cpp \
-    Protocols/Proxy/proxy.cpp \
-    Protocols/Proxy/proxythread.cpp
+    Protocols/Proxy/proxy.cpp
 
 
 HEADERS  += network.h \
@@ -36,9 +34,7 @@ HEADERS  += network.h \
     Protocols/telnet.h \
     Protocols/graphics.h \
     Protocols/file.h \
-    Protocols/Proxy/proxyserver.h \
-    Protocols/Proxy/proxy.h \
-    Protocols/Proxy/proxythread.h
+    Protocols/Proxy/proxy.h
 
 #SOURCES +=  UI/fileform.cpp \
 #	    UI/graphform.cpp \
