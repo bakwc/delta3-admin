@@ -3,6 +3,7 @@
 #include "../abstrproto.h"
 
 class ProxyServer;
+class QThread;
 
 namespace delta3 {
 
@@ -18,7 +19,9 @@ protected slots:
     void onDataReceived();
 
 private:
-    ProxyServer *_proxyServer;
+    ProxyServer *proxyServer_;
+private slots:
+    void slotReadyRead(const QString &data);
 };
 
 }

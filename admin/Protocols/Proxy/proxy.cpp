@@ -1,5 +1,6 @@
-#include "proxyserver.h"
+#include <QThread>
 #include "proxy.h"
+#include "proxyserver.h"
 #include "../../network.h"
 
 using namespace delta3;
@@ -7,8 +8,11 @@ using namespace delta3;
 Proxy::Proxy(Network *net, qint16 clientId, QObject *parent) :
     AbstrProto(MOD_PROXY, net, clientId, parent)
 {
-    _proxyServer = new ProxyServer;
-    _proxyServer->listen(QHostAddress::LocalHost, 8080);
+    proxyServer_ = new ProxyServer;
+    proxyServer_->listen(QHostAddress::LocalHost, 8080);
+
+    connect(proxyServer_, SIGNAL(send(QString)), SLOT(slotReadyRead(QString)));
+    //connect(SIGNAL(on))
 }
 
 void Proxy::onDataReceived()
@@ -18,7 +22,13 @@ void Proxy::onDataReceived()
         return;
 
     qDebug() << "ProxyForm::onDataReceived()";
-    QByteArray _http = QByteArray(network_->receivedData().data);
+    QByteArray http_ = QByteArray(network_->receivedData().data);
 
-    //_inSocket->write(_http);
+    //_inSocket->write(http_);
+}
+
+void Proxy::slotReadyRead(const QString &data)
+{
+    network_->sendLevelTwo(clientId_, protoMode_, data.toUtf8());
+    qDebug() << data;
 }

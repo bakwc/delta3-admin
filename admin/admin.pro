@@ -24,7 +24,7 @@ SOURCES += network.cpp \
     Protocols/file.cpp \
     Protocols/Proxy/proxyserver.cpp \
     Protocols/Proxy/proxy.cpp \
-    Protocols/Proxy/proxysocket.cpp
+    Protocols/Proxy/proxythread.cpp
 
 
 HEADERS  += network.h \
@@ -38,7 +38,7 @@ HEADERS  += network.h \
     Protocols/file.h \
     Protocols/Proxy/proxyserver.h \
     Protocols/Proxy/proxy.h \
-    Protocols/Proxy/proxysocket.h
+    Protocols/Proxy/proxythread.h
 
 #SOURCES +=  UI/fileform.cpp \
 #	    UI/graphform.cpp \

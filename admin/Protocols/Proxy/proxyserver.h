@@ -2,7 +2,7 @@
 
 #include <QTcpServer>
 
-class ProxySocket;
+class ProxyThread;
 
 class ProxyServer : public QTcpServer
 {
@@ -14,9 +14,13 @@ protected:
     void incomingConnection(int handle);
 
 signals:
+    void send(const QString &data);
+    void proxyAnswer(const QByteArray &data);
 
-public slots:
+private slots:
+    void read(const QString &message);
+    void slotProxyAnswer(const QByteArray &data);
 
 private:
-    ProxySocket *socket_;
+    ProxyThread *thread_;
 };
