@@ -33,3 +33,4 @@ Makefile*
 latex
 html
 
+*.dll
