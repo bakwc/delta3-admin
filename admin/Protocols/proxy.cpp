@@ -20,9 +20,9 @@ void Proxy::onDataReceived()
             network_->receivedData().mode == protoMode_))
         return;
 
-    qDebug() << "ProxyForm::onDataReceived()";
-    //QByteArray http_ = QByteArray(network_->receivedData().data);
- //_inSocket->write(http_);
+    qDebug() << Q_FUNC_INFO;
+    qDebug() << network_->receivedData().data;
+    socket_->write(network_->receivedData().data);
 }
 
 void Proxy::slotReadyRead()
