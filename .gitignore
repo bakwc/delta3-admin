@@ -8,7 +8,9 @@ admin/admin
 
 
 DesktopUI/debug*/
+
 desktopui-*/
+
 ui_*.h
 *.qm
 
@@ -23,14 +25,16 @@ Makefile*
 
 *.Debug
 *.Release
-<<<<<<< HEAD
+
 
 *Qt_SDK*
 *.a
-*so.*
+*.so
+*.so*
 *.o
+*.dll
+*.lib
 
 latex
 html
 
-*.dll

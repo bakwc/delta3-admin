@@ -5,6 +5,7 @@
 #include <QTextCodec>
 #include <QPoint>
 #include <QMenu>
+#include <QSystemTrayIcon>
 #include "network.h"
 #include "telnetform.h"
 #include "graphform.h"
@@ -40,9 +41,18 @@ private slots:
 //    void runFile();
     void runProxy();
     void runOptions();
+    void ShowHide();
 
 private:
-    Ui::MainWindow *ui;
-    delta3::Network *network_;
-    QMenu *modeMenu_;
+    bool isClientExist(QListWidget *wdg, qint32 id);
+    void smartClear(QListWidget* wdg, delta3::Clients clients);
+    bool isIdExist(const QListWidgetItem *item, delta3::Clients &clients);
+    void createTrayIcon();
+    void timerEvent(QTimerEvent *);
+
+private:
+    Ui::MainWindow  *ui;
+	delta3::Network *network_;
+    QMenu           *modeMenu_;
+    QSystemTrayIcon *trayIcon;
 };

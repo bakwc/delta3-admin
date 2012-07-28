@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "Protocols/graphics.h"
 #include "Protocols/proxy.h"
+#include <QTimerEvent>
 
 MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     QMainWindow(parent),
@@ -35,17 +36,21 @@ MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     connect(act,SIGNAL(triggered()),this,SLOT(runGraph()));
     modeMenu_->addAction(act);
 
-    modeMenu_->addSeparator();
+	act = new QAction(tr("Options"),this);
+	connect(act,SIGNAL(triggered()),this,SLOT(runOptions()));
+	modeMenu_->addAction(act);
 
-    act = new QAction(tr("Options"),this);
-    connect(act,SIGNAL(triggered()),this,SLOT(runOptions()));
-    modeMenu_->addAction(act);
+    createTrayIcon();
+
+    startTimer(1000);
 }
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 void MainWindow::setNetwork(delta3::Network *net)
 {
@@ -59,6 +64,7 @@ void MainWindow::setNetwork(delta3::Network *net)
 
 }
 
+
 void MainWindow::on_actionConnect_activated()
 {
     if(network_ == NULL)
@@ -67,43 +73,47 @@ void MainWindow::on_actionConnect_activated()
     network_->connectToServer();
 }
 
+
 void MainWindow::onRedraw()
 {
-    qDebug() << "onRedraw()";
     QListWidget *list=ui->listWidget;
     QListWidgetItem *item;
-    list->clear();
-    qDebug() << "clients: " << network_->getClients().size();
-    for(auto i = network_->getClients().begin();
-             i != network_->getClients().end(); i++)
-    {
-        item = new QListWidgetItem(i.value()->getOs() );
-        item->setWhatsThis(QString("%1")
-                        .arg( i.value()->getId() ));
-        list->addItem(item);
-    }
+
+    const delta3::Clients &clients = network_->getClients();
+
+    //qDebug() << "clients: " << clients.size();
+
+    for (auto i = clients.begin(); i != clients.end(); i++)
+        if ( !isClientExist(list, i.value()->getId()) ) {
+            item = new QListWidgetItem(i.value()->getCaption());
+            item->setWhatsThis( QString::number(i.value()->getId()) );
+            list->addItem(item);
+        }
+
+    smartClear(list, clients);
 }
+
 
 void MainWindow::on_listWidget_itemClicked(QListWidgetItem *item)
 {
-
 }
+
 
 void MainWindow::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
-    qDebug() << "Double Click!";
-    runTelnet();
+	runTelnet();
 }
+
 
 void MainWindow::on_listWidget_customContextMenuRequested(const QPoint &pos)
 {
-    qDebug() << "Context Menu!";
     if (ui->listWidget->selectedItems().size()==0)
         return;
-   // modeMenu_->raise();
+
     modeMenu_->move(QCursor::pos());
     modeMenu_->show();
 }
+
 
 void MainWindow::runTelnet()
 {
@@ -112,18 +122,10 @@ void MainWindow::runTelnet()
     if ((item = ui->listWidget->selectedItems()[0]) == NULL)
         return;
 
-    static delta3::Telnet *tel = NULL;
-    static TelnetForm *form = NULL;
-
-//	if(tel) {
-//		delete tel;
-//		delete form;
-//	}
-
-    tel = new delta3::Telnet(network_, item->whatsThis().toInt());
-    form = new TelnetForm(tel);
-    tel->setParent(form);
-    form->show();
+    delta3::Telnet *tel = new delta3::Telnet(network_, item->whatsThis().toInt());
+    TelnetForm *form = new TelnetForm(tel);
+	tel->setParent(form);
+	form->show();
 }
 
 
@@ -134,16 +136,10 @@ void MainWindow::runGraph()
     if ((item = ui->listWidget->selectedItems()[0]) == NULL)
         return;
 
-    static delta3::Graphics *graph = NULL;
-    static GraphForm *form = NULL;
-
-//	if(graph)
-//		delete graph;
-
-    graph = new delta3::Graphics(network_,item->whatsThis().toInt());
-    form = new GraphForm(graph);
-    graph->setParent(form);
-    form->show();
+    delta3::Graphics *graph = new delta3::Graphics(network_,item->whatsThis().toInt());
+    GraphForm *form = new GraphForm(graph);
+	graph->setParent(form);
+	form->show();
 }
 
 /*
@@ -160,6 +156,7 @@ void MainWindow::runFile()
 }
 */
 
+
 void MainWindow::runOptions()
 {
     QListWidgetItem *item = NULL;
@@ -170,9 +167,11 @@ void MainWindow::runOptions()
     ClientInfoDialog dialog(item->whatsThis().toInt(), network_);
     if (dialog.exec() != ClientInfoDialog::Rejected)
     {
-        network_->setClientCaption(item->whatsThis().toInt(), dialog.getCaption());
+		network_->setClientCaption(item->whatsThis().toInt(), dialog.getCaption());
+        item->setText(dialog.getCaption());
     }
 }
+
 
 void MainWindow::runProxy()
 {
@@ -187,4 +186,82 @@ void MainWindow::runProxy()
                           "127.0.0.1:8080"));
     proxy->setParent(label_);
     label_->show();
+}
+
+
+void MainWindow::ShowHide()
+{
+    if(isHidden())
+        show();
+    else
+        hide();
+}
+
+
+bool MainWindow::isClientExist(QListWidget *wdg, qint32 id)
+{
+    for (int i = 0; i != wdg->count(); ++i)
+        if(wdg->item(i)->whatsThis().toInt() == id)
+            return true;
+
+    return false;
+}
+
+
+void MainWindow::smartClear(QListWidget *wdg, delta3::Clients clients)
+{
+    for (int i = 0; i < wdg->count(); ++i)
+        if ( !isIdExist(wdg->item(i), clients) )
+            wdg->takeItem(i);
+}
+
+
+bool MainWindow::isIdExist(const QListWidgetItem *item, delta3::Clients &clients)
+{
+    for (auto it = clients.begin(); it != clients.end(); ++it)
+        if ( item->whatsThis().toInt() == it.value()->getId() ) {
+            clients.remove(it.key());
+            return true;
+        }
+
+    return false;
+}
+
+
+void MainWindow::createTrayIcon()
+{
+    QAction *action;
+    this->setWindowIcon(QIcon(":/icon.ico"));
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/icon.ico"));
+    trayIcon->show();
+
+    QMenu *menu = new QMenu(this);
+
+    action = new QAction("Show/Hide",this);
+    connect(action, SIGNAL(triggered()), this, SLOT(ShowHide()));
+    menu->addAction(action);
+
+    menu->addSeparator();
+
+    action = new QAction("About Delta3", this);
+    connect(action, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
+    menu->addAction(action);
+
+    menu->addSeparator();
+
+    action = new QAction("Exit",this);
+    connect(action, SIGNAL(triggered()), qApp, SLOT(quit()));
+    menu->addAction(action);
+
+    trayIcon->setContextMenu(menu);
+}
+
+
+void MainWindow::timerEvent(QTimerEvent *ev)
+{
+    onRedraw();
+
+    ev->accept();
 }
