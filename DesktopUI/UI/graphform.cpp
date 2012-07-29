@@ -2,6 +2,7 @@
 #include "ui_graphform.h"
 #include <QKeyEvent>
 #include <QPaintEvent>
+#include <QMouseEvent>
 #include <QPainter>
 
 using namespace delta3;
@@ -20,10 +21,12 @@ GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
 	setAttribute(Qt::WA_DeleteOnClose);
 }
 
+
 GraphForm::~GraphForm()
 {
     delete ui;
 }
+
 
 bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
 {
@@ -33,8 +36,8 @@ bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
         qDebug() << pKeyEvent->key();
 
         QByteArray buf;
-        buf.append(GMOD_KEYPRESSED);
-        buf.append((quint8)pKeyEvent->key());
+//        buf.append(GMOD_KEYPRESSED);
+//        buf.append((quint8)pKeyEvent->key());
 
 		emit ready(buf);
 
@@ -43,11 +46,36 @@ bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
     return false;
 }
 
+
+void GraphForm::mouseMoveEvent(QMouseEvent *ev)
+{
+    double x = 1.0 * ev->x() / this->width() * 10000;
+    double y = 1.0 * ev->y() / this->width() * 10000;
+
+    emit mMove(x, y);
+}
+
+
+void GraphForm::mousePressEvent(QMouseEvent *ev)
+{
+}
+
+
+void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
+{
+}
+
+void GraphForm::mouseDoubleClickEvent(QMouseEvent *ev)
+{
+}
+
+
 void GraphForm::onDataReceived(QImage &img)
 {
 	image_ = img;
 	repaint();
 }
+
 
 void GraphForm::paintEvent(QPaintEvent *)
 {

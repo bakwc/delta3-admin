@@ -19,6 +19,8 @@ public:
 
 signals:
 	void ready(QByteArray &arr);
+    void mMove(quint16, quint16);
+    void mClick(quint16, quint16, delta3::GMCLICK);
 
 private slots:
 	void onDataReceived(QImage &img);
@@ -26,10 +28,13 @@ private slots:
 protected:
 	void paintEvent(QPaintEvent *);
 	bool eventFilter(QObject* _o, QEvent* _e);
+    void mouseMoveEvent(QMouseEvent *);
+    void mousePressEvent(QMouseEvent *);
+    void mouseReleaseEvent(QMouseEvent *);
+    void mouseDoubleClickEvent(QMouseEvent *);
 
 private:
 	delta3::Graphics	*graph_;
 	QImage				image_; // mb it's a not very well idea ;|
 	Ui::GraphForm		*ui;
 };
-

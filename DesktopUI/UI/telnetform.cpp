@@ -83,7 +83,6 @@ bool TelnetForm::eventFilter(QObject* _o, QEvent* _e)
                 key=tolower(key);
 
             currentCmd_+=QChar(key);
-
             ui->textEdit->setText(history_+currentCmd_);
             textScrollDown();
             return true;

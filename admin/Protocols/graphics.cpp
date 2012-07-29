@@ -26,3 +26,8 @@ void Graphics::onReady(QByteArray &arr)
 	network_->sendLevelTwo(clientId_, protoMode_, arr);
 }
 
+
+void Graphics::onReady(quint16 x, quint16 y, GraphicsMode mode, GMCLICK click)
+{
+    qDebug() << Q_FUNC_INFO << x << y << mode << click;
+}
