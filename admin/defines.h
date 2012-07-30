@@ -11,6 +11,8 @@ const qint8 CSPYP2_PROTOCOL_VERSION = 2;
 
 const qint16 CMD1_CLIENT_INFO_SIZE = 92;    // Client info struct size
 
+const int MOUSE_ACCURACY                  = 30000;
+
 enum ProtocolMode
 {
     MOD_TELNET   = 1,
@@ -75,7 +77,8 @@ enum GMCLICK {
     GMCLICK_RIGHT   = 4,
     GMCLICK_DOWN    = 8,
     GMCLICK_UP      = 16,
-    GMCLICK_CLICK   = 32
+    GMCLICK_CLICK   = 32,
+    GMCLICK_DCLICK  = 64
 };
 
 

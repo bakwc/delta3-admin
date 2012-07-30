@@ -20,8 +20,9 @@ protected slots:
 
 public slots:
 	void onReady(QByteArray &arr);
-    void onReady(quint16 x, quint16 y, GraphicsMode mode, GMCLICK click);
-
+    void onMove(qint16 x, qint16 y);
+    void onClick(qint16 x, qint16 y, delta3::GMCLICK click);
+    void onKey(int key);
 };
 
 }

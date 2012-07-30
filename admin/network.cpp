@@ -36,7 +36,7 @@ void Network::onDataReceived()
             getProtoVersion(buf_)!=CSPYP1_PROTOCOL_VERSION)
     {
         // wrong packet - disconnecting client
-        qDebug() << "PROTOCOL ERROR!";
+        qDebug() << Q_FUNC_INFO << " PROTOCOL ERROR";
         //this->disconnectFromHost();
         return;
     }
@@ -47,11 +47,11 @@ void Network::onDataReceived()
     switch (getCommand(buf_))
     {
     case CMD1_RLIST:
-        qDebug() << "list";
+        //qDebug() << "list";
         parseList();
         break;
     case CMD1_TRANSMIT:
-        qDebug() << "transmit";
+        //qDebug() << "transmit";
         parseResponse();
         break;
     case CMD1_PING:
@@ -70,13 +70,13 @@ void Network::parseList()
     if (buf_.size()<5) // TODO: remove magic number
         return;     // not all data avaliable
 
-    qDebug("parseList()");
+    //qDebug("parseList()");
     qDebug() << buf_.size();
 
     if (buf_.size()<5+getClientNumber(buf_)*CMD1_CLIENT_INFO_SIZE) // TODO: remove magic number
         return;     // not all data avaliable
 
-    qDebug() << "Clients: " << getClientNumber(buf_);
+    //qDebug() << "Clients: " << getClientNumber(buf_);
 
     clients_.clear();
 
@@ -121,7 +121,7 @@ void Network::parsePing()
 
 void Network::parseResponse()
 {
-    qDebug() << "parseResponse()";
+    //qDebug() << "parseResponse()";
 
     if (buf_.size()<9) // TODO: remove magic number
         return;     // not all data avaliable
@@ -133,8 +133,6 @@ void Network::parseResponse()
 
     QByteArray cmd = getPacketData(buf_);
 
-    qDebug() << "parseResponse():";
-
     parseProtoTwo(from, cmd);
     return;
 }
@@ -142,12 +140,12 @@ void Network::parseResponse()
 
 void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 {
-    qDebug() << "parseProtoTwo()";
+    //qDebug() << "parseProtoTwo()";
     if (getProtoId(data) != CSPYP2_PROTOCOL_ID ||
             getProtoVersion(data) != CSPYP2_PROTOCOL_VERSION)
     {
         // wrong packet - disconnecting client
-        qDebug() << "PROTOCOL ERROR!";
+        qDebug() << Q_FUNC_INFO << " PROTOCOL ERROR!";
         //this->disconnectFromHost();
         return;
     }
@@ -156,11 +154,11 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
     switch (getCommand2(data))
     {
     case CMD2_TRANSMIT:
-        qDebug() << "transmit2";
+        //qDebug() << "transmit2";
         parseMessage(from, data);
         break;
     case CMD2_MODES:
-        qDebug() << "modes";
+        //qDebug() << "modes";
         //TODO: parse avaliable modes
         break;
     default:
@@ -308,6 +306,6 @@ void Network::setClientCaption(qint16 client, const QString& info)
     cmd.append(CMD1_SETINFO);
     cmd.append(toBytes(client));
     cmd.append(toBytes(info,30),30);
-    qDebug() << "stClientInfo(): size" << cmd.size();
+    //qDebug() << "stClientInfo(): size" << cmd.size();
     socket_->write(cmd);
 }

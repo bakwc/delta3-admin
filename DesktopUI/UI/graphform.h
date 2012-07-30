@@ -19,8 +19,9 @@ public:
 
 signals:
 	void ready(QByteArray &arr);
-    void mMove(quint16, quint16);
-    void mClick(quint16, quint16, delta3::GMCLICK);
+    void mMove(qint16, qint16);
+    void mClick(qint16, qint16, delta3::GMCLICK);
+    void keyPress(int key);
 
 private slots:
 	void onDataReceived(QImage &img);
@@ -33,8 +34,15 @@ protected:
     void mouseReleaseEvent(QMouseEvent *);
     void mouseDoubleClickEvent(QMouseEvent *);
 
+    void keyPressEvent(QKeyEvent *);
+
 private:
 	delta3::Graphics	*graph_;
 	QImage				image_; // mb it's a not very well idea ;|
 	Ui::GraphForm		*ui;
+
+private:
+    qint16 mPos(int mP, int wS) {
+        return (1.0 * mP / wS) * delta3::MOUSE_ACCURACY;
+    }
 };

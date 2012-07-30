@@ -32,4 +32,6 @@ inline QByteArray toBytes(const QString& str, quint16 len)
     return res;
 }
 
+#define toBytesMacro(T) (char*)(&T),sizeof(T)
+
 }
