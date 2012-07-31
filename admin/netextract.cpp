@@ -103,7 +103,7 @@ qint32 getPacketLength2(const QByteArray& data)
 
 QByteArray getPacketData2(const QByteArray& data)
 {
-	return data.right(getPacketLength2(data));
+    return data.right(getPacketLength2(data));
 }
 
 }

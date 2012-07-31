@@ -51,22 +51,46 @@ bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
 
 void GraphForm::mouseMoveEvent(QMouseEvent *ev)
 {
-    emit mMove(mPos(ev->x(), width()), mPos(ev->y(), height()));
+    qint16 x = getClientMousePosX(ev->x());
+    qint16 y = getClientMousePosY(ev->y());
+
+//    if(x > delta3::MOUSE_ACCURACY)
+//        x = delta3::MOUSE_ACCURACY;
+//    else if(x < 0)
+//        x = 0;
+
+//    if(y > delta3::MOUSE_ACCURACY)
+//        y = delta3::MOUSE_ACCURACY;
+//    else if(y < 0)
+//        y = 0;
+
+    //emit mMove(x, y);
     ev->accept();
+
+    //qDebug() << "    " << Q_FUNC_INFO;
 }
 
 
 void GraphForm::mousePressEvent(QMouseEvent *ev)
 {
-    emit mClick(mPos(ev->x(), width()), mPos(ev->y(), height()),
-                (delta3::GMCLICK)(delta3::GMCLICK_LEFT | delta3::GMCLICK_CLICK));
+
     ev->accept();
+
+    //qDebug() << "    " << Q_FUNC_INFO;
 }
 
 
 void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
 {
+    qint16 x = getClientMousePosX(ev->x());
+    qint16 y = getClientMousePosY(ev->y());
+
+    emit mClick(x, y,
+                (delta3::GMCLICK)(delta3::GMCLICK_LEFT | delta3::GMCLICK_CLICK));
+
     ev->accept();
+
+    qDebug() << Q_FUNC_INFO << x << y << ev->x() << ev->y() << graph_->clientWidth() << graph_->clientHeight();
 }
 
 void GraphForm::mouseDoubleClickEvent(QMouseEvent *ev)

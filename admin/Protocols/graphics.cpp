@@ -4,7 +4,7 @@
 using namespace delta3;
 
 Graphics::Graphics(Network *net, qint16 clientId, QObject *parent):
-	AbstrProto(MOD_GRAPHICS, net, clientId, parent)
+    AbstrProto(MOD_GRAPHICS, net, clientId, parent), clientWidht_(1), clientHeight_(1)
 {
 
 }
@@ -15,10 +15,27 @@ void Graphics::onDataReceived()
 			network_->receivedData().mode == protoMode_))
 		return;
 
-	QImage img;
-	img.loadFromData(network_->receivedData().data);
+    QByteArray arr = network_->receivedData().data;
 
-	emit ready(img);
+    QImage img;
+
+    switch((qint8)arr[0]) {
+    case GMOD_IMGDIFF:
+        break;
+    case GMOD_IMGFULL:
+        img.loadFromData(arr.mid(1));
+        emit ready(img);
+
+        break;
+    case GMOD_INFO:
+        clientWidht_ = fromBytes<qint16>(arr.mid(2,2));
+        clientHeight_ = fromBytes<qint16>(arr.mid(4,2));
+        qDebug() << "    " << Q_FUNC_INFO << fromBytes<qint16>(arr.mid(2,2)) << fromBytes<qint16>(arr.mid(4,2));
+
+        break;
+    default:
+        break;
+    }
 }
 
 void Graphics::onReady(QByteArray &arr)
@@ -45,9 +62,11 @@ void Graphics::onClick(qint16 x, qint16 y, GMCLICK click)
 
     QByteArray arr;
     arr.append(GMOD_MCLICK);
-    arr.append(toBytesMacro(x));
-    arr.append(toBytesMacro(y));
+    arr.append(toBytes(x));
+    arr.append(toBytes(y));
     arr.append(click);
+
+    qDebug() << "    " << Q_FUNC_INFO << fromBytes<qint16>(arr.mid(1,2)) << fromBytes<qint16>(arr.mid(3,2));
 
     network_->sendLevelTwo(clientId_, protoMode_, arr);
 }

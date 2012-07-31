@@ -11,6 +11,9 @@ class Graphics : public AbstrProto
 public:
     explicit Graphics(Network *net = NULL,
 					  qint16 clientId = 0, QObject *parent = 0);
+
+    qint16 clientWidth() const { return clientWidht_; }
+    qint16 clientHeight() const { return clientHeight_; }
 	
 signals:
 	void ready(QImage &img);
@@ -18,11 +21,16 @@ signals:
 protected slots:
 	void onDataReceived();
 
-public slots:
 	void onReady(QByteArray &arr);
     void onMove(qint16 x, qint16 y);
     void onClick(qint16 x, qint16 y, delta3::GMCLICK click);
     void onKey(int key);
+
+private:
+    qint16 clientWidht_;
+    qint16 clientHeight_;
+
+    //GraphicsMode
 };
 
 }

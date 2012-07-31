@@ -42,7 +42,9 @@ private:
 	Ui::GraphForm		*ui;
 
 private:
-    qint16 mPos(int mP, int wS) {
-        return (1.0 * mP / wS) * delta3::MOUSE_ACCURACY;
-    }
+    qint16 getClientMousePosX(int mPos) {
+        return 1.0 * mPos / width() * graph_->clientWidth(); }
+
+    qint16 getClientMousePosY(int mPos) {
+        return 1.0 * mPos / height() * graph_->clientHeight(); }
 };

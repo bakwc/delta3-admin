@@ -56,19 +56,15 @@ enum FileMode
     FMOD_ABS_WAY= 8
 };
 
-/*!
-  \enum GraphicsMode
 
-  Foo Bar Baz
-*/
 enum GraphicsMode
 {
-    GMOD_INFO       = 1, /* Команда передачи информации о администраторе */
-    GMOD_IMGFULL    = 2, /* Команда приема полного изображения */
-    GMOD_IMGDIFF    = 3, /* Команда приема разницы изображений */
-    GMOD_KEYEV      = 4, /* Команда передачи события нажатии клавиши */
-    GMOD_MMOV       = 5, /* Команда передачи сибытия перемещения мыши */
-    GMOD_MCLICK     = 6  /* Команды передачи клика */
+    GMOD_INFO       = 1,
+    GMOD_IMGFULL    = 2,
+    GMOD_IMGDIFF    = 3,
+    GMOD_KEYEV      = 4,
+    GMOD_MMOV       = 5,
+    GMOD_MCLICK     = 6
 };
 
 enum GMCLICK {
