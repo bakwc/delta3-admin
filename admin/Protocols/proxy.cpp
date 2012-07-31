@@ -20,7 +20,7 @@ void Proxy::onDataReceived()
         return;
 
     qDebug() << network_->receivedData().data;
-    socket_->write(network_->receivedData().data);
+    socket_->write(network_->receivedData().data + "\n");
     socket_->close();
 
     qDebug() << "\n" << Q_FUNC_INFO << "\n";
