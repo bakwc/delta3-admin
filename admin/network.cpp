@@ -1,4 +1,4 @@
-#include "network.h"
+﻿#include "network.h"
 #include "netextract.h"
 
 using namespace delta3;
@@ -27,9 +27,9 @@ void Network::connectToServer()
 
 void Network::onDataReceived()
 {
-    //qDebug() << "onDataReceived()";
+    qDebug() << Q_FUNC_INFO;
     buf_+=socket_->readAll();
-
+    //qDebug() << socket_->readAll();
     if (buf_.size()<3) return; // if we don't read header
 
     if (getProtoId(buf_)!=CSPYP1_PROTOCOL_ID ||
@@ -76,7 +76,7 @@ void Network::parseList()
     if (buf_.size()<5+getClientNumber(buf_)*CMD1_CLIENT_INFO_SIZE) // TODO: remove magic number
         return;     // not all data avaliable
 
-    qDebug() << "Clients: " << getClientNumber(buf_);
+    //qDebug() << "Clients: " << getClientNumber(buf_);
 
     clients_.clear();
 
