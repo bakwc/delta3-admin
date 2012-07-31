@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Protocols/graphics.h"
+#include "Protocols/proxy.h"
+#include "proxyform.h"
 #include <QTimerEvent>
 
 MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
@@ -29,6 +31,10 @@ MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
 	act = new QAction(tr("Graphics mode"),this);
 	connect(act,SIGNAL(triggered()),this,SLOT(runGraph()));
 	modeMenu_->addAction(act);
+
+    act = new QAction(tr("Proxy mode"),this);
+    connect(act,SIGNAL(triggered()),this,SLOT(runProxy()));
+    modeMenu_->addAction(act);
 
 	modeMenu_->addSeparator();
 
@@ -246,5 +252,13 @@ void MainWindow::timerEvent(QTimerEvent *ev)
     ev->accept();
 }
 
+void MainWindow::runProxy()
+{
+    QListWidgetItem *item = NULL;
 
-
+    if ((item = ui->listWidget->selectedItems()[0]) == NULL)
+        return;
+    delta3::Proxy *_proxy = new delta3::Proxy(network_, item->whatsThis().toInt());
+    ProxyForm *_form = new ProxyForm(_proxy);
+    _form->show();
+}

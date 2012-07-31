@@ -21,7 +21,8 @@ SOURCES += network.cpp \
     Protocols/abstrproto.cpp \
     Protocols/telnet.cpp \
     Protocols/graphics.cpp \
-    Protocols/file.cpp
+    Protocols/file.cpp \
+    Protocols/proxy.cpp
 
 
 HEADERS  += network.h \
@@ -32,7 +33,8 @@ HEADERS  += network.h \
     Protocols/abstrproto.h \
     Protocols/telnet.h \
     Protocols/graphics.h \
-    Protocols/file.h
+    Protocols/file.h \
+    Protocols/proxy.h
 
 #SOURCES +=  UI/fileform.cpp \
 #	    UI/graphform.cpp \
