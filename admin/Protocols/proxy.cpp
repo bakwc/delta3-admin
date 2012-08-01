@@ -1,4 +1,4 @@
-#include <QTcpSocket>
+﻿#include <QTcpSocket>
 #include <QTcpServer>
 #include "proxy.h"
 #include "../network.h"
@@ -20,11 +20,10 @@ void Proxy::onDataReceived()
             network_->receivedData().mode == protoMode_))
         return;
 
+    qDebug() << 1;
     qDebug() << network_->receivedData().data;
-    socket_->write(network_->receivedData().data + "\n");
+    socket_->write(network_->receivedData().data);
     socket_->close();
-
-    qDebug() << "\n" << Q_FUNC_INFO << "\n";
 }
 
 void Proxy::slotReadyRead()
