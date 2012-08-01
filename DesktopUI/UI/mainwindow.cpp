@@ -83,7 +83,7 @@ void MainWindow::onRedraw()
     const delta3::Clients &clients = network_->getClients();
 
     //list->clear();
-    qDebug() << "clients: " << clients.size();
+    //qDebug() << "clients: " << clients.size();
 
     for (auto i = clients.begin(); i != clients.end(); i++)
         if ( !isClientExist(list, i.value()->getId()) ) {

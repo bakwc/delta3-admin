@@ -15,6 +15,7 @@ Proxy::Proxy(Network *net, qint16 clientId, QObject *parent) :
 
 void Proxy::onDataReceived()
 {
+    qDebug() << "SOMETHING COMES HERE!";
     if (!(network_->receivedData().from == clientId_ &&
             network_->receivedData().mode == protoMode_))
         return;
@@ -39,7 +40,7 @@ void Proxy::slotNewConnection()
     socket_ = proxyServer_->nextPendingConnection();
     connect(socket_, SIGNAL(readyRead()), SLOT(slotReadyRead()));
 
-    qDebug() << "\n" << Q_FUNC_INFO << "\n";
+    //qDebug() << "\n" << Q_FUNC_INFO << "\n";
 }
 
 void Proxy::start(int port){

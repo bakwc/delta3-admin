@@ -27,7 +27,7 @@ void Network::connectToServer()
 
 void Network::onDataReceived()
 {
-    //qDebug() << "onDataReceived()";
+    qDebug() << "onDataReceived()";
     buf_+=socket_->readAll();
 
     if (buf_.size()<3) return; // if we don't read header
@@ -55,7 +55,7 @@ void Network::onDataReceived()
         parseResponse();
         break;
     case CMD1_PING:
-        //qDebug() << "ping";
+        qDebug() << "ping";
         parsePing();
         break;
     default:
@@ -71,12 +71,12 @@ void Network::parseList()
         return;     // not all data avaliable
 
     qDebug("parseList()");
-    qDebug() << buf_.size();
+    //qDebug() << buf_.size();
 
     if (buf_.size()<5+getClientNumber(buf_)*CMD1_CLIENT_INFO_SIZE) // TODO: remove magic number
         return;     // not all data avaliable
 
-    qDebug() << "Clients: " << getClientNumber(buf_);
+    //qDebug() << "Clients: " << getClientNumber(buf_);
 
     clients_.clear();
 
