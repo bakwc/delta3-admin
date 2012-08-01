@@ -1,10 +1,10 @@
-﻿#include "network.h"
+#include "network.h"
 #include "netextract.h"
 
 using namespace delta3;
 
 Network::Network(QHostAddress adr, QObject *parent) :
-	QObject(parent), adr_(adr)
+    QObject(parent), adr_(adr)
 {
     socket_ = new QTcpSocket(this);
     QObject::connect(socket_, SIGNAL(readyRead()),
@@ -28,7 +28,7 @@ void Network::connectToServer()
 void Network::onDataReceived()
 {
     qDebug() << Q_FUNC_INFO;
-    buf_+=socket_->readAll();
+    buf_ += socket_->readAll();
     //qDebug() << socket_->readAll();
     if (buf_.size()<3) return; // if we don't read header
 
@@ -37,6 +37,7 @@ void Network::onDataReceived()
     {
         // wrong packet - disconnecting client
         qDebug() << "PROTOCOL ERROR!";
+        qDebug() << getProtoId(buf_) << getProtoVersion(buf_);
         //this->disconnectFromHost();
         return;
     }
@@ -148,6 +149,7 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
     {
         // wrong packet - disconnecting client
         qDebug() << "PROTOCOL ERROR!";
+        qDebug() << data;
         //this->disconnectFromHost();
         return;
     }
@@ -173,7 +175,7 @@ void Network::parseProtoTwo(qint32 from, const QByteArray &data)
 void Network::parseMessage(qint32 from, const QByteArray &data)
 {
 
-	income_.mode = getMode2(data);
+    income_.mode = getMode2(data);
     income_.from = from;
     income_.data = getPacketData2(data);
 
@@ -233,7 +235,7 @@ QString	Network::getClientCapt(qint16 id) const
 
 
 void Network::sendLevelOne(qint16 dest, const QByteArray& data)
-{   
+{
     QByteArray cmd;
     cmd.append(CSPYP1_PROTOCOL_ID);
     cmd.append(CSPYP1_PROTOCOL_VERSION);
@@ -273,19 +275,19 @@ void Network::activateMode(qint16 client, ProtocolMode mode)
 
 void Network::deactivateMode(qint16 client, ProtocolMode mode)
 {
-	QByteArray cmd;
-	cmd.append(CSPYP2_PROTOCOL_ID);
-	cmd.append(CSPYP2_PROTOCOL_VERSION);
-	cmd.append(CMD2_DEACTIVATE);
-	cmd.append(mode);
+    QByteArray cmd;
+    cmd.append(CSPYP2_PROTOCOL_ID);
+    cmd.append(CSPYP2_PROTOCOL_VERSION);
+    cmd.append(CMD2_DEACTIVATE);
+    cmd.append(mode);
 
-	sendLevelOne(client, cmd);
+    sendLevelOne(client, cmd);
 }
 
 
 const Network::Income& Network::receivedData() const
 {
-	return income_;
+    return income_;
 }
 
 
