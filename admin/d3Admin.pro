@@ -12,9 +12,9 @@ TARGET = delta3admin
 TEMPLATE = lib
 DESTDIR = ..
 
-unix {
+#unix {
    QMAKE_CXXFLAGS += -std=c++0x
-}
+#}
 
 win32 {
    # To compile DLL library use the following definition:

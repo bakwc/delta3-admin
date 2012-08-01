@@ -13,12 +13,12 @@ TARGET = d3aDesktop
 TEMPLATE = app
 INCLUDEPATH += ../admin
 
-unix {
-	QMAKE_CXXFLAGS += -std=c++0x
-}
+#unix {
+        QMAKE_CXXFLAGS += -std=c++0x
+#}
 
 SOURCES += main.cpp\
-	UI/mainwindow.cpp \
+        UI/mainwindow.cpp \
     UI/telnetform.cpp \
     UI/fileform.cpp \
     UI/graphform.cpp \
