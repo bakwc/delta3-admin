@@ -13,8 +13,9 @@ TARGET = d3aDesktop
 TEMPLATE = app
 INCLUDEPATH += ../admin
 
-QMAKE_CXXFLAGS += -std=c++0x
-
+unix {
+    QMAKE_CXXFLAGS += -std=c++0x
+}
 
 SOURCES += main.cpp\
 	UI/mainwindow.cpp \

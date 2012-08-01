@@ -4,9 +4,15 @@
 #include <QDebug>
 #include <QHostAddress>
 
+#if defined(DELTA3_ADMIN_LIBRARY)
+#   define DELTA3_EXPORT Q_DECL_EXPORT
+#else
+#   define DELTA3_EXPORT Q_DECL_IMPORT
+#endif
+
 namespace delta3 {
 
-class Client: public QObject
+class DELTA3_EXPORT Client: public QObject
 {
     Q_OBJECT
 public:

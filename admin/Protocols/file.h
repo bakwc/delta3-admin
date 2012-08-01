@@ -2,9 +2,15 @@
 
 #include "abstrproto.h"
 
+#if defined(DELTA3_ADMIN_LIBRARY)
+#   define DELTA3_EXPORT Q_DECL_EXPORT
+#else
+#   define DELTA3_EXPORT Q_DECL_IMPORT
+#endif
+
 namespace delta3 {
 
-class File : public AbstrProto
+class DELTA3_EXPORT File : public AbstrProto
 {
 	Q_OBJECT
 public:

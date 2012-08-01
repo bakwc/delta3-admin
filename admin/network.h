@@ -11,11 +11,17 @@
 #include "client.h"
 #include "defines.h"
 
+#if defined(DELTA3_ADMIN_LIBRARY)
+#   define DELTA3_EXPORT Q_DECL_EXPORT
+#else
+#   define DELTA3_EXPORT Q_DECL_IMPORT
+#endif
+
 namespace delta3 {
 
 typedef QMap<qint32, Client *> Clients;
 
-class Network: public QObject
+class DELTA3_EXPORT Network: public QObject
 {
     Q_OBJECT
 
