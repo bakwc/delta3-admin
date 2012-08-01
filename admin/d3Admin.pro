@@ -12,8 +12,17 @@ TARGET = delta3admin
 TEMPLATE = lib
 DESTDIR = ..
 
-QMAKE_CXXFLAGS += -std=c++0x
+unix {
+   QMAKE_CXXFLAGS += -std=c++0x
+}
 
+win32 {
+   # To compile DLL library use the following definition:
+   CONFIG += DLL
+   DEFINES += DELTA3_ADMIN_LIBRARY
+   # To compile static library use following definitions
+   # CONFIG += staticlib
+}
 
 SOURCES += network.cpp \
     client.cpp \

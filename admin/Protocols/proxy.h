@@ -2,12 +2,19 @@
 
 #include "abstrproto.h"
 
+#if defined(DELTA3_ADMIN_LIBRARY)
+#   define DELTA3_EXPORT Q_DECL_EXPORT
+#else
+#   define DELTA3_EXPORT Q_DECL_IMPORT
+#endif
+
+
 class QTcpServer;
 class QTcpSocket;
 
 namespace delta3 {
 
-class Proxy : public AbstrProto
+class DELTA3_EXPORT Proxy : public AbstrProto
 {
     Q_OBJECT
 public:

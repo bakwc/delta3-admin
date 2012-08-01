@@ -3,6 +3,12 @@
 #include <QByteArray>
 #include <QDebug>
 
+#if defined(DELTA3_ADMIN_LIBRARY)
+#   define DELTA3_EXPORT Q_DECL_EXPORT
+#else
+#   define DELTA3_EXPORT Q_DECL_IMPORT
+#endif
+
 namespace delta3 {
 
 template <typename T>

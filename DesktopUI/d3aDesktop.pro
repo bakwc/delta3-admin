@@ -13,8 +13,9 @@ TARGET = d3aDesktop
 TEMPLATE = app
 INCLUDEPATH += ../admin
 
-QMAKE_CXXFLAGS += -std=c++0x
-
+unix {
+	QMAKE_CXXFLAGS += -std=c++0x
+}
 
 SOURCES += main.cpp\
 	UI/mainwindow.cpp \
@@ -39,7 +40,11 @@ FORMS    += UI/mainwindow.ui \
     UI/clientinfodialog.ui \
     UI/proxyform.ui
 
-LIBS += -L.. -ldelta3admin
+LIBS += -L..
+
+win32 {
+    LIBS += -L.. -ldelta3admin
+}
 
 RESOURCES += \
     Images/Images.qrc

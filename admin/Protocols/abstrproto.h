@@ -4,11 +4,17 @@
 #include <QString>
 #include "../defines.h"
 
+#if defined(DELTA3_ADMIN_LIBRARY)
+#   define DELTA3_EXPORT Q_DECL_EXPORT
+#else
+#   define DELTA3_EXPORT Q_DECL_IMPORT
+#endif
+
 namespace delta3 {
 
 class Network;
 
-class AbstrProto : public QObject
+class DELTA3_EXPORT AbstrProto : public QObject
 {
 	Q_OBJECT
 
