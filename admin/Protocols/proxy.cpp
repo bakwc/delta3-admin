@@ -20,7 +20,6 @@ void Proxy::onDataReceived()
             network_->receivedData().mode == protoMode_))
         return;
 
-    qDebug() << 1;
     qDebug() << network_->receivedData().data;
     socket_->write(network_->receivedData().data);
     socket_->close();
