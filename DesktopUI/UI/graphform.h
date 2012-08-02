@@ -43,6 +43,8 @@ private:
 	Ui::GraphForm		*ui;
 
 private:
+    Qt::MouseButtons buttons_;
+
     qint16 getClientMousePosX(int mPos) {
         return 1.0 * mPos / width() * graph_->clientWidth(); }
 

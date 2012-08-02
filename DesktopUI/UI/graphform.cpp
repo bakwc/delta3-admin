@@ -70,6 +70,11 @@ void GraphForm::mousePressEvent(QMouseEvent *ev)
     qint16 y = getClientMousePosY( (v < 0) ? 0 : v );
 
     quint8 click = ev->buttons();
+
+    buttons_ = (Qt::MouseButtons)click;
+
+    //qDebug() << "        " << buttons_;
+
     click |= delta3::GMCLICK_DOWN;
 
     emit mClick(x, y, (delta3::GMCLICK)click);
@@ -88,9 +93,13 @@ void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
     qint16 y = getClientMousePosY( (v < 0) ? 0 : v );
 
     quint8 click = ev->buttons();
+
+    click ^= buttons_;
+    //qDebug() << "        " << click;
+
     click |= delta3::GMCLICK_UP;
 
-    //emit mClick(x, y, (delta3::GMCLICK)click);
+    emit mClick(x, y, (delta3::GMCLICK)click);
 
     ev->accept();
 }
