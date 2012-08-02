@@ -29,7 +29,7 @@ private slots:
 
 protected:
 	void paintEvent(QPaintEvent *);
-	bool eventFilter(QObject* _o, QEvent* _e);
+    bool eventFilter(QObject* obj, QEvent* ev);
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
@@ -43,11 +43,16 @@ private:
 	Ui::GraphForm		*ui;
 
 private:
-    Qt::MouseButtons buttons_;
+    quint8 pressButtons_;
 
     qint16 getClientMousePosX(int mPos) {
-        return 1.0 * mPos / width() * graph_->clientWidth(); }
+        qint16 v = 1.0 * mPos / width() * graph_->clientWidth();
+        return (v < 0) ? 0 : v;
+    }
 
     qint16 getClientMousePosY(int mPos) {
-        return 1.0 * mPos / height() * graph_->clientHeight(); }
+        qint16 v = 1.0 * mPos / height() * graph_->clientHeight();
+        return (v < 0) ? 0 : v;
+    }
+
 };

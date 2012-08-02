@@ -9,21 +9,15 @@
 using namespace delta3;
 
 GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
-    QWidget(parent),
-	graph_(graph),
-    ui(new Ui::GraphForm)
+    QWidget(parent), graph_(graph), ui(new Ui::GraphForm), pressButtons_(0)
 {
     ui->setupUi(this);
     this->setWindowTitle(tr("Graphics - ") + graph_->getClientCaption());
 
     connect(graph_, SIGNAL(imageReady(QImage&)), SLOT(onDataReceived(QImage&)));
-    connect(this, SIGNAL(keyPress(int)), graph_, SLOT(onKey(int)));
-    connect(this, SIGNAL(mMove(qint16,qint16)), graph_, SLOT(onMove(qint16,qint16)));
-    connect(this, SIGNAL(mClick(qint16,qint16,delta3::GMCLICK)),
-            graph_, SLOT(onClick(qint16,qint16,delta3::GMCLICK)));
-    //connect(graph_, SIGNAL(ready(int,int)), this, SLOT(onReady(int,int)));
+    connect(graph_, SIGNAL(ready(int,int)), this, SLOT(onReady(int,int)));
 
-	setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 
@@ -33,12 +27,12 @@ GraphForm::~GraphForm()
 }
 
 
-bool GraphForm::eventFilter(QObject *_o, QEvent *_e)
+bool GraphForm::eventFilter(QObject *obj, QEvent *ev)
 {
     qDebug() << Q_FUNC_INFO;
 
-    if(_e->type() == QEvent::KeyPress){
-        QKeyEvent* pKeyEvent = static_cast<QKeyEvent*>(_e);
+    if (ev->type() == QEvent::KeyPress){
+        QKeyEvent* pKeyEvent = static_cast<QKeyEvent*>(ev);
 
         qDebug() << Q_FUNC_INFO << "KEY: " << pKeyEvent->key();
 
@@ -55,6 +49,7 @@ void GraphForm::mouseMoveEvent(QMouseEvent *ev)
     qint16 x = getClientMousePosX(ev->x());
     qint16 y = getClientMousePosY(ev->y());
 
+    //emit mMove(x, y);
 
     ev->accept();
 
@@ -64,20 +59,13 @@ void GraphForm::mouseMoveEvent(QMouseEvent *ev)
 
 void GraphForm::mousePressEvent(QMouseEvent *ev)
 {
-    int v = ev->x();
-    qint16 x = getClientMousePosX( (v < 0) ? 0 : v );
-    v = ev->y();
-    qint16 y = getClientMousePosY( (v < 0) ? 0 : v );
+    qint16 x = getClientMousePosX(ev->x());
+    qint16 y = getClientMousePosY(ev->y());
+    
+    pressButtons_ = ev->buttons();
+    pressButtons_ |= delta3::GMCLICK_DOWN;
 
-    quint8 click = ev->buttons();
-
-    buttons_ = (Qt::MouseButtons)click;
-
-    //qDebug() << "        " << buttons_;
-
-    click |= delta3::GMCLICK_DOWN;
-
-    emit mClick(x, y, (delta3::GMCLICK)click);
+    emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
 
     ev->accept();
 
@@ -87,34 +75,26 @@ void GraphForm::mousePressEvent(QMouseEvent *ev)
 
 void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
 {
-    int v = ev->x();
-    qint16 x = getClientMousePosX( (v < 0) ? 0 : v );
-    v = ev->y();
-    qint16 y = getClientMousePosY( (v < 0) ? 0 : v );
+    qint16 x = getClientMousePosX(ev->x());
+    qint16 y = getClientMousePosY(ev->y());
 
-    quint8 click = ev->buttons();
+    pressButtons_ = ev->buttons();
+    pressButtons_ |= delta3::GMCLICK_UP;
 
-    click ^= buttons_;
-    //qDebug() << "        " << click;
-
-    click |= delta3::GMCLICK_UP;
-
-    emit mClick(x, y, (delta3::GMCLICK)click);
+    emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
 
     ev->accept();
 }
 
 void GraphForm::mouseDoubleClickEvent(QMouseEvent *ev)
 {
-    int v = ev->x();
-    qint16 x = getClientMousePosX( (v < 0) ? 0 : v );
-    v = ev->y();
-    qint16 y = getClientMousePosY( (v < 0) ? 0 : v );
+    qint16 x = getClientMousePosX(ev->x());
+    qint16 y = getClientMousePosY(ev->y());
 
-    quint8 click = ev->buttons();
-    click |= delta3::GMCLICK_DCLICK;
+    pressButtons_ = ev->buttons();
+    pressButtons_ |= delta3::GMCLICK_DCLICK;
 
-    emit mClick(x, y, (delta3::GMCLICK)click);
+    emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
 
     ev->accept();
 }
@@ -129,13 +109,17 @@ void GraphForm::keyPressEvent(QKeyEvent *ev)
 void GraphForm::onDataReceived(QImage &img)
 {
 	image_ = img;
-    resize(img.width(), img.height());
     repaint();
 }
 
 void GraphForm::onReady(int clW, int clH)
 {
     resize(clW, clH);
+
+    connect(this, SIGNAL(keyPress(int)), graph_, SLOT(onKey(int)));
+    connect(this, SIGNAL(mMove(qint16,qint16)), graph_, SLOT(onMove(qint16,qint16)));
+    connect(this, SIGNAL(mClick(qint16,qint16,delta3::GMCLICK)),
+            graph_, SLOT(onClick(qint16,qint16,delta3::GMCLICK)));
 }
 
 
@@ -143,7 +127,6 @@ void GraphForm::paintEvent(QPaintEvent *ev)
 {
 	QPainter p(this);
 
-    //p.scale(1.0 * width() / image_.width(), 1.0 * height() / image_.height());
     p.drawImage(0, 0, image_);
 
     ev->accept();
