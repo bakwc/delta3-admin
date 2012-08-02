@@ -8,6 +8,7 @@ const qint8 CSPYP1_PROTOCOL_ID      = 1;
 const qint8 CSPYP1_PROTOCOL_VERSION = 3;
 const qint8 CSPYP2_PROTOCOL_ID      = 1;
 const qint8 CSPYP2_PROTOCOL_VERSION = 2;
+const qint8 GMOD_PROTOCOL_VERSION   = 2;
 
 const qint16 CMD1_CLIENT_INFO_SIZE = 92;    // Client info struct size
 
@@ -69,8 +70,8 @@ enum GraphicsMode
 
 enum GMCLICK {
     GMCLICK_LEFT    = 1,
-    GMCLICK_MIDDLE  = 2,
-    GMCLICK_RIGHT   = 4,
+    GMCLICK_RIGHT   = 2,
+    GMCLICK_MIDDLE  = 4,
     GMCLICK_DOWN    = 8,
     GMCLICK_UP      = 16,
     GMCLICK_CLICK   = 32,

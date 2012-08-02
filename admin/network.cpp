@@ -37,7 +37,6 @@ void Network::onDataReceived()
     {
         // wrong packet - disconnecting client
         qDebug() << Q_FUNC_INFO << " PROTOCOL ERROR";
-        //this->disconnectFromHost();
         return;
     }
 

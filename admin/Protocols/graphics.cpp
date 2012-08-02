@@ -24,13 +24,22 @@ void Graphics::onDataReceived()
         break;
     case GMOD_IMGFULL:
         img.loadFromData(arr.mid(1));
-        emit ready(img);
+        emit imageReady(img);
 
         break;
     case GMOD_INFO:
         clientWidht_ = fromBytes<qint16>(arr.mid(2,2));
         clientHeight_ = fromBytes<qint16>(arr.mid(4,2));
-        qDebug() << "    " << Q_FUNC_INFO << fromBytes<qint16>(arr.mid(2,2)) << fromBytes<qint16>(arr.mid(4,2));
+
+        arr.clear();
+        arr.append(GMOD_INFO);
+        arr.append(GMOD_PROTOCOL_VERSION);
+        arr.append((quint8)50);
+        network_->sendLevelTwo(clientId_, protoMode_, arr);
+
+        emit ready(clientWidht_, clientHeight_);
+
+        qDebug() << "    GMOD_INFO";
 
         break;
     default:
@@ -46,8 +55,6 @@ void Graphics::onReady(QByteArray &arr)
 
 void Graphics::onMove(qint16 x, qint16 y)
 {
-    qDebug() << Q_FUNC_INFO << x << y;
-
     QByteArray arr;
     arr.append(GMOD_MMOV);
     arr.append(toBytesMacro(x));
@@ -58,17 +65,16 @@ void Graphics::onMove(qint16 x, qint16 y)
 
 void Graphics::onClick(qint16 x, qint16 y, GMCLICK click)
 {
-    qDebug() << Q_FUNC_INFO << x << y << click;
-
     QByteArray arr;
     arr.append(GMOD_MCLICK);
     arr.append(toBytes(x));
     arr.append(toBytes(y));
     arr.append(click);
 
-    qDebug() << "    " << Q_FUNC_INFO << fromBytes<qint16>(arr.mid(1,2)) << fromBytes<qint16>(arr.mid(3,2));
-
     network_->sendLevelTwo(clientId_, protoMode_, arr);
+
+    qDebug() << "    " << Q_FUNC_INFO << fromBytes<qint16>(arr.mid(1,2)) <<
+                fromBytes<qint16>(arr.mid(3,2)) << (quint8)arr[5];
 }
 
 void Graphics::onKey(int key)

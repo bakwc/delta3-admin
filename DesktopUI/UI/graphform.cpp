@@ -16,11 +16,12 @@ GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle(tr("Graphics - ") + graph_->getClientCaption());
 
-    connect(graph_, SIGNAL(ready(QImage&)), SLOT(onDataReceived(QImage&)));
+    connect(graph_, SIGNAL(imageReady(QImage&)), SLOT(onDataReceived(QImage&)));
     connect(this, SIGNAL(keyPress(int)), graph_, SLOT(onKey(int)));
     connect(this, SIGNAL(mMove(qint16,qint16)), graph_, SLOT(onMove(qint16,qint16)));
     connect(this, SIGNAL(mClick(qint16,qint16,delta3::GMCLICK)),
             graph_, SLOT(onClick(qint16,qint16,delta3::GMCLICK)));
+    //connect(graph_, SIGNAL(ready(int,int)), this, SLOT(onReady(int,int)));
 
 	setAttribute(Qt::WA_DeleteOnClose);
 }
@@ -54,17 +55,7 @@ void GraphForm::mouseMoveEvent(QMouseEvent *ev)
     qint16 x = getClientMousePosX(ev->x());
     qint16 y = getClientMousePosY(ev->y());
 
-//    if(x > delta3::MOUSE_ACCURACY)
-//        x = delta3::MOUSE_ACCURACY;
-//    else if(x < 0)
-//        x = 0;
 
-//    if(y > delta3::MOUSE_ACCURACY)
-//        y = delta3::MOUSE_ACCURACY;
-//    else if(y < 0)
-//        y = 0;
-
-    //emit mMove(x, y);
     ev->accept();
 
     //qDebug() << "    " << Q_FUNC_INFO;
@@ -73,6 +64,15 @@ void GraphForm::mouseMoveEvent(QMouseEvent *ev)
 
 void GraphForm::mousePressEvent(QMouseEvent *ev)
 {
+    int v = ev->x();
+    qint16 x = getClientMousePosX( (v < 0) ? 0 : v );
+    v = ev->y();
+    qint16 y = getClientMousePosY( (v < 0) ? 0 : v );
+
+    quint8 click = ev->buttons();
+    click |= delta3::GMCLICK_DOWN;
+
+    emit mClick(x, y, (delta3::GMCLICK)click);
 
     ev->accept();
 
@@ -82,19 +82,31 @@ void GraphForm::mousePressEvent(QMouseEvent *ev)
 
 void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
 {
-    qint16 x = getClientMousePosX(ev->x());
-    qint16 y = getClientMousePosY(ev->y());
+    int v = ev->x();
+    qint16 x = getClientMousePosX( (v < 0) ? 0 : v );
+    v = ev->y();
+    qint16 y = getClientMousePosY( (v < 0) ? 0 : v );
 
-    emit mClick(x, y,
-                (delta3::GMCLICK)(delta3::GMCLICK_LEFT | delta3::GMCLICK_CLICK));
+    quint8 click = ev->buttons();
+    click |= delta3::GMCLICK_UP;
+
+    //emit mClick(x, y, (delta3::GMCLICK)click);
 
     ev->accept();
-
-    qDebug() << Q_FUNC_INFO << x << y << ev->x() << ev->y() << graph_->clientWidth() << graph_->clientHeight();
 }
 
 void GraphForm::mouseDoubleClickEvent(QMouseEvent *ev)
 {
+    int v = ev->x();
+    qint16 x = getClientMousePosX( (v < 0) ? 0 : v );
+    v = ev->y();
+    qint16 y = getClientMousePosY( (v < 0) ? 0 : v );
+
+    quint8 click = ev->buttons();
+    click |= delta3::GMCLICK_DCLICK;
+
+    emit mClick(x, y, (delta3::GMCLICK)click);
+
     ev->accept();
 }
 
@@ -108,13 +120,22 @@ void GraphForm::keyPressEvent(QKeyEvent *ev)
 void GraphForm::onDataReceived(QImage &img)
 {
 	image_ = img;
-	repaint();
+    resize(img.width(), img.height());
+    repaint();
+}
+
+void GraphForm::onReady(int clW, int clH)
+{
+    resize(clW, clH);
 }
 
 
-void GraphForm::paintEvent(QPaintEvent *)
+void GraphForm::paintEvent(QPaintEvent *ev)
 {
 	QPainter p(this);
 
-	p.drawImage(0, 0, image_);
+    //p.scale(1.0 * width() / image_.width(), 1.0 * height() / image_.height());
+    p.drawImage(0, 0, image_);
+
+    ev->accept();
 }

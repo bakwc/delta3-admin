@@ -25,6 +25,7 @@ signals:
 
 private slots:
 	void onDataReceived(QImage &img);
+    void onReady(int clW, int clH);
 
 protected:
 	void paintEvent(QPaintEvent *);
