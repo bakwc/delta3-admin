@@ -12,6 +12,9 @@ class GraphForm;
 class GraphForm : public QWidget
 {
     Q_OBJECT
+
+    static const int CLICKTIME      = 300;
+    static const int MBUTTONSCOUNT  = 3;
     
 public:
 	explicit GraphForm(delta3::Graphics* graph, QWidget* parent = 0);
@@ -25,7 +28,7 @@ signals:
 
 private slots:
 	void onDataReceived(QImage &img);
-    void onReady(int clW, int clH);
+    void onReady(int clW, int clH, int q);
 
 protected:
 	void paintEvent(QPaintEvent *);
@@ -33,17 +36,21 @@ protected:
     void mouseMoveEvent(QMouseEvent *);
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
-    void mouseDoubleClickEvent(QMouseEvent *);
-
     void keyPressEvent(QKeyEvent *);
+    void timerEvent(QTimerEvent *);
 
 private:
 	delta3::Graphics	*graph_;
 	QImage				image_; // mb it's a not very well idea ;|
 	Ui::GraphForm		*ui;
+    quint8  pressButtons_;
 
-private:
-    quint8 pressButtons_;
+    struct ParseClick {
+        int             timerId;
+        int             count;
+        quint16         x, y;
+        delta3::GMCLICK mouse;
+    } mouseButton[MBUTTONSCOUNT];
 
     qint16 getClientMousePosX(int mPos) {
         qint16 v = 1.0 * mPos / width() * graph_->clientWidth();
@@ -54,5 +61,7 @@ private:
         qint16 v = 1.0 * mPos / height() * graph_->clientHeight();
         return (v < 0) ? 0 : v;
     }
+
+    void graphMouseEvent(int q, quint16 x, quint16 y);
 
 };

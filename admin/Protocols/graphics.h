@@ -16,7 +16,7 @@ public:
     qint16 clientHeight() const { return clientHeight_; }
 	
 signals:
-    void ready(int clW, int clH);
+    void ready(int clW, int clH, int q);
     void imageReady(QImage &img);
 	
 protected slots:

@@ -34,10 +34,10 @@ void Graphics::onDataReceived()
         arr.clear();
         arr.append(GMOD_INFO);
         arr.append(GMOD_PROTOCOL_VERSION);
-        arr.append((quint8)50);
+        arr.append((quint8)30);
         network_->sendLevelTwo(clientId_, protoMode_, arr);
 
-        emit ready(clientWidht_, clientHeight_);
+        emit ready(clientWidht_, clientHeight_, 2);
 
         qDebug() << "    GMOD_INFO" << clientWidht_ << clientHeight_;
 

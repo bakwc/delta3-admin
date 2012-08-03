@@ -3,19 +3,29 @@
 #include <QKeyEvent>
 #include <QPaintEvent>
 #include <QMouseEvent>
-#include <QKeyEvent>
+#include <QTimerEvent>
 #include <QPainter>
+#include <QTime>
 
 using namespace delta3;
 
 GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
     QWidget(parent), graph_(graph), ui(new Ui::GraphForm), pressButtons_(0)
 {
+    for (ParseClick &cl : mouseButton) {
+        cl.count = 0;
+        cl.timerId = 0;
+    }
+
+    mouseButton[0].mouse = GMCLICK_LEFT;
+    mouseButton[1].mouse = GMCLICK_RIGHT;
+    mouseButton[2].mouse = GMCLICK_MIDDLE;
+
     ui->setupUi(this);
     this->setWindowTitle(tr("Graphics - ") + graph_->getClientCaption());
 
     connect(graph_, SIGNAL(imageReady(QImage&)), SLOT(onDataReceived(QImage&)));
-    connect(graph_, SIGNAL(ready(int,int)), this, SLOT(onReady(int,int)));
+    connect(graph_, SIGNAL(ready(int,int, int)), this, SLOT(onReady(int,int, int)));
 
     setAttribute(Qt::WA_DeleteOnClose);
 }
@@ -61,15 +71,22 @@ void GraphForm::mousePressEvent(QMouseEvent *ev)
 {
     qint16 x = getClientMousePosX(ev->x());
     qint16 y = getClientMousePosY(ev->y());
-    
+
     pressButtons_ = ev->buttons();
-    pressButtons_ |= delta3::GMCLICK_DOWN;
+
+    if (pressButtons_ & Qt::LeftButton)
+        graphMouseEvent(0, x, y);
+
+    if (pressButtons_ & Qt::RightButton)
+        graphMouseEvent(1, x, y);
+
+    if (pressButtons_ & Qt::MidButton)
+        graphMouseEvent(2, x, y);
+
+    //pressButtons_ |= delta3::GMCLICK_DOWN;
 
     //emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
-
     ev->accept();
-
-    qDebug() << "    " << Q_FUNC_INFO << x << y;
 }
 
 
@@ -78,24 +95,30 @@ void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
     qint16 x = getClientMousePosX(ev->x());
     qint16 y = getClientMousePosY(ev->y());
 
-    pressButtons_ = ev->buttons();
-    pressButtons_ |= delta3::GMCLICK_UP;
+    pressButtons_ ^= ev->buttons();
+
+    if (pressButtons_ & Qt::LeftButton) {
+        if (mouseButton[0].count > 0)
+            mouseButton[0].count += 1;
+        else
+            emit mClick(x, y, GMCLICK(GMCLICK_LEFT | GMCLICK_UP));
+    }
+
+    if (pressButtons_ & Qt::RightButton) {
+        if (mouseButton[1].count > 0)
+            mouseButton[1].count += 1;
+        else
+            emit mClick(x, y, GMCLICK(GMCLICK_RIGHT | GMCLICK_UP));
+    }
+
+    if (pressButtons_ & Qt::MidButton) {
+        if (mouseButton[2].count > 0)
+            mouseButton[2].count += 1;
+        else
+            emit mClick(x, y, GMCLICK(GMCLICK_MIDDLE | GMCLICK_UP));
+    }
 
     //emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
-
-    ev->accept();
-}
-
-void GraphForm::mouseDoubleClickEvent(QMouseEvent *ev)
-{
-    qint16 x = getClientMousePosX(ev->x());
-    qint16 y = getClientMousePosY(ev->y());
-
-    pressButtons_ = ev->buttons();
-    pressButtons_ |= delta3::GMCLICK_DCLICK;
-
-    emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
-
     ev->accept();
 }
 
@@ -106,15 +129,54 @@ void GraphForm::keyPressEvent(QKeyEvent *ev)
     ev->accept();
 }
 
+/* Find mouse button end send click event or double click event.
+ * If mouse button up + mouse button down not a multiple of 2,
+ * so mouse button was sandwiched and signal will be send to press,
+ * not click
+ */
+void GraphForm::timerEvent(QTimerEvent *ev)
+{
+    for (int i = 0; i < MBUTTONSCOUNT; ++i) {
+        if (mouseButton[i].timerId == ev->timerId()) {
+            if ( (mouseButton[i].count % 4) == 0)
+                emit mClick(mouseButton[i].x, mouseButton[i].y,
+                            delta3::GMCLICK( mouseButton[i].mouse | delta3::GMCLICK_DCLICK));
+            else if ( (mouseButton[i].count % 2) == 0)
+                emit mClick(mouseButton[i].x, mouseButton[i].y,
+                            delta3::GMCLICK(mouseButton[i].mouse | delta3::GMCLICK_CLICK));
+
+            if ( (mouseButton[i].count) == 1)
+                emit mClick(mouseButton[i].x, mouseButton[i].y,
+                            delta3::GMCLICK(mouseButton[i].mouse | delta3::GMCLICK_DOWN));
+
+            killTimer(ev->timerId());
+            mouseButton[i].count = 0;
+            mouseButton[i].timerId = 0;
+        }
+    }
+}
+
+
+void GraphForm::graphMouseEvent(int q, quint16 x, quint16 y)
+{
+    mouseButton[q].count += 1;
+
+    if (mouseButton[q].timerId == 0) {
+        mouseButton[q].x = x;
+        mouseButton[q].y = y;
+        mouseButton[q].timerId = startTimer(CLICKTIME);
+    }
+}
+
 void GraphForm::onDataReceived(QImage &img)
 {
 	image_ = img;
     repaint();
 }
 
-void GraphForm::onReady(int clW, int clH)
+void GraphForm::onReady(int clW, int clH, int q)
 {
-    resize(clW/2, clH/2);
+    resize(clW/q, clH/q);
 
     connect(this, SIGNAL(keyPress(int)), graph_, SLOT(onKey(int)));
     connect(this, SIGNAL(mMove(qint16,qint16)), graph_, SLOT(onMove(qint16,qint16)));
