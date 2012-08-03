@@ -65,11 +65,11 @@ void GraphForm::mousePressEvent(QMouseEvent *ev)
     pressButtons_ = ev->buttons();
     pressButtons_ |= delta3::GMCLICK_DOWN;
 
-    emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
+    //emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
 
     ev->accept();
 
-    //qDebug() << "    " << Q_FUNC_INFO;
+    qDebug() << "    " << Q_FUNC_INFO << x << y;
 }
 
 
@@ -81,7 +81,7 @@ void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
     pressButtons_ = ev->buttons();
     pressButtons_ |= delta3::GMCLICK_UP;
 
-    emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
+    //emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
 
     ev->accept();
 }
@@ -114,7 +114,7 @@ void GraphForm::onDataReceived(QImage &img)
 
 void GraphForm::onReady(int clW, int clH)
 {
-    resize(clW, clH);
+    resize(clW/2, clH/2);
 
     connect(this, SIGNAL(keyPress(int)), graph_, SLOT(onKey(int)));
     connect(this, SIGNAL(mMove(qint16,qint16)), graph_, SLOT(onMove(qint16,qint16)));

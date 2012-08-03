@@ -39,7 +39,7 @@ void Graphics::onDataReceived()
 
         emit ready(clientWidht_, clientHeight_);
 
-        qDebug() << "    GMOD_INFO";
+        qDebug() << "    GMOD_INFO" << clientWidht_ << clientHeight_;
 
         break;
     default:
