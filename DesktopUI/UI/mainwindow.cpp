@@ -3,6 +3,7 @@
 #include "ui_mainwindow.h"
 #include "Protocols/graphics.h"
 #include "Protocols/proxy.h"
+#include "proxyform.h"
 #include <QTimerEvent>
 
 MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
@@ -35,6 +36,8 @@ MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     act = new QAction(tr("Graphics mode"),this);
     connect(act,SIGNAL(triggered()),this,SLOT(runGraph()));
     modeMenu_->addAction(act);
+
+	modeMenu_->addSeparator();
 
 	act = new QAction(tr("Options"),this);
 	connect(act,SIGNAL(triggered()),this,SLOT(runOptions()));
@@ -80,8 +83,6 @@ void MainWindow::onRedraw()
     QListWidgetItem *item;
 
     const delta3::Clients &clients = network_->getClients();
-
-    //qDebug() << "clients: " << clients.size();
 
     for (auto i = clients.begin(); i != clients.end(); i++)
         if ( !isClientExist(list, i.value()->getId()) ) {
@@ -173,22 +174,6 @@ void MainWindow::runOptions()
 }
 
 
-void MainWindow::runProxy()
-{
-    QListWidgetItem *item = NULL;
-
-    if ((item = ui->listWidget->selectedItems()[0]) == NULL)
-        return;
-
-    delta3::Proxy *proxy = new delta3::Proxy(network_, item->whatsThis().toInt());
-    QLabel *label_ = new QLabel;
-    label_->setText(trUtf8("Включите в браузере режим прокси прокси\n"
-                          "127.0.0.1:8080"));
-    proxy->setParent(label_);
-    label_->show();
-}
-
-
 void MainWindow::ShowHide()
 {
     if(isHidden())
@@ -264,4 +249,16 @@ void MainWindow::timerEvent(QTimerEvent *ev)
     onRedraw();
 
     ev->accept();
+}
+
+
+void MainWindow::runProxy()
+{
+    QListWidgetItem *item = NULL;
+
+    if ((item = ui->listWidget->selectedItems()[0]) == NULL)
+        return;
+    delta3::Proxy *_proxy = new delta3::Proxy(network_, item->whatsThis().toInt());
+    ProxyForm *_form = new ProxyForm(_proxy);
+    _form->show();
 }

@@ -5,7 +5,7 @@
 
 namespace delta3  {
 
-class Graphics : public AbstrProto
+class DELTA3_EXPORT Graphics : public AbstrProto
 {
 	Q_OBJECT
 public:

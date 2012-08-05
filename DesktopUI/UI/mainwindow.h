@@ -40,7 +40,7 @@ private slots:
     void runGraph();
 //    void runFile();
     void runProxy();
-    void runOptions();
+	void runOptions();
     void ShowHide();
 
 private:

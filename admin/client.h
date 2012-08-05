@@ -1,18 +1,20 @@
 #pragma once
+
 #include <QObject>
 #include <QString>
 #include <QDebug>
 #include <QHostAddress>
+#include "defines.h"
 
 namespace delta3 {
 
-class Client: public QObject
+class DELTA3_EXPORT Client: public QObject
 {
     Q_OBJECT
 public:
     Client(QObject *parent);
     QString getHash() const;
-    qint32 getId() const;
+    qint32  getId() const;
     QString getOs() const;
     QString getDevice() const;
     QString getCaption() const;

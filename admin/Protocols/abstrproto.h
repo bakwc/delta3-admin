@@ -8,7 +8,7 @@ namespace delta3 {
 
 class Network;
 
-class AbstrProto : public QObject
+class DELTA3_EXPORT AbstrProto : public QObject
 {
 	Q_OBJECT
 

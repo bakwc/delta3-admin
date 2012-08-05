@@ -7,13 +7,15 @@ class QTcpSocket;
 
 namespace delta3 {
 
-class Proxy : public AbstrProto
+class DELTA3_EXPORT Proxy : public AbstrProto
 {
     Q_OBJECT
 public:
     explicit Proxy(Network *net = NULL,
                    qint16 clientId = 0,
                    QObject *parent = 0);
+    void start(int port);
+    void stop();
 
 protected slots:
     void onDataReceived();
@@ -28,4 +30,3 @@ private slots:
 };
 
 }
-

@@ -4,7 +4,7 @@
 
 namespace delta3 {
 
-class File : public AbstrProto
+class DELTA3_EXPORT File : public AbstrProto
 {
 	Q_OBJECT
 public:

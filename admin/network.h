@@ -15,11 +15,11 @@ namespace delta3 {
 
 typedef QMap<qint32, Client *> Clients;
 
-class Network: public QObject
+class DELTA3_EXPORT Network: public QObject
 {
     Q_OBJECT
 
-	struct Income
+    struct /*DELTA3_EXPORT*/ Income
 	{
 		qint16 from;
 		ProtocolMode mode;
@@ -27,23 +27,23 @@ class Network: public QObject
 	};
 
 public:
-	Network(QHostAddress adr = QHostAddress("127.0.0.1"),
+    Network(QHostAddress adr = QHostAddress("127.0.0.1"),
             QObject *parent = NULL);
 
-	void			connectToServer();
-	const Clients&	getClients()	const;
-	Client			*getClient(qint16 clientId)	const;
-	QString			getClientName(qint16 id)	const;
+    void			connectToServer();
+    const Clients&	getClients()	const;
+    Client			*getClient(qint16 clientId)	const;
+    QString			getClientName(qint16 id)	const;
     QString			getClientCapt(qint16 id)	const;
-	void			sendLevelOne(qint16 dest, const QByteArray& data);
-	void			sendLevelTwo(qint16 dest, ProtocolMode mode, const QByteArray& data);
-	void			activateMode(qint16 client, ProtocolMode mode);
-	void			deactivateMode(qint16 client, ProtocolMode mode);
-	void			setClientCaption(qint16 client, const QString& info);
-	const Income&	receivedData()	const;
+    void			sendLevelOne(qint16 dest, const QByteArray& data);
+    void			sendLevelTwo(qint16 dest, ProtocolMode mode, const QByteArray& data);
+    void			activateMode(qint16 client, ProtocolMode mode);
+    void			deactivateMode(qint16 client, ProtocolMode mode);
+    void			setClientCaption(qint16 client, const QString& info);
+    const Income&	receivedData()	const;
 
-	void			setHostAddres(QHostAddress adr) { adr_ = adr; }
-	const QHostAddress&	hostAddres() const { return adr_; }
+    void			setHostAddres(QHostAddress adr) { adr_ = adr; }
+    const QHostAddress&	hostAddres() const { return adr_; }
 
 signals:
     void listUpdated();

@@ -4,9 +4,6 @@
 #
 #-------------------------------------------------
 
-
-#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 QT       += core gui network
 
 TARGET = d3aDesktop
@@ -20,14 +17,15 @@ SOURCES += main.cpp\
     UI/telnetform.cpp \
     UI/fileform.cpp \
     UI/graphform.cpp \
-    UI/clientinfodialog.cpp
+    UI/clientinfodialog.cpp \
+    UI/proxyform.cpp
 
 HEADERS  += UI/mainwindow.h \
     UI/telnetform.h \
     UI/fileform.h \
     UI/graphform.h \
-    UI/clientinfodialog.h
-
+    UI/clientinfodialog.h \
+    UI/proxyform.h
 
 FORMS    += UI/mainwindow.ui \
     UI/telnetform.ui \

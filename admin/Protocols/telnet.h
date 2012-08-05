@@ -5,7 +5,7 @@
 
 namespace delta3 {
 
-class Telnet : public AbstrProto
+class DELTA3_EXPORT Telnet : public AbstrProto
 {
     Q_OBJECT
 public:
