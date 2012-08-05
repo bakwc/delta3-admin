@@ -8,12 +8,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    delta3::Network network(QHostAddress("46.247.149.149"));
+    delta3::Network network(QHostAddress::LocalHost);
 
 	MainWindow w(&network);
     w.show();
 
-    a.setQuitOnLastWindowClosed(false);
+    a.setQuitOnLastWindowClosed(true);
     
     return a.exec();
 }

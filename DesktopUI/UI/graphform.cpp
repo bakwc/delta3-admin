@@ -66,7 +66,11 @@ void GraphForm::mouseMoveEvent(QMouseEvent *ev)
     //qDebug() << "    " << Q_FUNC_INFO;
 }
 
-
+/* Function increments the counter of clicks
+ * and start a timer if it is not running.
+ * For each mouse button has its own timer.
+ * It's allows press mitiple buttons together
+ */
 void GraphForm::mousePressEvent(QMouseEvent *ev)
 {
     qint16 x = getClientMousePosX(ev->x());
@@ -83,13 +87,13 @@ void GraphForm::mousePressEvent(QMouseEvent *ev)
     if (pressButtons_ & Qt::MidButton)
         graphMouseEvent(2, x, y);
 
-    //pressButtons_ |= delta3::GMCLICK_DOWN;
-
-    //emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
     ev->accept();
 }
 
-
+/* Computes which button was released
+ * and increment the counter of clicks or send release signal,
+ * when timer is not working
+ */
 void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
 {
     qint16 x = getClientMousePosX(ev->x());
@@ -118,7 +122,6 @@ void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
             emit mClick(x, y, GMCLICK(GMCLICK_MIDDLE | GMCLICK_UP));
     }
 
-    //emit mClick(x, y, (delta3::GMCLICK)pressButtons_);
     ev->accept();
 }
 
@@ -131,21 +134,20 @@ void GraphForm::keyPressEvent(QKeyEvent *ev)
 
 /* Find mouse button end send click event or double click event.
  * If mouse button up + mouse button down not a multiple of 2,
- * so mouse button was sandwiched and signal will be send to press,
- * not click
+ * so mouse button was sandwiched and signal will be send to press
  */
 void GraphForm::timerEvent(QTimerEvent *ev)
 {
     for (int i = 0; i < MBUTTONSCOUNT; ++i) {
         if (mouseButton[i].timerId == ev->timerId()) {
-            if ( (mouseButton[i].count % 4) == 0)
+            if ( (mouseButton[i].count >= 4) == 0)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
                             delta3::GMCLICK( mouseButton[i].mouse | delta3::GMCLICK_DCLICK));
-            else if ( (mouseButton[i].count % 2) == 0)
+            else if ( (mouseButton[i].count >= 2) == 0)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
                             delta3::GMCLICK(mouseButton[i].mouse | delta3::GMCLICK_CLICK));
 
-            if ( (mouseButton[i].count) == 1)
+            if (mouseButton[i].count)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
                             delta3::GMCLICK(mouseButton[i].mouse | delta3::GMCLICK_DOWN));
 
