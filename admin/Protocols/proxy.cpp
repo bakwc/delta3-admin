@@ -17,7 +17,7 @@ void Proxy::onDataReceived()
 {
     qDebug() << "SOMETHING COMES HERE!";
     if (!(network_->receivedData().from == clientId_ &&
-            network_->receivedData().mode == protoMode_))
+            network_->receivedData().mode == mode_))
         return;
 
     qDebug() << network_->receivedData().data;
@@ -28,7 +28,7 @@ void Proxy::onDataReceived()
 void Proxy::slotReadyRead()
 {
     QByteArray _data = QByteArray(socket_->readAll());
-    network_->sendLevelTwo(clientId_, protoMode_, _data);
+    network_->sendLevelTwo(clientId_, mode_, _data);
 
     qDebug() << Q_FUNC_INFO << _data;
 }

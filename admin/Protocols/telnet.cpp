@@ -11,7 +11,7 @@ Telnet::Telnet(Network *net, qint16 clientId, QObject *parent) :
 void Telnet::onDataReceived()
 {
     if (!(network_->receivedData().from == clientId_ &&
-            network_->receivedData().mode == protoMode_))
+            network_->receivedData().mode == mode_))
         return;
     qDebug() << "TelnetForm::onDataReceived()";
 
@@ -22,5 +22,5 @@ void Telnet::onDataReceived()
 
 void Telnet::onReady(QString &data)
 {
-    network_->sendLevelTwo(clientId_, protoMode_, data.toUtf8());
+    network_->sendLevelTwo(clientId_, mode_, data.toUtf8());
 }

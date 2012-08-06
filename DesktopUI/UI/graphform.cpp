@@ -140,14 +140,14 @@ void GraphForm::timerEvent(QTimerEvent *ev)
 {
     for (int i = 0; i < MBUTTONSCOUNT; ++i) {
         if (mouseButton[i].timerId == ev->timerId()) {
-            if ( (mouseButton[i].count >= 4) == 0)
+            if (mouseButton[i].count >= 4)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
                             delta3::GMCLICK( mouseButton[i].mouse | delta3::GMCLICK_DCLICK));
-            else if ( (mouseButton[i].count >= 2) == 0)
+            else if (mouseButton[i].count >= 2)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
                             delta3::GMCLICK(mouseButton[i].mouse | delta3::GMCLICK_CLICK));
 
-            if (mouseButton[i].count)
+            if (mouseButton[i].count % 2)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
                             delta3::GMCLICK(mouseButton[i].mouse | delta3::GMCLICK_DOWN));
 

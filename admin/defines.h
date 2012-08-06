@@ -12,7 +12,6 @@ const qint8 GMOD_PROTOCOL_VERSION   = 2;
 
 const qint16 CMD1_CLIENT_INFO_SIZE = 92;    // Client info struct size
 
-const int MOUSE_ACCURACY                  = 30000;
 
 enum ProtocolMode
 {
@@ -24,6 +23,7 @@ enum ProtocolMode
     MOD_REDIRECT = 6
 };
 
+
 enum Cspyp1Command
 {
     CMD1_AUTH       = 1,
@@ -33,8 +33,9 @@ enum Cspyp1Command
     CMD1_RLIST      = 5,
     CMD1_TRANSMIT   = 6,
     CMD1_DISCONNECT = 7,
-    CMD1_SETINFO = 8
+    CMD1_SETINFO    = 8
 };
+
 
 enum Cspyp2Command
 {
@@ -43,18 +44,6 @@ enum Cspyp2Command
     CMD2_ACTIVATE   = 3,
     CMD2_DEACTIVATE = 4,
     CMD2_TRANSMIT   = 5
-};
-
-enum FileMode
-{
-    FMOD_ROOT   = 1,
-    FMOD_CD     = 2,
-    FMOD_MKDIR  = 3,
-    FMOD_RMDIR  = 4,
-    FMOD_GET    = 5,
-    FMOD_SEND   = 6,
-    FMOD_FILE   = 7,
-    FMOD_ABS_WAY= 8
 };
 
 

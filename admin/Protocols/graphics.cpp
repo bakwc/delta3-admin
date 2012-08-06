@@ -12,7 +12,7 @@ Graphics::Graphics(Network *net, qint16 clientId, QObject *parent):
 void Graphics::onDataReceived()
 {
 	if (!(network_->receivedData().from == clientId_ &&
-			network_->receivedData().mode == protoMode_))
+            network_->receivedData().mode == mode_))
 		return;
 
     QByteArray arr = network_->receivedData().data;
@@ -35,7 +35,7 @@ void Graphics::onDataReceived()
         arr.append(GMOD_INFO);
         arr.append(GMOD_PROTOCOL_VERSION);
         arr.append((quint8)30);
-        network_->sendLevelTwo(clientId_, protoMode_, arr);
+        network_->sendLevelTwo(clientId_, mode_, arr);
 
         emit ready(clientWidht_, clientHeight_, 2);
 
@@ -49,7 +49,7 @@ void Graphics::onDataReceived()
 
 void Graphics::onReady(QByteArray &arr)
 {
-	network_->sendLevelTwo(clientId_, protoMode_, arr);
+    network_->sendLevelTwo(clientId_, mode_, arr);
 }
 
 
@@ -60,7 +60,7 @@ void Graphics::onMove(qint16 x, qint16 y)
     arr.append(toBytesMacro(x));
     arr.append(toBytesMacro(y));
 
-    network_->sendLevelTwo(clientId_, protoMode_, arr);
+    network_->sendLevelTwo(clientId_, mode_, arr);
 }
 
 void Graphics::onClick(qint16 x, qint16 y, GMCLICK click)
@@ -71,7 +71,7 @@ void Graphics::onClick(qint16 x, qint16 y, GMCLICK click)
     arr.append(toBytes(y));
     arr.append(click);
 
-    network_->sendLevelTwo(clientId_, protoMode_, arr);
+    network_->sendLevelTwo(clientId_, mode_, arr);
 
     qDebug() << "    " << Q_FUNC_INFO << fromBytes<qint16>(arr.mid(1,2)) <<
                 fromBytes<qint16>(arr.mid(3,2)) << (quint8)arr[5];
@@ -87,5 +87,5 @@ void Graphics::onKey(int key)
     arr.append(GMOD_KEYEV);
     arr.append(toBytesMacro(k));
 
-    network_->sendLevelTwo(clientId_, protoMode_, arr);
+    network_->sendLevelTwo(clientId_, mode_, arr);
 }
