@@ -1,0 +1,10 @@
+digraph "admin/" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_b56013ff87e0b8a9fb902ef4a07a6990 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_b56013ff87e0b8a9fb902ef4a07a6990.html"];
+    dir_b56013ff87e0b8a9fb902ef4a07a6990 [shape=plaintext label="admin"];
+    dir_07221d5515ff62c5293f0ad2c62267a9 [shape=box label="Protocols" color="black" fillcolor="white" style="filled" URL="dir_07221d5515ff62c5293f0ad2c62267a9.html"];
+  }
+}

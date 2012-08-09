@@ -1,0 +1,10 @@
+digraph "DesktopUI/" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_2e5175aad440b871e45199525ea7f2ea {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_2e5175aad440b871e45199525ea7f2ea.html"];
+    dir_2e5175aad440b871e45199525ea7f2ea [shape=plaintext label="DesktopUI"];
+    dir_bfb60a176a96cb8f4f7ba201c7853005 [shape=box label="UI" color="black" fillcolor="white" style="filled" URL="dir_bfb60a176a96cb8f4f7ba201c7853005.html"];
+  }
+}
