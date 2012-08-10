@@ -11,8 +11,8 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
      connect(file_,SIGNAL(dir(QVector<QStringList>)),
              this,SLOT(onDirListReceived(QVector<QStringList>)));
 
-     connect(this,SIGNAL(requestDir(QString)),
-             file_,SLOT(requestDir(QString)));
+     connect(this,SIGNAL(requestDir(QString&)),
+             file_,SLOT(requestDir(QString&)));
 
      //connect(file_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
      //connect(this, SIGNAL(ready(QString&)), file_, SLOT(onReady(QString&)));

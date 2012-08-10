@@ -1,6 +1,5 @@
 #include "file.h"
 #include "../network.h"
-#include <QTextCodec>
 
 using namespace delta3;
 
@@ -18,15 +17,16 @@ void File::onDataReceived()
         return;
 
     QByteArray arr = network_->receivedData().data;
+    QByteArray send;
 
     switch ((quint8)arr[0]) {
     case FMOD_INFO:
         // (quint)arr[1] // version
 
-        arr.clear();
-        arr.append(FMOD_INFO);
-        arr.append(VERSION);
-        network_->sendLevelTwo(clientId_, mode_, arr);
+        send.clear();
+        send.append(FMOD_INFO);
+        send.append(VERSION);
+        network_->sendLevelTwo(clientId_, mode_, send);
 
         break;
 //    case FMOD_CD:
@@ -64,15 +64,18 @@ void File::onDataReceived()
 
 void File::onCommand(File::FileMode cmd, QString source, QString dest)
 {
-    QByteArray arr;
+    QByteArray arr, s, d;
 
     arr.append(cmd);
-    arr.append((quint8)source.size());
-    arr.append( reinterpret_cast<const char*>(source.utf16()) );
+
+    s.append(source.toUtf8());
+    arr.append(toBytes<quint16>(s.size()));
+    arr.append(s);
 
     if(cmd != FMOD_DEL) {
-        arr.append((quint8)dest.size());
-        arr.append( reinterpret_cast<const char*>(dest.utf16()) );
+        d.append(dest.toUtf8());
+        arr.append(toBytes<quint16>(d.size()));
+        arr.append(d);
     }
 
     network_->sendLevelTwo(clientId_, mode_, arr);
@@ -81,13 +84,18 @@ void File::onCommand(File::FileMode cmd, QString source, QString dest)
 
 QVector<QStringList> File::parseDirCmd(QByteArray &arr)
 {
+    qDebug() << Q_FUNC_INFO << "array size " << arr.size();
+
     QVector<QStringList> vec;
-    int i = arr[1], ind = 2, size = 0;
+    quint32 i = fromBytes<quint32>(arr.mid(1, 4)), ind = 5, size = 0;
 
     for (; i; --i) {
-        size = arr[ind++]; // read the size of string and move to the beginning of this string
         QStringList list;
-        list << QString::fromUtf16(fromBytes<ushort*>(arr.mid(ind, size)), size);
+
+        // read the size of string and move to the beginning of this string
+        size = fromBytes<quint16>(arr.mid(ind, 2));
+        ind += 2;
+        list << QString::fromUtf8( arr.mid(ind, size) );
         vec.push_back(list);
         ind += size;
     }
@@ -101,11 +109,8 @@ void File::requestDir(QString &dir)
     QByteArray arr;
 
     arr.append(FMOD_CD);
-
-    QByteArray dirArr((const char*) (dir.utf16()), dir.size() * 2); // to Utf16
-
-    arr.append(dirArr);
-    arr.append('\0');
+    arr.append(dir.toUtf8());
+    //arr.append('\0'); // ??
 
     network_->sendLevelTwo(clientId_, mode_, arr);
 }

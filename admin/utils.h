@@ -19,7 +19,7 @@ T fromBytes(const QByteArray& array)
 {
     if (array.size()!=sizeof(T))
     {
-        qDebug() << "fromBytes(): error";
+        qDebug() << "fromBytes(): error" << array.size() << sizeof(T);
         return 0;
     }
     const T* tmp=(reinterpret_cast<const T*>(array.data()));
