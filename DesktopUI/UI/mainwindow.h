@@ -38,7 +38,7 @@ private slots:
 
     void runTelnet();
     void runGraph();
-//    void runFile();
+    void runFile();
     void runProxy();
 	void runOptions();
     void ShowHide();

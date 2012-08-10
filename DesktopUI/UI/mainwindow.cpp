@@ -26,7 +26,7 @@ MainWindow::MainWindow(delta3::Network *net, QWidget *parent) :
     modeMenu_->addAction(act);
 
     act = new QAction(tr("File mode"),this);
-    //connect(act,SIGNAL(triggered()),this,SLOT(runFile()));
+    connect(act,SIGNAL(triggered()),this,SLOT(runFile()));
     modeMenu_->addAction(act);
 
     act = new QAction(tr("Proxy mode"),this);
@@ -143,19 +143,18 @@ void MainWindow::runGraph()
 	form->show();
 }
 
-/*
 void MainWindow::runFile()
 {
-    if (ui->listWidget->selectedItems().size()==0)
+    QListWidgetItem *item = NULL;
+
+    if ((item = ui->listWidget->selectedItems()[0]) == NULL)
         return;
-    QListWidgetItem *item=ui->listWidget->selectedItems()[0];
-    FileForm *file = new FileForm(
-                network_,
-                item->whatsThis().toInt());
-            // REVIEW: potential memory leak?
-    file->show();
+
+    delta3::File *file = new delta3::File(network_,item->whatsThis().toInt());
+    FileForm *form = new FileForm(file);
+    file->setParent(form);
+    form->show();
 }
-*/
 
 
 void MainWindow::runOptions()

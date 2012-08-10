@@ -37,6 +37,7 @@ protected slots:
 
 public slots:
     void onCommand(FileMode cmd, QString source, QString dest = QString());
+    void requestDir(QString &dir);
 
 private:
     QVector<QStringList> parseDirCmd(QByteArray& arr);

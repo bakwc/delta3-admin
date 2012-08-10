@@ -1,5 +1,5 @@
 #include "file.h"
-#include "network.h"
+#include "../network.h"
 #include <QTextCodec>
 
 using namespace delta3;
@@ -93,4 +93,19 @@ QVector<QStringList> File::parseDirCmd(QByteArray &arr)
     }
 
     return vec;
+}
+
+void File::requestDir(QString &dir)
+{
+    qDebug() << Q_FUNC_INFO;
+    QByteArray arr;
+
+    arr.append(FMOD_CD);
+
+    QByteArray dirArr((const char*) (dir.utf16()), dir.size() * 2); // to Utf16
+
+    arr.append(dirArr);
+    arr.append('\0');
+
+    network_->sendLevelTwo(clientId_, mode_, arr);
 }

@@ -17,10 +17,12 @@ public:
     ~FileForm();
     
 signals:
-	void ready(QString &d);
+    void requestDir(QString &d);
 
 private slots:
-	void onDataReceived(QString &d);
+    void onDirListReceived(const QVector<QStringList> &dir);
+
+    void on_pushButton_clicked();
 
 private:
 	delta3::File	*file_;
