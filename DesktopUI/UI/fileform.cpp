@@ -34,13 +34,28 @@ void FileForm::onDirListReceived(const QVector<QStringList> &dir)
     //ui->textEdit->clear();
     ui->listWidget->clear();
     QIcon folderIcon(":/Folder.png");
-    for (auto i=dir.begin();i!=dir.end();i++)
+    QIcon fileIcon(":/File.png");
+
+    for (auto i=dir.begin();i!=dir.end();i++)   // Directory display
     {
         QStringList l=*i;
-        //ui->textEdit->insertPlainText(l[0]+"\n");
         QListWidgetItem *item = new QListWidgetItem(l[0]);
-        item->setIcon(folderIcon);
-        ui->listWidget->addItem(item);
+        if (l[1]=="dir")
+        {
+            item->setIcon(folderIcon);
+            ui->listWidget->addItem(item);
+        }
+    }
+
+    for (auto i=dir.begin();i!=dir.end();i++)  // Files display
+    {
+        QStringList l=*i;
+        QListWidgetItem *item = new QListWidgetItem(l[0]);
+        if (l[1]=="file")
+        {
+            item->setIcon(fileIcon);
+            ui->listWidget->addItem(item);
+        }
     }
 }
 

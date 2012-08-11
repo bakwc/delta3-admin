@@ -96,8 +96,11 @@ QVector<QStringList> File::parseDirCmd(QByteArray &arr)
         size = fromBytes<quint16>(arr.mid(ind, 2));
         ind += 2;
         list << QString::fromUtf8( arr.mid(ind, size) );
-        vec.push_back(list);
         ind += size;
+        list.push_back(arr[ind]=='\0' ? "file" : "dir");
+        ind++;
+
+        vec.push_back(list);
     }
 
     return vec;
