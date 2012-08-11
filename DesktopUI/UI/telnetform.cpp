@@ -7,7 +7,7 @@ TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
     ui->setupUi(this);
 
 	connect(tel_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
-	connect(this, SIGNAL(ready(QString&)), tel_, SLOT(onReady(QString&)));
+    connect(this, SIGNAL(ready(QString&)), tel_, SLOT(sendCommand(QString&)));
 
     QPalette p = ui->textEdit->palette();
     p.setColor(QPalette::Base, Qt::black);

@@ -3,6 +3,7 @@
 
 using namespace delta3;
 
+
 AbstrProto::AbstrProto(ProtocolMode mode, Network *net, qint16 clientId, QObject *parent) :
 	QObject(parent), network_(net), clientId_(clientId), protoMode_(mode)
 {
@@ -13,6 +14,7 @@ AbstrProto::AbstrProto(ProtocolMode mode, Network *net, qint16 clientId, QObject
 
 }
 
+
 AbstrProto::~AbstrProto()
 {
 	network_->deactivateMode(clientId_, protoMode_);
@@ -21,7 +23,13 @@ AbstrProto::~AbstrProto()
 	qDebug("Protocol %i deactivate", protoMode_);
 }
 
+
 QString AbstrProto::getClientCaption()
 {
     return network_->getClientCapt(clientId_);
+}
+
+void AbstrProto::sendData(const QByteArray &arr)
+{
+    network_->sendLevelTwo(clientId_, protoMode_, arr);
 }

@@ -31,6 +31,7 @@ protected:
 
 	ProtocolMode protoMode_;
 
+    void sendData(const QByteArray &arr);
 };
 
 }
