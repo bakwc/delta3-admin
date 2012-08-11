@@ -7,7 +7,7 @@ TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
     ui->setupUi(this);
 
 	connect(tel_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
-	connect(this, SIGNAL(ready(QString&)), tel_, SLOT(onReady(QString&)));
+    connect(this, SIGNAL(ready(QString&)), tel_, SLOT(sendCommand(QString&)));
 
     QPalette p = ui->textEdit->palette();
     p.setColor(QPalette::Base, Qt::black);
@@ -57,14 +57,8 @@ bool TelnetForm::eventFilter(QObject* _o, QEvent* _e)
 
         if(eventKey->key() == Qt::Key_Return)
         {
-            qDebug() << "pressed enter!";
-//			network_->sendLevelTwo(clientId_, delta3::MOD_TELNET,
-//                                   currentCmd_.toUtf8());
-
 			emit ready(currentCmd_);
-
             currentCmd_.clear();
-
             return true;
         }
 

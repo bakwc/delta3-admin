@@ -17,21 +17,18 @@ void File::onDataReceived()
         return;
 
     QByteArray arr = network_->receivedData().data;
-    QByteArray send;
 
     switch ((quint8)arr[0]) {
-    case FMOD_INFO:
+    case FMOD_INFO: {
         // (quint)arr[1] // version
 
-        send.clear();
+        QByteArray send;
         send.append(FMOD_INFO);
         send.append(VERSION);
-        network_->sendLevelTwo(clientId_, mode_, send);
+        sendData(send);
 
         break;
-//    case FMOD_CD:
-
-//        break;
+    }
     case FMOD_DIR:
         emit dir(parseDirCmd(arr));
 
@@ -42,18 +39,6 @@ void File::onDataReceived()
     case FMOD_DOWNLOAD:
 
         break;
-//    case FMOD_RENAME:
-
-//        break;
-//    case FMOD_DEL:
-
-//        break;
-//    case FMOD_COPYTO:
-
-//        break;
-//    case FMOD_MOVETO:
-
-//        break;
     case FMOD_READY:
 
         break;
@@ -78,23 +63,21 @@ void File::onCommand(File::FileMode cmd, QString source, QString dest)
         arr.append(d);
     }
 
-    network_->sendLevelTwo(clientId_, mode_, arr);
+    sendData(arr);
 }
 
 
 QVector<QStringList> File::parseDirCmd(QByteArray &arr)
 {
-    qDebug() << Q_FUNC_INFO << "array size " << arr.size();
-
     QVector<QStringList> vec;
     quint32 i = fromBytes<quint32>(arr.mid(1, 4)), ind = 5, size = 0;
 
     for (; i; --i) {
         QStringList list;
-
         // read the size of string and move to the beginning of this string
         size = fromBytes<quint16>(arr.mid(ind, 2));
         ind += 2;
+        // Fill list
         list << QString::fromUtf8( arr.mid(ind, size) );
         ind += size;
         list.push_back(arr[ind]=='\0' ? "file" : "dir");
@@ -108,12 +91,11 @@ QVector<QStringList> File::parseDirCmd(QByteArray &arr)
 
 void File::requestDir(QString &dir)
 {
-    qDebug() << Q_FUNC_INFO;
     QByteArray arr;
 
     arr.append(FMOD_CD);
     arr.append(dir.toUtf8());
     //arr.append('\0'); // ??
 
-    network_->sendLevelTwo(clientId_, mode_, arr);
+    sendData(arr);
 }

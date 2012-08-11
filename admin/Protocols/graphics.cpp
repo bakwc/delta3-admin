@@ -15,33 +15,31 @@ void Graphics::onDataReceived()
             network_->receivedData().mode == mode_))
 		return;
 
-    QByteArray arr = network_->receivedData().data;
-
-    QImage img;
+    const QByteArray &arr = network_->receivedData().data;
 
     switch((qint8)arr[0]) {
     case GMOD_IMGDIFF:
         break;
-    case GMOD_IMGFULL:
+    case GMOD_IMGFULL: {
+        QImage img;
         img.loadFromData(arr.mid(1));
         emit imageReady(img);
 
         break;
-    case GMOD_INFO:
+    }
+    case GMOD_INFO: {
         clientWidht_ = fromBytes<qint16>(arr.mid(2,2));
         clientHeight_ = fromBytes<qint16>(arr.mid(4,2));
 
-        arr.clear();
-        arr.append(GMOD_INFO);
-        arr.append(GMOD_PROTOCOL_VERSION);
-        arr.append((quint8)30);
-        network_->sendLevelTwo(clientId_, mode_, arr);
+        QByteArray send;
+        send.append(GMOD_INFO);
+        send.append(GMOD_PROTOCOL_VERSION);
+        send.append((quint8)30);
+        sendData(send);
 
         emit ready(clientWidht_, clientHeight_, 2);
-
-        qDebug() << "    GMOD_INFO" << clientWidht_ << clientHeight_;
-
         break;
+    }
     default:
         break;
     }
@@ -60,7 +58,7 @@ void Graphics::onMove(qint16 x, qint16 y)
     arr.append(toBytesMacro(x));
     arr.append(toBytesMacro(y));
 
-    network_->sendLevelTwo(clientId_, mode_, arr);
+    sendData(arr);
 }
 
 void Graphics::onClick(qint16 x, qint16 y, GMCLICK click)
@@ -71,10 +69,7 @@ void Graphics::onClick(qint16 x, qint16 y, GMCLICK click)
     arr.append(toBytes(y));
     arr.append(click);
 
-    network_->sendLevelTwo(clientId_, mode_, arr);
-
-    qDebug() << "    " << Q_FUNC_INFO << fromBytes<qint16>(arr.mid(1,2)) <<
-                fromBytes<qint16>(arr.mid(3,2)) << (quint8)arr[5];
+    sendData(arr);
 }
 
 void Graphics::onKey(int key)
@@ -84,8 +79,8 @@ void Graphics::onKey(int key)
     qint8 k = key;
 
     QByteArray arr;
-    arr.append(GMOD_KEYEV);
+    arr.append((quint8)GMOD_KEYEV);
     arr.append(toBytesMacro(k));
 
-    network_->sendLevelTwo(clientId_, mode_, arr);
+    sendData(arr);
 }

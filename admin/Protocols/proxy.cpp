@@ -27,10 +27,11 @@ void Proxy::onDataReceived()
 
 void Proxy::slotReadyRead()
 {
-    QByteArray _data = QByteArray(socket_->readAll());
-    network_->sendLevelTwo(clientId_, mode_, _data);
+    QByteArray arr = QByteArray(socket_->readAll());
+    sendData(arr);
+//    network_->sendLevelTwo(clientId_, mode_, _data);
 
-    qDebug() << Q_FUNC_INFO << _data;
+    qDebug() << Q_FUNC_INFO << arr;
 }
 
 void Proxy::slotNewConnection()

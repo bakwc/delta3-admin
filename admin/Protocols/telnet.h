@@ -13,6 +13,18 @@ public:
                     qint16 clientId = 0,
                     QObject *parent = 0);
 
+    enum TelnetMode {
+        TMOD_REQ    = 1,
+        TMOD_RESP   = 2,
+        TMOD_CMD    = 3
+    };
+
+    enum TMODCMD {
+        TMODCMD_BREAK   = 1,
+        TMODCMD_UP      = 11,
+        TMODCMD_DOWN    = 12
+    };
+
 signals:
     void ready(QString &data);
 
@@ -20,7 +32,8 @@ protected slots:
     void onDataReceived();
 
 public slots:
-    void onReady(QString &data);
+    void sendCommand(QString &data);
+    void sendCommand(TMODCMD cmd);
 };
 
 }

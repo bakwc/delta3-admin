@@ -31,6 +31,7 @@ protected:
 
     ProtocolMode mode_;
 
+    void sendData(const QByteArray &arr);
 };
 
 }

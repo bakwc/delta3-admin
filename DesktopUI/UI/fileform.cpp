@@ -30,8 +30,6 @@ FileForm::~FileForm()
 
 void FileForm::onDirListReceived(const QVector<QStringList> &dir)
 {
-    qDebug() << Q_FUNC_INFO;
-    //ui->textEdit->clear();
     ui->listWidget->clear();
     QIcon folderIcon(":/Folder.png");
     QIcon fileIcon(":/File.png");

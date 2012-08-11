@@ -3,24 +3,52 @@
 
 using namespace delta3;
 
+
 Telnet::Telnet(Network *net, qint16 clientId, QObject *parent) :
     AbstrProto(MOD_TELNET, net, clientId, parent)
 {
 }
 
+
 void Telnet::onDataReceived()
 {
     if (!(network_->receivedData().from == clientId_ &&
-            network_->receivedData().mode == mode_))
+            network_->receivedData().mode == mode_)) {
+        qDebug() << Q_FUNC_INFO << "PROTOCOL ERROR";
         return;
-    qDebug() << "TelnetForm::onDataReceived()";
+    }
 
-    QString message = QString::fromUtf8(network_->receivedData().data);
+    const QByteArray &arr = network_->receivedData().data;
 
-    emit ready(message);
+    switch ((quint8)arr[0]) {
+    case TMOD_RESP: {
+        int size = fromBytes<quint32>(arr.mid(1, 4));
+        QString message = QString::fromUtf8(arr.mid(5, size));
+
+        emit ready(message);
+    }
+
+    }
 }
 
-void Telnet::onReady(QString &data)
+
+void Telnet::sendCommand(QString &data)
 {
-    network_->sendLevelTwo(clientId_, mode_, data.toUtf8());
+    QByteArray send, arr = data.toUtf8();
+
+    send.append((quint8)TMOD_REQ);
+    send.append(toBytes<quint32>(arr.size()));
+    send.append(arr);
+
+    sendData(send);
+}
+
+
+void Telnet::sendCommand(TMODCMD cmd)
+{
+    QByteArray send;
+    send.append((quint8)TMOD_CMD);
+    send.append((quint8)cmd);
+
+    sendData(send);
 }
