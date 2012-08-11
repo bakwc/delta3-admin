@@ -1,5 +1,6 @@
 #include "fileform.h"
 #include "ui_fileform.h"
+#include <QIcon>
 
 FileForm::FileForm(delta3::File *file, QWidget *parent) :
     QWidget(parent),
@@ -30,11 +31,16 @@ FileForm::~FileForm()
 void FileForm::onDirListReceived(const QVector<QStringList> &dir)
 {
     qDebug() << Q_FUNC_INFO;
-    ui->textEdit->clear();
+    //ui->textEdit->clear();
+    ui->listWidget->clear();
+    QIcon folderIcon(":/Folder.png");
     for (auto i=dir.begin();i!=dir.end();i++)
     {
         QStringList l=*i;
-        ui->textEdit->insertPlainText(l[0]+"\n");
+        //ui->textEdit->insertPlainText(l[0]+"\n");
+        QListWidgetItem *item = new QListWidgetItem(l[0]);
+        item->setIcon(folderIcon);
+        ui->listWidget->addItem(item);
     }
 }
 
