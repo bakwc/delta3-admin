@@ -18,7 +18,7 @@ TelnetForm::TelnetForm(delta3::Telnet *tel, QWidget *parent) :
 
 	setAttribute(Qt::WA_DeleteOnClose);
 
-    this->setWindowTitle("telnet - "+tel_->getClientCaption());
+    this->setWindowTitle(tr("Telnet - ")+tel_->getClientCaption());
 
     auto fmt = ui->textEdit->currentCharFormat();
     fmt.setFontFixedPitch(true);

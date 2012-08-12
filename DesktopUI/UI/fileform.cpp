@@ -20,7 +20,10 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
 
 	 setAttribute(Qt::WA_DeleteOnClose);
 
+     this->setWindowTitle(tr("File Browser - ")+file_->getClientCaption());
+
      _cd="/";
+     ui->lineEdit->setText(_cd);
      emit requestDir(_cd);
 }
 
@@ -64,15 +67,35 @@ void FileForm::onDirListReceived(const QVector<QStringList> &dir)
 
 void FileForm::on_pushButton_clicked()
 {
-    QString dir=ui->lineEdit->text();
-    emit requestDir(dir);
+    _cd=ui->lineEdit->text();
+    emit requestDir(_cd);
 }
 
 void FileForm::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     if (item->whatsThis()=="folder")
     {
-        _cd+=item->text()+"/";
+        if (item->text()==".")
+            _cd="/";
+        else if (item->text()=="..")
+        {
+            if (_cd.count("/")>1)
+            {
+                _cd.chop(1);
+                auto n=_cd.lastIndexOf("/");
+                qDebug() << n;
+                _cd=_cd.left(n+1);
+            }
+        }
+        else
+            _cd+=item->text()+"/";
+
+        ui->lineEdit->setText(_cd);
         emit requestDir(_cd);
+    }
+    else if (item->whatsThis()=="file")
+    {
+        QString file=_cd+item->text();
+        //emit requestFile(file);
     }
 }
