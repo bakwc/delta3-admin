@@ -19,6 +19,9 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
      //connect(this, SIGNAL(ready(QString&)), file_, SLOT(onReady(QString&)));
 
 	 setAttribute(Qt::WA_DeleteOnClose);
+
+     _cd="/";
+     emit requestDir(_cd);
 }
 
 
@@ -41,6 +44,7 @@ void FileForm::onDirListReceived(const QVector<QStringList> &dir)
         if (l[1]=="dir")
         {
             item->setIcon(folderIcon);
+            item->setWhatsThis("folder");
             ui->listWidget->addItem(item);
         }
     }
@@ -52,6 +56,7 @@ void FileForm::onDirListReceived(const QVector<QStringList> &dir)
         if (l[1]=="file")
         {
             item->setIcon(fileIcon);
+            item->setWhatsThis("file");
             ui->listWidget->addItem(item);
         }
     }
@@ -61,4 +66,13 @@ void FileForm::on_pushButton_clicked()
 {
     QString dir=ui->lineEdit->text();
     emit requestDir(dir);
+}
+
+void FileForm::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    if (item->whatsThis()=="folder")
+    {
+        _cd+=item->text()+"/";
+        emit requestDir(_cd);
+    }
 }

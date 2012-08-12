@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QListWidgetItem>
 #include "network.h"
 #include "Protocols/file.h"
 
@@ -21,10 +22,11 @@ signals:
 
 private slots:
     void onDirListReceived(const QVector<QStringList> &dir);
-
     void on_pushButton_clicked();
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
 
 private:
 	delta3::File	*file_;
 	Ui::FileForm	*ui;
+    QString _cd;
 };
