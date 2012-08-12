@@ -19,6 +19,7 @@ public:
     
 signals:
     void requestDir(QString &d);
+    void requestFile(QString &f);
 
 private slots:
     void onDirListReceived(const QVector<QStringList> &dir);

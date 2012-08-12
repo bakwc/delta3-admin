@@ -26,6 +26,7 @@ public:
         FMOD_DEL        = 7, // cmd
         FMOD_COPYTO     = 8, // cmd
         FMOD_MOVETO     = 9, // cmd
+        FMOD_DOWNREQ    = 10,
         FMOD_READY      = 101
     };
 	
@@ -38,6 +39,7 @@ protected slots:
 public slots:
     void onCommand(FileMode cmd, QString source, QString dest = QString());
     void requestDir(QString &dir);
+    void requestFile(QString &file);
 
 private:
     QVector<QStringList> parseDirCmd(QByteArray& arr);
