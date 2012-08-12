@@ -47,28 +47,24 @@ void TelnetForm::onDataReceived(QString &str)
 
 bool TelnetForm::eventFilter(QObject* _o, QEvent* _e)
 {
-    if(_e->type() == QEvent::KeyPress)
+    if (_e->type() == QEvent::KeyPress)
     {
+        qApp->sendEvent(tel_, _e);
+
         QKeyEvent* eventKey = static_cast<QKeyEvent*>(_e);
         if(eventKey->key() == Qt::Key_Shift ||
            eventKey->key() == Qt::Key_Control ||
            eventKey->key() == Qt::Key_Alt)
             return true;
 
-        if(eventKey->key() == Qt::Key_Return)
+        if (eventKey->key() == Qt::Key_Return)
         {
-            qDebug() << "pressed enter!";
-//			network_->sendLevelTwo(clientId_, delta3::MOD_TELNET,
-//                                   currentCmd_.toUtf8());
-
 			emit ready(currentCmd_);
-
             currentCmd_.clear();
-
             return true;
         }
 
-        if(eventKey->key() == Qt::Key_Backspace)
+        if (eventKey->key() == Qt::Key_Backspace)
         {
             if (currentCmd_.isEmpty()) return true;
             currentCmd_=currentCmd_.left(currentCmd_.size()-1);
@@ -79,15 +75,17 @@ bool TelnetForm::eventFilter(QObject* _o, QEvent* _e)
 
             qint32 key = eventKey->key();
 
-            if ( ! (eventKey->modifiers() == Qt::ShiftModifier ))
-                key=tolower(key);
+//            if ( ! (eventKey->modifiers() == Qt::ShiftModifier ))
+//                key=tolower(key);
 
-            currentCmd_+=QChar(key);
+//            currentCmd_+=QChar(key);
+            currentCmd_ += eventKey->text();
             ui->textEdit->setText(history_+currentCmd_);
             textScrollDown();
             return true;
 
     }
+
     return QWidget::eventFilter(_o, _e);
 }
 

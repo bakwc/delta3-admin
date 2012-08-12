@@ -25,6 +25,9 @@ public:
         TMODCMD_DOWN    = 12
     };
 
+protected:
+    bool event(QEvent *);
+
 signals:
     void ready(QString &data);
 

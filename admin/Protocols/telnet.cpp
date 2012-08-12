@@ -1,5 +1,6 @@
 #include "telnet.h"
 #include "../network.h"
+#include <QKeyEvent>
 
 using namespace delta3;
 
@@ -56,4 +57,33 @@ void Telnet::sendCommand(TMODCMD cmd)
     send.append((quint8)cmd);
 
     sendData(send);
+}
+
+
+bool Telnet::event(QEvent *ev)
+{
+    if (ev->type() == QEvent::KeyPress) {
+        QKeyEvent *kEv = static_cast<QKeyEvent*>(ev);
+        qDebug() << Q_FUNC_INFO << "KeyPress" << kEv->text() << kEv->key();
+
+        if (kEv->key() == Qt::Key_Up) {
+            QByteArray send;
+            send.append(TMOD_CMD);
+            send.append(TMODCMD_UP);
+            sendData(send);
+        } else if (kEv->key() == Qt::Key_Down) {
+            QByteArray send;
+            send.append(TMOD_CMD);
+            send.append(TMODCMD_DOWN);
+            sendData(send);
+        } else if (kEv->modifiers() == Qt::ControlModifier &&
+                kEv->key() == Qt::Key_C) {
+            QByteArray send;
+            send.append(TMOD_CMD);
+            send.append(TMODCMD_BREAK);
+            sendData(send);
+        }
+    }
+
+    AbstrProto::event(ev);
 }
