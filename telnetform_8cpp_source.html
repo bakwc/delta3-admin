@@ -91,7 +91,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    ui-&gt;setupUi(<span class="keyword">this</span>);</div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    connect(tel_, SIGNAL(<a class="code" href="class_telnet_form.html#a9c26910fd8b5e6aa2d96ccede5e9e05f">ready</a>(QString&amp;)), SLOT(onDataReceived(QString&amp;)));</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="class_telnet_form.html#a9c26910fd8b5e6aa2d96ccede5e9e05f">ready</a>(QString&amp;)), tel_, SLOT(onReady(QString&amp;)));</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    connect(<span class="keyword">this</span>, SIGNAL(<a class="code" href="class_telnet_form.html#a9c26910fd8b5e6aa2d96ccede5e9e05f">ready</a>(QString&amp;)), tel_, SLOT(sendCommand(QString&amp;)));</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    QPalette p = ui-&gt;textEdit-&gt;palette();</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    p.setColor(QPalette::Base, Qt::black);</div>
@@ -141,51 +141,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordflow">if</span>(eventKey-&gt;key() == Qt::Key_Return)</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        {</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            qDebug() &lt;&lt; <span class="stringliteral">&quot;pressed enter!&quot;</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">//          network_-&gt;sendLevelTwo(clientId_, delta3::MOD_TELNET,</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="comment">//                                   currentCmd_.toUtf8());</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            emit <a class="code" href="class_telnet_form.html#a9c26910fd8b5e6aa2d96ccede5e9e05f">ready</a>(currentCmd_);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            currentCmd_.clear();</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        }</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordflow">if</span>(eventKey-&gt;key() == Qt::Key_Backspace)</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">if</span> (currentCmd_.isEmpty()) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            currentCmd_=currentCmd_.left(currentCmd_.size()-1);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            ui-&gt;textEdit-&gt;setText(history_+currentCmd_);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            textScrollDown();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            qint32 key = eventKey-&gt;key();</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">if</span> ( ! (eventKey-&gt;modifiers() == Qt::ShiftModifier ))</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                key=tolower(key);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            currentCmd_+=QChar(key);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            ui-&gt;textEdit-&gt;setText(history_+currentCmd_);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            textScrollDown();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordflow">return</span> QWidget::eventFilter(_o, _e);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;}</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keywordtype">void</span> TelnetForm::textScrollDown()</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;{</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    QTextCursor c =  ui-&gt;textEdit-&gt;textCursor();</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    c.movePosition(QTextCursor::End);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    ui-&gt;textEdit-&gt;setTextCursor(c);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;}</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            emit <a class="code" href="class_telnet_form.html#a9c26910fd8b5e6aa2d96ccede5e9e05f">ready</a>(currentCmd_);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            currentCmd_.clear();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        }</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordflow">if</span>(eventKey-&gt;key() == Qt::Key_Backspace)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordflow">if</span> (currentCmd_.isEmpty()) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            currentCmd_=currentCmd_.left(currentCmd_.size()-1);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            ui-&gt;textEdit-&gt;setText(history_+currentCmd_);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            textScrollDown();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            qint32 key = eventKey-&gt;key();</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordflow">if</span> ( ! (eventKey-&gt;modifiers() == Qt::ShiftModifier ))</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                key=tolower(key);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            currentCmd_+=QChar(key);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            ui-&gt;textEdit-&gt;setText(history_+currentCmd_);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            textScrollDown();</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    }</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordflow">return</span> QWidget::eventFilter(_o, _e);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">void</span> TelnetForm::textScrollDown()</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;{</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    QTextCursor c =  ui-&gt;textEdit-&gt;textCursor();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    c.movePosition(QTextCursor::End);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    ui-&gt;textEdit-&gt;setTextCursor(c);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:22 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 11:20:18 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

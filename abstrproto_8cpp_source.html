@@ -87,32 +87,39 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">using namespace </span>delta3;</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="code" href="classdelta3_1_1_abstr_proto.html#a6726d6ed487fc0fe5301b6febcbd90a6">    6</a></span>&#160;<a class="code" href="classdelta3_1_1_abstr_proto.html#a6726d6ed487fc0fe5301b6febcbd90a6">AbstrProto::AbstrProto</a>(<a class="code" href="namespacedelta3.html#a137f5faa3e56bfe04e5db6f306df4827">ProtocolMode</a> mode, <a class="code" href="classdelta3_1_1_network.html">Network</a> *net, qint16 clientId, QObject *parent) :</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    QObject(parent), network_(net), clientId_(clientId), protoMode_(mode)</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    connect(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>, SIGNAL(dataIncome()), SLOT(<a class="code" href="classdelta3_1_1_abstr_proto.html#a803381719684ba6fe48a901c286ecd3a">onDataReceived</a>()));</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>-&gt;<a class="code" href="classdelta3_1_1_network.html#ae97d355f81951ab42744f60f47cf4464">activateMode</a>(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a>, <a class="code" href="classdelta3_1_1_abstr_proto.html#a4586f43e986f74f0ce1de070875134e1">protoMode_</a>);</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    qDebug(<span class="stringliteral">&quot;Protocol %i activate&quot;</span>, <a class="code" href="classdelta3_1_1_abstr_proto.html#a4586f43e986f74f0ce1de070875134e1">protoMode_</a>);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="code" href="classdelta3_1_1_abstr_proto.html#a6726d6ed487fc0fe5301b6febcbd90a6">    7</a></span>&#160;<a class="code" href="classdelta3_1_1_abstr_proto.html#a6726d6ed487fc0fe5301b6febcbd90a6">AbstrProto::AbstrProto</a>(<a class="code" href="namespacedelta3.html#a137f5faa3e56bfe04e5db6f306df4827">ProtocolMode</a> mode, <a class="code" href="classdelta3_1_1_network.html">Network</a> *net, qint16 clientId, QObject *parent) :</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    QObject(parent), network_(net), clientId_(clientId), mode_(mode)</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;{</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    connect(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>, SIGNAL(dataIncome()), SLOT(<a class="code" href="classdelta3_1_1_abstr_proto.html#a803381719684ba6fe48a901c286ecd3a">onDataReceived</a>()));</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>-&gt;<a class="code" href="classdelta3_1_1_network.html#ae97d355f81951ab42744f60f47cf4464">activateMode</a>(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a>, <a class="code" href="classdelta3_1_1_abstr_proto.html#aa357d90f3b492dc3224d4d1a777ea4b3">mode_</a>);</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    qDebug(<span class="stringliteral">&quot;Protocol %i activate&quot;</span>, <a class="code" href="classdelta3_1_1_abstr_proto.html#aa357d90f3b492dc3224d4d1a777ea4b3">mode_</a>);</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;}</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="code" href="classdelta3_1_1_abstr_proto.html#ab93ad6044cc0585791e7ca1eeaabf712">   16</a></span>&#160;<a class="code" href="classdelta3_1_1_abstr_proto.html#ab93ad6044cc0585791e7ca1eeaabf712">AbstrProto::~AbstrProto</a>()</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>-&gt;<a class="code" href="classdelta3_1_1_network.html#a93f491165fdb82c144420c9b21363c2b">deactivateMode</a>(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a>, <a class="code" href="classdelta3_1_1_abstr_proto.html#a4586f43e986f74f0ce1de070875134e1">protoMode_</a>);</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    disconnect(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    qDebug(<span class="stringliteral">&quot;Protocol %i deactivate&quot;</span>, <a class="code" href="classdelta3_1_1_abstr_proto.html#a4586f43e986f74f0ce1de070875134e1">protoMode_</a>);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;}</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="classdelta3_1_1_abstr_proto.html#ad1abf8be0578e9704918b9890674e991">   24</a></span>&#160;QString <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1abf8be0578e9704918b9890674e991">AbstrProto::getClientCaption</a>()</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>-&gt;<a class="code" href="classdelta3_1_1_network.html#ad718634914893de9f727f20140ec4784">getClientCapt</a>(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a>);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="code" href="classdelta3_1_1_abstr_proto.html#ab93ad6044cc0585791e7ca1eeaabf712">   17</a></span>&#160;<a class="code" href="classdelta3_1_1_abstr_proto.html#ab93ad6044cc0585791e7ca1eeaabf712">AbstrProto::~AbstrProto</a>()</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>-&gt;<a class="code" href="classdelta3_1_1_network.html#a93f491165fdb82c144420c9b21363c2b">deactivateMode</a>(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a>, <a class="code" href="classdelta3_1_1_abstr_proto.html#aa357d90f3b492dc3224d4d1a777ea4b3">mode_</a>);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    disconnect(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    qDebug(<span class="stringliteral">&quot;Protocol %i deactivate&quot;</span>, <a class="code" href="classdelta3_1_1_abstr_proto.html#aa357d90f3b492dc3224d4d1a777ea4b3">mode_</a>);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;}</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="classdelta3_1_1_abstr_proto.html#ad1abf8be0578e9704918b9890674e991">   26</a></span>&#160;QString <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1abf8be0578e9704918b9890674e991">AbstrProto::getClientCaption</a>()</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;{</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>-&gt;<a class="code" href="classdelta3_1_1_network.html#ad718634914893de9f727f20140ec4784">getClientCapt</a>(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;}</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="code" href="classdelta3_1_1_abstr_proto.html#a564d429cc8444b061987602d2e8de3e2">   31</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classdelta3_1_1_abstr_proto.html#a564d429cc8444b061987602d2e8de3e2">AbstrProto::sendData</a>(<span class="keyword">const</span> QByteArray &amp;arr)</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a>-&gt;<a class="code" href="classdelta3_1_1_network.html#a1ed73eff13c9713520eb1881721f2645">sendLevelTwo</a>(<a class="code" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a>, <a class="code" href="classdelta3_1_1_abstr_proto.html#aa357d90f3b492dc3224d4d1a777ea4b3">mode_</a>, arr);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:22 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 11:20:17 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['sendcommand',['sendCommand',['../classdelta3_1_1_telnet.html#a070291f1ce22fd2f575dce48524a9630',1,'delta3::Telnet::sendCommand(QString &amp;data)'],['../classdelta3_1_1_telnet.html#a521ad999723f510f770cd8074eacb693',1,'delta3::Telnet::sendCommand(TMODCMD cmd)']]],
+  ['senddata',['sendData',['../classdelta3_1_1_abstr_proto.html#a564d429cc8444b061987602d2e8de3e2',1,'delta3::AbstrProto']]],
   ['sendlevelone',['sendLevelOne',['../classdelta3_1_1_network.html#ae7841737d806171fb9c934a74edb319d',1,'delta3::Network']]],
   ['sendleveltwo',['sendLevelTwo',['../classdelta3_1_1_network.html#a1ed73eff13c9713520eb1881721f2645',1,'delta3::Network']]],
   ['setcaption',['setCaption',['../classdelta3_1_1_client.html#ae06c1dda47192ce845ba676cbd1abde7',1,'delta3::Client']]],

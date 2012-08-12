@@ -97,21 +97,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;                    qint16 clientId = 0,</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;                    QObject *parent = 0);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;signals:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">void</span> ready(QString &amp;data);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">protected</span> slots:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> onDataReceived();</div>
+<div class="line"><a name="l00016"></a><span class="lineno"><a class="code" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4">   16</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4">TelnetMode</a> {</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="code" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4a27468cc2db4b08708fa9ff82c7f738f1">   17</a></span>&#160;        TMOD_REQ    = 1,</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4a5f093a11c2b3d029e3d6d5214c694cde">   18</a></span>&#160;        TMOD_RESP   = 2,</div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="code" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4ab553e3e1b8557004c24c688b54217b39">   19</a></span>&#160;        TMOD_CMD    = 3</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    };</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">void</span> onReady(QString &amp;data);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;};</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;}</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231c">   22</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231c">TMODCMD</a> {</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231cadf1555e9dcde632d5c094208f2ee32c5">   23</a></span>&#160;        TMODCMD_BREAK   = 1,</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231cac2a959c7bee08e513da6827d123d128c">   24</a></span>&#160;        TMODCMD_UP      = 11,</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231caa2d2702c57f45048fdb55de7ef0db160">   25</a></span>&#160;        TMODCMD_DOWN    = 12</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    };</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;signals:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">void</span> ready(QString &amp;data);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">protected</span> slots:</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">void</span> onDataReceived();</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> sendCommand(QString &amp;data);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> sendCommand(TMODCMD cmd);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:22 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 11:20:18 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

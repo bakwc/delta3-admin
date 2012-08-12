@@ -85,31 +85,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;abstrproto.h&quot;</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span>delta3 {</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QVector&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;QStringList&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
-<div class="line"><a name="l00007"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html">    7</a></span>&#160;<span class="keyword">class </span>DELTA3_EXPORT <a class="code" href="classdelta3_1_1_file.html">File</a> : <span class="keyword">public</span> <a class="code" href="classdelta3_1_1_abstr_proto.html">AbstrProto</a></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classdelta3_1_1_file.html">File</a>(<a class="code" href="classdelta3_1_1_network.html">Network</a> *net = NULL,</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;                  qint16 clientId = 0, QObject *parent = 0);</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;signals:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordtype">void</span> ready(QString &amp;d);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">protected</span> slots:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">void</span> onDataReceived();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">public</span> slots:</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">void</span> onReady(QString &amp;d);</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;};</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span>delta3 {</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html">    9</a></span>&#160;<span class="keyword">class </span>DELTA3_EXPORT <a class="code" href="classdelta3_1_1_file.html">File</a> : <span class="keyword">public</span> <a class="code" href="classdelta3_1_1_abstr_proto.html">AbstrProto</a></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> quint8 VERSION = 1;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classdelta3_1_1_file.html">File</a>(<a class="code" href="classdelta3_1_1_network.html">Network</a> *net = NULL,</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;                  qint16 clientId = 0, QObject *parent = 0);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1">   18</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1">FileMode</a></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    {</div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1ae97dcd72b810332bec6c0311f1bd2998">   20</a></span>&#160;        FMOD_INFO       = 1,</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1a728546b7cdf497fec0018a085b948415">   21</a></span>&#160;        FMOD_CD         = 2, <span class="comment">// cmd</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1ae8d77c4b0ba4ebd5a84edf8b630f161f">   22</a></span>&#160;        FMOD_DIR        = 3,</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1adf2e11d9d955f11c5a1f61d234b3eff1">   23</a></span>&#160;        FMOD_DOWNINFO   = 4,</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1a838c326be889857eeaeea3974c83e524">   24</a></span>&#160;        FMOD_DOWNLOAD   = 5,</div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1a20581671dbc8feb425e80301bcfd7c16">   25</a></span>&#160;        FMOD_RENAME     = 6, <span class="comment">// cmd</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1a8a8b29b5d3445d53526c0f07e11a4b3b">   26</a></span>&#160;        FMOD_DEL        = 7, <span class="comment">// cmd</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1a4bf4873241b521e66b7c6646e8736ca6">   27</a></span>&#160;        FMOD_COPYTO     = 8, <span class="comment">// cmd</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1adc1ede4812129289c9d2fbb97184c4cc">   28</a></span>&#160;        FMOD_MOVETO     = 9, <span class="comment">// cmd</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="code" href="classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1af895a0059d1684250ba019919e304bc1">   29</a></span>&#160;        FMOD_READY      = 101</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    };</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    </div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;signals:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> dir(<span class="keyword">const</span> QVector&lt;QStringList&gt; &amp;dir);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">protected</span> slots:</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> onDataReceived();</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> onCommand(FileMode cmd, QString source, QString dest = QString());</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> requestDir(QString &amp;dir);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    QVector&lt;QStringList&gt; parseDirCmd(QByteArray&amp; arr);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:22 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 11:20:17 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

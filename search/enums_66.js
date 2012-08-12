@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['filemode',['FileMode',['../namespacedelta3.html#a14c4c3ed3ce68d4346d7093780b71de1',1,'delta3']]]
+  ['filemode',['FileMode',['../classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1',1,'delta3::File']]]
 ];

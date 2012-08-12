@@ -89,6 +89,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-slots">Protected Slots</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classdelta3_1_1_abstr_proto-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -121,11 +122,15 @@ Public Member Functions</h2></td></tr>
 Protected Slots</h2></td></tr>
 <tr class="memitem:a803381719684ba6fe48a901c286ecd3a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#a803381719684ba6fe48a901c286ecd3a">onDataReceived</a> ()=0</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a564d429cc8444b061987602d2e8de3e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#a564d429cc8444b061987602d2e8de3e2">sendData</a> (const QByteArray &amp;arr)</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ad1adb76cf04a43e792f31ef7b64f1690"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdelta3_1_1_network.html">Network</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a></td></tr>
 <tr class="memitem:ad6f58e07f4181f4a0ad278eb8a77bea3"><td class="memItemLeft" align="right" valign="top">qint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a></td></tr>
-<tr class="memitem:a4586f43e986f74f0ce1de070875134e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacedelta3.html#a137f5faa3e56bfe04e5db6f306df4827">ProtocolMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#a4586f43e986f74f0ce1de070875134e1">protoMode_</a></td></tr>
+<tr class="memitem:aa357d90f3b492dc3224d4d1a777ea4b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacedelta3.html#a137f5faa3e56bfe04e5db6f306df4827">ProtocolMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#aa357d90f3b492dc3224d4d1a777ea4b3">mode_</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
@@ -175,7 +180,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="abstrproto_8cpp_source.html#l00006">6</a> of file <a class="el" href="abstrproto_8cpp_source.html">abstrproto.cpp</a>.</p>
+<p>Definition at line <a class="el" href="abstrproto_8cpp_source.html#l00007">7</a> of file <a class="el" href="abstrproto_8cpp_source.html">abstrproto.cpp</a>.</p>
 
 </div>
 </div>
@@ -192,7 +197,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="abstrproto_8cpp_source.html#l00016">16</a> of file <a class="el" href="abstrproto_8cpp_source.html">abstrproto.cpp</a>.</p>
+<p>Definition at line <a class="el" href="abstrproto_8cpp_source.html#l00017">17</a> of file <a class="el" href="abstrproto_8cpp_source.html">abstrproto.cpp</a>.</p>
 
 </div>
 </div>
@@ -235,7 +240,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="abstrproto_8cpp_source.html#l00024">24</a> of file <a class="el" href="abstrproto_8cpp_source.html">abstrproto.cpp</a>.</p>
+<p>Definition at line <a class="el" href="abstrproto_8cpp_source.html#l00026">26</a> of file <a class="el" href="abstrproto_8cpp_source.html">abstrproto.cpp</a>.</p>
 
 </div>
 </div>
@@ -259,6 +264,32 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a564d429cc8444b061987602d2e8de3e2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AbstrProto::sendData </td>
+          <td>(</td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>arr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="abstrproto_8cpp_source.html#l00031">31</a> of file <a class="el" href="abstrproto_8cpp_source.html">abstrproto.cpp</a>.</p>
 
 </div>
 </div>
@@ -307,7 +338,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4586f43e986f74f0ce1de070875134e1"></a>
+<a class="anchor" id="aa357d90f3b492dc3224d4d1a777ea4b3"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -315,7 +346,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacedelta3.html#a137f5faa3e56bfe04e5db6f306df4827">ProtocolMode</a> delta3::AbstrProto::protoMode_</td>
+          <td class="memname"><a class="el" href="namespacedelta3.html#a137f5faa3e56bfe04e5db6f306df4827">ProtocolMode</a> delta3::AbstrProto::mode_</td>
         </tr>
       </table>
   </td>
@@ -336,7 +367,7 @@ Protected Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:22 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 11:20:18 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>

@@ -87,6 +87,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -108,9 +109,21 @@ Inheritance diagram for delta3::Telnet:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:afce3467f6426293b9e6223e863bba6d4"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4">TelnetMode</a> { <a class="el" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4a27468cc2db4b08708fa9ff82c7f738f1">TMOD_REQ</a> =  1, 
+<a class="el" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4a5f093a11c2b3d029e3d6d5214c694cde">TMOD_RESP</a> =  2, 
+<a class="el" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4ab553e3e1b8557004c24c688b54217b39">TMOD_CMD</a> =  3
+ }</td></tr>
+<tr class="memitem:af1f5a2906c4840063e8d43d15321231c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231c">TMODCMD</a> { <a class="el" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231cadf1555e9dcde632d5c094208f2ee32c5">TMODCMD_BREAK</a> =  1, 
+<a class="el" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231cac2a959c7bee08e513da6827d123d128c">TMODCMD_UP</a> =  11, 
+<a class="el" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231caa2d2702c57f45048fdb55de7ef0db160">TMODCMD_DOWN</a> =  12
+ }</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="pub-slots"></a>
 Public Slots</h2></td></tr>
-<tr class="memitem:a017b6195687892bd784a36424d0ec017"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_telnet.html#a017b6195687892bd784a36424d0ec017">onReady</a> (QString &amp;data)</td></tr>
+<tr class="memitem:a070291f1ce22fd2f575dce48524a9630"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_telnet.html#a070291f1ce22fd2f575dce48524a9630">sendCommand</a> (QString &amp;data)</td></tr>
+<tr class="memitem:a521ad999723f510f770cd8074eacb693"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_telnet.html#a521ad999723f510f770cd8074eacb693">sendCommand</a> (<a class="el" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231c">TMODCMD</a> cmd)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="signals"></a>
 Signals</h2></td></tr>
@@ -133,15 +146,66 @@ Protected Slots</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_classdelta3_1_1_abstr_proto"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classdelta3_1_1_abstr_proto')"><img src="closed.png" alt="-"/>&nbsp;Protected Member Functions inherited from <a class="el" href="classdelta3_1_1_abstr_proto.html">delta3::AbstrProto</a></td></tr>
+<tr class="memitem:a564d429cc8444b061987602d2e8de3e2 inherit pro_methods_classdelta3_1_1_abstr_proto"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#a564d429cc8444b061987602d2e8de3e2">sendData</a> (const QByteArray &amp;arr)</td></tr>
 <tr class="inherit_header pro_attribs_classdelta3_1_1_abstr_proto"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classdelta3_1_1_abstr_proto')"><img src="closed.png" alt="-"/>&nbsp;Protected Attributes inherited from <a class="el" href="classdelta3_1_1_abstr_proto.html">delta3::AbstrProto</a></td></tr>
 <tr class="memitem:ad1adb76cf04a43e792f31ef7b64f1690 inherit pro_attribs_classdelta3_1_1_abstr_proto"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdelta3_1_1_network.html">Network</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#ad1adb76cf04a43e792f31ef7b64f1690">network_</a></td></tr>
 <tr class="memitem:ad6f58e07f4181f4a0ad278eb8a77bea3 inherit pro_attribs_classdelta3_1_1_abstr_proto"><td class="memItemLeft" align="right" valign="top">qint16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#ad6f58e07f4181f4a0ad278eb8a77bea3">clientId_</a></td></tr>
-<tr class="memitem:a4586f43e986f74f0ce1de070875134e1 inherit pro_attribs_classdelta3_1_1_abstr_proto"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacedelta3.html#a137f5faa3e56bfe04e5db6f306df4827">ProtocolMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#a4586f43e986f74f0ce1de070875134e1">protoMode_</a></td></tr>
+<tr class="memitem:aa357d90f3b492dc3224d4d1a777ea4b3 inherit pro_attribs_classdelta3_1_1_abstr_proto"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacedelta3.html#a137f5faa3e56bfe04e5db6f306df4827">ProtocolMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdelta3_1_1_abstr_proto.html#aa357d90f3b492dc3224d4d1a777ea4b3">mode_</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="telnet_8h_source.html#l00008">8</a> of file <a class="el" href="telnet_8h_source.html">telnet.h</a>.</p>
-</div><h2>Constructor &amp; Destructor Documentation</h2>
+</div><h2>Member Enumeration Documentation</h2>
+<a class="anchor" id="afce3467f6426293b9e6223e863bba6d4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classdelta3_1_1_telnet.html#afce3467f6426293b9e6223e863bba6d4">delta3::Telnet::TelnetMode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="afce3467f6426293b9e6223e863bba6d4a27468cc2db4b08708fa9ff82c7f738f1"></a>TMOD_REQ</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="afce3467f6426293b9e6223e863bba6d4a5f093a11c2b3d029e3d6d5214c694cde"></a>TMOD_RESP</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="afce3467f6426293b9e6223e863bba6d4ab553e3e1b8557004c24c688b54217b39"></a>TMOD_CMD</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="telnet_8h_source.html#l00016">16</a> of file <a class="el" href="telnet_8h_source.html">telnet.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af1f5a2906c4840063e8d43d15321231c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231c">delta3::Telnet::TMODCMD</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="af1f5a2906c4840063e8d43d15321231cadf1555e9dcde632d5c094208f2ee32c5"></a>TMODCMD_BREAK</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="af1f5a2906c4840063e8d43d15321231cac2a959c7bee08e513da6827d123d128c"></a>TMODCMD_UP</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="af1f5a2906c4840063e8d43d15321231caa2d2702c57f45048fdb55de7ef0db160"></a>TMODCMD_DOWN</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="telnet_8h_source.html#l00022">22</a> of file <a class="el" href="telnet_8h_source.html">telnet.h</a>.</p>
+
+</div>
+</div>
+<h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ae21a6de6cac4fdacc90640212b48b719"></a>
 <div class="memitem">
 <div class="memproto">
@@ -180,7 +244,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="telnet_8cpp_source.html#l00006">6</a> of file <a class="el" href="telnet_8cpp_source.html">telnet.cpp</a>.</p>
+<p>Definition at line <a class="el" href="telnet_8cpp_source.html#l00007">7</a> of file <a class="el" href="telnet_8cpp_source.html">telnet.cpp</a>.</p>
 
 </div>
 </div>
@@ -230,11 +294,11 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="telnet_8cpp_source.html#l00011">11</a> of file <a class="el" href="telnet_8cpp_source.html">telnet.cpp</a>.</p>
+<p>Definition at line <a class="el" href="telnet_8cpp_source.html#l00013">13</a> of file <a class="el" href="telnet_8cpp_source.html">telnet.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a017b6195687892bd784a36424d0ec017"></a>
+<a class="anchor" id="a070291f1ce22fd2f575dce48524a9630"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -242,7 +306,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Telnet::onReady </td>
+          <td class="memname">void Telnet::sendCommand </td>
           <td>(</td>
           <td class="paramtype">QString &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -256,7 +320,33 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="telnet_8cpp_source.html#l00023">23</a> of file <a class="el" href="telnet_8cpp_source.html">telnet.cpp</a>.</p>
+<p>Definition at line <a class="el" href="telnet_8cpp_source.html#l00035">35</a> of file <a class="el" href="telnet_8cpp_source.html">telnet.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a521ad999723f510f770cd8074eacb693"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Telnet::sendCommand </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classdelta3_1_1_telnet.html#af1f5a2906c4840063e8d43d15321231c">TMODCMD</a>&#160;</td>
+          <td class="paramname"><em>cmd</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="telnet_8cpp_source.html#l00047">47</a> of file <a class="el" href="telnet_8cpp_source.html">telnet.cpp</a>.</p>
 
 </div>
 </div>
@@ -267,7 +357,7 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Aug 8 2012 04:36:22 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Aug 12 2012 11:20:18 for Delta3 Admin by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.1.2
 </small></address>
