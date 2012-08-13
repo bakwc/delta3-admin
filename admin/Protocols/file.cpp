@@ -1,5 +1,6 @@
 #include "file.h"
 #include "../network.h"
+#include "../utils.h"
 
 using namespace delta3;
 
@@ -92,10 +93,16 @@ QVector<QStringList> File::parseDirCmd(QByteArray &arr)
 void File::requestDir(QString &dir)
 {
     QByteArray arr;
-
     arr.append(FMOD_CD);
     arr.append(dir.toUtf8());
     //arr.append('\0'); // ??
 
     sendData(arr);
+}
+
+void File::requestFile(QString &file)
+{
+    QByteArray arr;
+    arr.append(FMOD_DOWNREQ);
+    arr.append(file.toUtf8());
 }
