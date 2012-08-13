@@ -36,7 +36,7 @@ protected slots:
 	void onDataReceived();
 
 public slots:
-    void onCommand(FileMode cmd, QString source, QString dest = QString());
+    void onCommand(delta3::File::FileMode cmd, QString source, QString dest);
     void requestDir(QString &dir);
 
 private:

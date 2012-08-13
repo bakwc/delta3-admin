@@ -1,6 +1,7 @@
 #include "fileform.h"
 #include "ui_fileform.h"
 #include <QIcon>
+#include <QInputDialog>
 
 FileForm::FileForm(delta3::File *file, QWidget *parent) :
     QWidget(parent),
@@ -15,6 +16,9 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
      connect(this,SIGNAL(requestDir(QString&)),
              file_,SLOT(requestDir(QString&)));
 
+     connect(this, SIGNAL(command(delta3::File::FileMode,QString,QString)),
+             file_, SLOT(onCommand(delta3::File::FileMode,QString,QString)));
+
      //connect(file_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
      //connect(this, SIGNAL(ready(QString&)), file_, SLOT(onReady(QString&)));
 
@@ -22,6 +26,10 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
 
      _cd="/";
      emit requestDir(_cd);
+
+     QAction* act = new QAction("Rename", this);
+     connect(act, SIGNAL(triggered()), SLOT(rename()));
+     menu_.addAction(act);
 }
 
 
@@ -62,11 +70,13 @@ void FileForm::onDirListReceived(const QVector<QStringList> &dir)
     }
 }
 
+
 void FileForm::on_pushButton_clicked()
 {
     QString dir=ui->lineEdit->text();
     emit requestDir(dir);
 }
+
 
 void FileForm::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
@@ -74,5 +84,27 @@ void FileForm::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     {
         _cd+=item->text()+"/";
         emit requestDir(_cd);
+    }
+
+}
+
+
+void FileForm::on_listWidget_customContextMenuRequested(const QPoint &pos)
+{
+    if (ui->listWidget->selectedItems().isEmpty())
+        return;
+
+    menu_.move(QCursor::pos());
+    menu_.show();
+}
+
+
+void FileForm::rename()
+{
+    QString newName = QInputDialog::getText(0, "Rename", "New name:");
+
+    if (!newName.isEmpty()) {
+        emit command(delta3::File::FMOD_RENAME, ui->listWidget->currentItem()->text(), newName);
+        ui->listWidget->currentItem()->setText(newName);
     }
 }
