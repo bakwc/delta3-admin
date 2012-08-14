@@ -17,16 +17,17 @@ GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
         cl.timerId = 0;
     }
 
-    mouseButton[0].mouse = GMCLICK_LEFT;
-    mouseButton[1].mouse = GMCLICK_RIGHT;
-    mouseButton[2].mouse = GMCLICK_MIDDLE;
+    mouseButton[0].mouse = delta3::Graphics::GMCLICK_LEFT;
+    mouseButton[1].mouse = delta3::Graphics::GMCLICK_RIGHT;
+    mouseButton[2].mouse = delta3::Graphics::GMCLICK_MIDDLE;
 
     ui->setupUi(this);
     this->setWindowTitle(tr("Graphics - ") + graph_->getClientCaption());
 
     connect(graph_, SIGNAL(imageReady(QImage&)), SLOT(onDataReceived(QImage&)));
     connect(graph_, SIGNAL(ready(int,int, int)), this, SLOT(onReady(int,int, int)));
-
+    connect(graph_, SIGNAL(images(delta3::Graphics::ImgStructList&)),
+            SLOT(images(delta3::Graphics::ImgStructList&)));
     setAttribute(Qt::WA_DeleteOnClose);
 }
 
@@ -105,21 +106,24 @@ void GraphForm::mouseReleaseEvent(QMouseEvent *ev)
         if (mouseButton[0].count > 0)
             mouseButton[0].count += 1;
         else
-            emit mClick(x, y, GMCLICK(GMCLICK_LEFT | GMCLICK_UP));
+            emit mClick(x, y, delta3::Graphics::GMCLICK(
+                            delta3::Graphics::GMCLICK_LEFT | delta3::Graphics::GMCLICK_UP));
     }
 
     if (pressButtons_ & Qt::RightButton) {
         if (mouseButton[1].count > 0)
             mouseButton[1].count += 1;
         else
-            emit mClick(x, y, GMCLICK(GMCLICK_RIGHT | GMCLICK_UP));
+            emit mClick(x, y, delta3::Graphics::GMCLICK(
+                            delta3::Graphics::GMCLICK_RIGHT | delta3::Graphics::GMCLICK_UP));
     }
 
     if (pressButtons_ & Qt::MidButton) {
         if (mouseButton[2].count > 0)
             mouseButton[2].count += 1;
         else
-            emit mClick(x, y, GMCLICK(GMCLICK_MIDDLE | GMCLICK_UP));
+            emit mClick(x, y, delta3::Graphics::GMCLICK(
+                            delta3::Graphics::GMCLICK_MIDDLE | delta3::Graphics::GMCLICK_UP));
     }
 
     ev->accept();
@@ -142,14 +146,17 @@ void GraphForm::timerEvent(QTimerEvent *ev)
         if (mouseButton[i].timerId == ev->timerId()) {
             if (mouseButton[i].count >= 4)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
-                            delta3::GMCLICK( mouseButton[i].mouse | delta3::GMCLICK_DCLICK));
+                            delta3::Graphics::GMCLICK(
+                                mouseButton[i].mouse | delta3::Graphics::GMCLICK_DCLICK));
             else if (mouseButton[i].count >= 2)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
-                            delta3::GMCLICK(mouseButton[i].mouse | delta3::GMCLICK_CLICK));
+                            delta3::Graphics::GMCLICK(
+                                mouseButton[i].mouse | delta3::Graphics::GMCLICK_CLICK));
 
             if (mouseButton[i].count % 2)
                 emit mClick(mouseButton[i].x, mouseButton[i].y,
-                            delta3::GMCLICK(mouseButton[i].mouse | delta3::GMCLICK_DOWN));
+                            delta3::Graphics::GMCLICK(
+                                mouseButton[i].mouse | delta3::Graphics::GMCLICK_DOWN));
 
             killTimer(ev->timerId());
             mouseButton[i].count = 0;
@@ -176,14 +183,21 @@ void GraphForm::onDataReceived(QImage &img)
     repaint();
 }
 
+
 void GraphForm::onReady(int clW, int clH, int q)
 {
     resize(clW/q, clH/q);
 
     connect(this, SIGNAL(keyPress(int)), graph_, SLOT(onKey(int)));
     connect(this, SIGNAL(mMove(qint16,qint16)), graph_, SLOT(onMove(qint16,qint16)));
-    connect(this, SIGNAL(mClick(qint16,qint16,delta3::GMCLICK)),
-            graph_, SLOT(onClick(qint16,qint16,delta3::GMCLICK)));
+    connect(this, SIGNAL(mClick(qint16,qint16,delta3::Graphics::GraphicsMode)),
+            graph_, SLOT(onClick(qint16,qint16,delta3::Graphics::GMCLICK)));
+}
+
+void GraphForm::images(QList<Graphics::ImgStruct> &imgList)
+{
+    imgStrctList = imgList;
+    repaint();
 }
 
 
@@ -191,7 +205,14 @@ void GraphForm::paintEvent(QPaintEvent *ev)
 {
 	QPainter p(this);
 
-    p.drawImage(0, 0, image_);
+    //p.drawImage(iX, iY, image_);
+
+    for (int i=0; i < imgStrctList.size(); ++i) {
+        const delta3::Graphics::ImgStruct &imgStrct = imgStrctList[i];
+        p.drawImage(imgStrct.x, imgStrct.y, imgStrct.img);
+    }
+
+    qDebug() << Q_FUNC_INFO << imgStrctList.size();
 
     ev->accept();
 }

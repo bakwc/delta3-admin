@@ -23,12 +23,13 @@ public:
 signals:
 	void ready(QByteArray &arr);
     void mMove(qint16, qint16);
-    void mClick(qint16, qint16, delta3::GMCLICK);
+    void mClick(qint16, qint16, delta3::Graphics::GMCLICK);
     void keyPress(int key);
 
 private slots:
 	void onDataReceived(QImage &img);
     void onReady(int clW, int clH, int q);
+    void images(delta3::Graphics::ImgStructList &imgList);
 
 protected:
 	void paintEvent(QPaintEvent *);
@@ -43,13 +44,15 @@ private:
 	delta3::Graphics	*graph_;
 	QImage				image_; // mb it's a not very well idea ;|
 	Ui::GraphForm		*ui;
+    delta3::Graphics::ImgStructList imgStrctList;
     quint8  pressButtons_;
+    int iX, iY;
 
     struct ParseClick {
         int             timerId;
         int             count;
         quint16         x, y;
-        delta3::GMCLICK mouse;
+        delta3::Graphics::GMCLICK mouse;
     } mouseButton[MBUTTONSCOUNT];
 
     qint16 getClientMousePosX(int mPos) {

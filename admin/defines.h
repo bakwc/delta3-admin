@@ -46,27 +46,6 @@ enum Cspyp2Command
     CMD2_TRANSMIT   = 5
 };
 
-
-enum GraphicsMode
-{
-    GMOD_INFO       = 1,
-    GMOD_IMGFULL    = 2,
-    GMOD_IMGDIFF    = 3,
-    GMOD_KEYEV      = 4,
-    GMOD_MMOV       = 5,
-    GMOD_MCLICK     = 6
-};
-
-enum GMCLICK {
-    GMCLICK_LEFT    = 1,
-    GMCLICK_RIGHT   = 2,
-    GMCLICK_MIDDLE  = 4,
-    GMCLICK_DOWN    = 8,
-    GMCLICK_UP      = 16,
-    GMCLICK_CLICK   = 32,
-    GMCLICK_DCLICK  = 64
-};
-
 }
 
 #if defined(DELTA3_ADMIN_LIBRARY)
