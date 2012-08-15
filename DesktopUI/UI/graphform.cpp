@@ -28,7 +28,9 @@ GraphForm::GraphForm(Graphics *graph, QWidget *parent) :
     connect(graph_, SIGNAL(ready(int,int, int)), this, SLOT(onReady(int,int, int)));
     connect(graph_, SIGNAL(images(delta3::Graphics::ImgStructList&)),
             SLOT(images(delta3::Graphics::ImgStructList&)));
+
     setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_OpaquePaintEvent);
 }
 
 
