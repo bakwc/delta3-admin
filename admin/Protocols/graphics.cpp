@@ -19,18 +19,21 @@ void Graphics::onDataReceived()
 
     switch((quint8)arr[0]) {
     case GMOD_IMG: {
-        int imgStrctCount = (quint8)arr[1];
+        quint16 imgStrctCount = fromBytes<quint16>(arr.mid(1, 2));
         ImgStructList imageList;
 
-        for (quint16 x, y, s, i=2; imgStrctCount--;) {
-            x = fromBytes<quint16>(arr.mid(i, 2)); i += 2;
-            y = fromBytes<quint16>(arr.mid(i, 2)); i += 2;
-            s = fromBytes<quint16>(arr.mid(i, 2)); i += 2;
+        quint32 ind = 3;
+        for (quint16 x, y, s; imgStrctCount > 0; --imgStrctCount) {
+            x = fromBytes<quint16>(arr.mid(ind, 2)); ind += 2;
+            y = fromBytes<quint16>(arr.mid(ind, 2)); ind += 2;
+            s = fromBytes<quint16>(arr.mid(ind, 2)); ind += 2;
 
             QImage img;
-            img.loadFromData(arr.mid(i, s)); i += s;
+            img.loadFromData(arr.mid(ind, s)); ind += s;
 
             imageList.push_back(ImgStruct(x, y, img));
+
+            qDebug() << Q_FUNC_INFO << s << x << y;
         }
 
         emit images(imageList);

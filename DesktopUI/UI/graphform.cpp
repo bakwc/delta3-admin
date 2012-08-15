@@ -210,6 +210,8 @@ void GraphForm::paintEvent(QPaintEvent *ev)
     for (int i=0; i < imgStrctList.size(); ++i) {
         const delta3::Graphics::ImgStruct &imgStrct = imgStrctList[i];
         p.drawImage(imgStrct.x, imgStrct.y, imgStrct.img);
+
+//        qDebug() << Q_FUNC_INFO << i << imgStrct.x << imgStrct.y;
     }
 
     qDebug() << Q_FUNC_INFO << imgStrctList.size();

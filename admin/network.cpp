@@ -26,7 +26,8 @@ void Network::connectToServer()
 
 void Network::onDataReceived()
 {
-    buf_ += socket_->readAll();
+    //buf_ += socket_->readAll();
+    buf_ = socket_->readAll();
 
     if (buf_.size() < 3) return; // if we don't read header
 
