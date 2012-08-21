@@ -3,6 +3,7 @@
 #include "abstrproto.h"
 #include <QVector>
 #include <QStringList>
+#include <QFile>
 
 namespace delta3 {
 
@@ -14,6 +15,7 @@ class DELTA3_EXPORT File : public AbstrProto
 public:
     explicit File(Network *net = NULL,
 				  qint16 clientId = 0, QObject *parent = 0);
+    ~File();
 
     enum FileMode
     {
@@ -43,6 +45,12 @@ public slots:
 
 private:
     QVector<QStringList> parseDirCmd(QByteArray& arr);
+
+    quint32 _fileSize;
+    quint32 _receivedSize;
+    quint8 _fileId;
+    QString *_fileName;
+    QFile *_f;
 };
 
 }

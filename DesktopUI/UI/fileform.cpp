@@ -16,6 +16,9 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
      connect(this,SIGNAL(requestDir(QString&)),
              file_,SLOT(requestDir(QString&)));
 
+     connect(this,SIGNAL(requestFile(QString&)),
+            file_,SLOT(requestFile(QString&)));
+
      connect(this, SIGNAL(command(delta3::File::FileMode,QString,QString)),
              file_, SLOT(onCommand(delta3::File::FileMode,QString,QString)));
 
@@ -38,7 +41,7 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
 
 FileForm::~FileForm()
 {
-	delete ui;
+    //delete ui;
 }
 
 
@@ -102,6 +105,11 @@ void FileForm::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 
         ui->lineEdit->setText(_cd);
         emit requestDir(_cd);
+    } if (item->whatsThis()=="file")
+    {
+        QString fname=_cd+item->text();
+        qDebug() << "request sended" << fname;
+        emit requestFile(fname);
     }
 }
 

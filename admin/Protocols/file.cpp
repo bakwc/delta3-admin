@@ -8,6 +8,14 @@ using namespace delta3;
 File::File(Network *net, qint16 clientId, QObject *parent) :
 	AbstrProto(MOD_FILE, net, clientId, parent)
 {
+    _fileName = new QString;
+    _f = new QFile;
+}
+
+File::~File()
+{
+    delete _fileName;
+    delete _f;
 }
 
 
@@ -35,10 +43,52 @@ void File::onDataReceived()
 
         break;
     case FMOD_DOWNINFO:
+    {
+        auto fileNameSize = fromBytes<quint16>(arr.mid(1,2));
+        *_fileName = QString::fromUtf8(arr.mid(3,fileNameSize));
+        _fileId = arr[3+fileNameSize];
+        _fileSize = fromBytes<quint32>(arr.mid(4+fileNameSize,4));
+        qDebug() << 4+fileNameSize << arr.size();
+        qDebug() << "FMOD_DOWNINFO:" << *_fileName << _fileSize;
+
+        _f->setFileName("testfile.dat");
+        if (!_f->open(QIODevice::WriteOnly))
+        {
+            return;
+        }
+
+        _receivedSize=0;
+
+        QByteArray send;
+        send.append(FMOD_READY);
+        send.append(_fileId);
+        send.append('\101');
+        sendData(send);
 
         break;
+    }
     case FMOD_DOWNLOAD:
+    {
+        //qDebug() << "Some data income!";
+        auto dataSize=fromBytes<quint16>(arr.mid(2,2));
+        QByteArray content=arr.mid(4,dataSize);
+        _receivedSize+=dataSize;
 
+        _f->write(content);
+        if (_receivedSize>=_fileSize)
+        {
+            qDebug() << "File received: " << *_fileName;
+            _f->close();
+        } else
+        {
+            QByteArray send;
+            send.append(FMOD_READY);
+            send.append(_fileId);
+            send.append('\101');
+            sendData(send);
+        }
+
+    }
         break;
     case FMOD_READY:
 
@@ -102,7 +152,10 @@ void File::requestDir(QString &dir)
 
 void File::requestFile(QString &file)
 {
-    QByteArray arr;
+    qDebug() << "admin request file" << file;
+    QByteArray arr,fname=file.toUtf8();
     arr.append(FMOD_DOWNREQ);
-    arr.append(file.toUtf8());
+    arr.append(toBytes((quint16)fname.size()));
+    arr.append(fname);
+    sendData(arr);
 }

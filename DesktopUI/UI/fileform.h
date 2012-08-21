@@ -21,6 +21,7 @@ public:
     
 signals:
     void requestDir(QString &d);
+    void requestFile(QString &f);
     void command(delta3::File::FileMode m, QString source, QString dest);
 
 private slots:
