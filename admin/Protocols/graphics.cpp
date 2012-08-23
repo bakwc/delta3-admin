@@ -33,7 +33,7 @@ void Graphics::onDataReceived()
 
             imageList.push_back(ImgStruct(x, y, img));
 
-            qDebug() << Q_FUNC_INFO << s << x << y;
+//            qDebug() << Q_FUNC_INFO << s << x << y;
         }
 
         emit images(imageList);

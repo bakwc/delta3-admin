@@ -29,6 +29,9 @@ public:
         FMOD_READY      = 101
     };
 	
+protected:
+
+
 signals:
     void dir(const QVector<QStringList> &dir);
 

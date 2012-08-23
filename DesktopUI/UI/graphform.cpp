@@ -192,7 +192,7 @@ void GraphForm::onReady(int clW, int clH, int q)
 
     connect(this, SIGNAL(keyPress(int)), graph_, SLOT(onKey(int)));
     connect(this, SIGNAL(mMove(qint16,qint16)), graph_, SLOT(onMove(qint16,qint16)));
-    connect(this, SIGNAL(mClick(qint16,qint16,delta3::Graphics::GraphicsMode)),
+    connect(this, SIGNAL(mClick(qint16,qint16,delta3::Graphics::GMCLICK)),
             graph_, SLOT(onClick(qint16,qint16,delta3::Graphics::GMCLICK)));
 }
 
@@ -215,8 +215,6 @@ void GraphForm::paintEvent(QPaintEvent *ev)
 
 //        qDebug() << Q_FUNC_INFO << i << imgStrct.x << imgStrct.y;
     }
-
-    qDebug() << Q_FUNC_INFO << imgStrctList.size();
 
     ev->accept();
 }

@@ -28,6 +28,7 @@ Makefile*
 
 
 *Qt_SDK*
+*build*
 *.a
 *.so
 *.so*
