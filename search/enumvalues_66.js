@@ -6,6 +6,7 @@ var searchData=
   ['fmod_5fdir',['FMOD_DIR',['../classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1ae8d77c4b0ba4ebd5a84edf8b630f161f',1,'delta3::File']]],
   ['fmod_5fdowninfo',['FMOD_DOWNINFO',['../classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1adf2e11d9d955f11c5a1f61d234b3eff1',1,'delta3::File']]],
   ['fmod_5fdownload',['FMOD_DOWNLOAD',['../classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1a838c326be889857eeaeea3974c83e524',1,'delta3::File']]],
+  ['fmod_5fdownreq',['FMOD_DOWNREQ',['../classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1a1ecde6f9c3ccd0783e3ffa5ba882eee4',1,'delta3::File']]],
   ['fmod_5finfo',['FMOD_INFO',['../classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1ae97dcd72b810332bec6c0311f1bd2998',1,'delta3::File']]],
   ['fmod_5fmoveto',['FMOD_MOVETO',['../classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1adc1ede4812129289c9d2fbb97184c4cc',1,'delta3::File']]],
   ['fmod_5fready',['FMOD_READY',['../classdelta3_1_1_file.html#abba7304e95f0b3bfb724abf5d466a4f1af895a0059d1684250ba019919e304bc1',1,'delta3::File']]],
