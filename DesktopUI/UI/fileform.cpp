@@ -13,14 +13,24 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
      connect(file_,SIGNAL(dir(QVector<QStringList>)),
              this,SLOT(onDirListReceived(QVector<QStringList>)));
 
-     connect(this,SIGNAL(requestDir(QString&)),
-             file_,SLOT(requestDir(QString&)));
+     connect(this,SIGNAL(requestDir()),
+             file_,SLOT(requestDir()));
 
      connect(this,SIGNAL(requestFile(QString&)),
             file_,SLOT(requestFile(QString&)));
 
      connect(this, SIGNAL(command(delta3::File::FileMode,QString,QString)),
              file_, SLOT(onCommand(delta3::File::FileMode,QString,QString)));
+
+     connect(this, SIGNAL(setDirUp()), file_, SLOT(setDirUp()));
+
+     connect(this, SIGNAL(setCurrentDir(const QString&)),
+             file_, SLOT(setCurrentDir(const QString&)));
+
+     connect(this, SIGNAL(openDir(const QString&)),
+            file_, SLOT(openDir(const QString&)));
+
+     connect(file_, SIGNAL(dirChanged(QString&)),this, SLOT(onDirChanged(QString&)));
 
      //connect(file_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
      //connect(this, SIGNAL(ready(QString&)), file_, SLOT(onReady(QString&)));
@@ -29,9 +39,9 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
 
      this->setWindowTitle(tr("File Browser - ")+file_->getClientCaption());
 
-     _cd="/";
-     ui->lineEdit->setText(_cd);
-     emit requestDir(_cd);
+
+     ui->lineEdit->setText("/");
+     emit requestDir();
 
      QAction* act = new QAction("Rename", this);
      connect(act, SIGNAL(triggered()), SLOT(rename()));
@@ -79,8 +89,9 @@ void FileForm::onDirListReceived(const QVector<QStringList> &dir)
 
 void FileForm::on_pushButton_clicked()
 {
-    _cd=ui->lineEdit->text();
-    emit requestDir(_cd);
+    QString absDir=ui->lineEdit->text();
+    emit setCurrentDir(absDir);
+    emit requestDir();
 }
 
 
@@ -89,25 +100,28 @@ void FileForm::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
     if (item->whatsThis()=="folder")
     {
         if (item->text()==".")
-            _cd="/";
+            emit setCurrentDir("/");
         else if (item->text()=="..")
         {
+            emit setDirUp();
+            /*
             if (_cd.count("/")>1)
             {
                 _cd.chop(1);
                 auto n=_cd.lastIndexOf("/");
                 qDebug() << n;
                 _cd=_cd.left(n+1);
-            }
+            }*/
         }
         else
-            _cd+=item->text()+"/";
+            emit openDir(item->text());
+            //_cd+=item->text()+"/";
 
-        ui->lineEdit->setText(_cd);
-        emit requestDir(_cd);
+        //ui->lineEdit->setText(_cd);
+        emit requestDir();
     } if (item->whatsThis()=="file")
     {
-        QString fname=_cd+item->text();
+        QString fname=item->text();
         qDebug() << "request sended" << fname;
         emit requestFile(fname);
     }
@@ -132,4 +146,9 @@ void FileForm::rename()
         emit command(delta3::File::FMOD_RENAME, ui->listWidget->currentItem()->text(), newName);
         ui->listWidget->currentItem()->setText(newName);
     }
+}
+
+void FileForm::onDirChanged(QString &cd)
+{
+    ui->lineEdit->setText(cd);
 }

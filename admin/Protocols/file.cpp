@@ -9,6 +9,7 @@ File::File(Network *net, qint16 clientId, QObject *parent) :
 	AbstrProto(MOD_FILE, net, clientId, parent)
 {
     _fileName = new QString;
+    _cd = new QString("/");
     _f = new QFile;
 }
 
@@ -16,6 +17,7 @@ File::~File()
 {
     delete _fileName;
     delete _f;
+    delete _cd;
 }
 
 
@@ -140,22 +142,43 @@ QVector<QStringList> File::parseDirCmd(QByteArray &arr)
     return vec;
 }
 
-void File::requestDir(QString &dir)
+void File::requestDir()
 {
     QByteArray arr;
     arr.append(FMOD_CD);
-    arr.append(dir.toUtf8());
-    //arr.append('\0'); // ??
-
+    arr.append((*_cd).toUtf8());
     sendData(arr);
 }
 
 void File::requestFile(QString &file)
 {
-    qDebug() << "admin request file" << file;
-    QByteArray arr,fname=file.toUtf8();
+    qDebug() << "admin request file" << *_cd+file;
+    QByteArray arr,fname=(*_cd+file).toUtf8();
     arr.append(FMOD_DOWNREQ);
     arr.append(toBytes((quint16)fname.size()));
     arr.append(fname);
     sendData(arr);
+}
+
+void File::setCurrentDir(const QString &dir)
+{
+    *_cd=dir;
+}
+
+void File::setDirUp()
+{
+    if ((*_cd).count("/")>1)
+    {
+        (*_cd).chop(1);
+        auto n=(*_cd).lastIndexOf("/");
+        qDebug() << n;
+        (*_cd)=(*_cd).left(n+1);
+        emit dirChanged(*_cd);
+    }
+}
+
+void File::openDir(const QString &dir)
+{
+    *_cd+=dir+"/";
+    emit dirChanged(*_cd);
 }

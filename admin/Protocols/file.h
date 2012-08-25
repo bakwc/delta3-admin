@@ -34,14 +34,18 @@ public:
 	
 signals:
     void dir(const QVector<QStringList> &dir);
+    void dirChanged(QString &dir);
 
 protected slots:
 	void onDataReceived();
 
 public slots:
     void onCommand(delta3::File::FileMode cmd, QString source, QString dest);
-    void requestDir(QString &dir);
+    void requestDir();
     void requestFile(QString &file);
+    void setCurrentDir(const QString &dir);
+    void setDirUp();
+    void openDir(const QString &dir);
 
 private:
     QVector<QStringList> parseDirCmd(QByteArray& arr);
@@ -49,6 +53,7 @@ private:
     quint32 _fileSize;
     quint32 _receivedSize;
     quint8 _fileId;
+    QString *_cd;
     QString *_fileName;
     QFile *_f;
 };
