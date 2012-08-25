@@ -5,11 +5,11 @@
 #include "network.h"
 #include "Protocols/file.h"
 #include <QMenu>
+#include <QFileDialog>
 
 namespace Ui {
 class FileForm;
 }
-
 
 class FileForm : public QWidget
 {
@@ -21,7 +21,7 @@ public:
     
 signals:
     void requestDir();
-    void requestFile(QString &f);
+    void requestFile(QString &remoteFile, QString &localFile);
     void setCurrentDir(const QString &dir);
     void setDirUp();
     void openDir(const QString &dir);
@@ -30,15 +30,18 @@ signals:
 
 private slots:
     void onDirListReceived(const QVector<QStringList> &dir);
-    void on_pushButton_clicked();
     void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
     void on_listWidget_customContextMenuRequested(const QPoint &pos);
     void onDirChanged(QString &cd);
+    void onFileReceived();
 
     void rename();
 
+    void on_buttonChangeDir_clicked();
+
 private:
-	delta3::File	*file_;
+    delta3::File	*_file;
 	Ui::FileForm	*ui;
-    QMenu           menu_;
+    QFileDialog *_dialog;
+    QMenu           _menu;
 };

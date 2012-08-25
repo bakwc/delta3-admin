@@ -4,11 +4,11 @@
 
 using namespace delta3;
 
-
 File::File(Network *net, qint16 clientId, QObject *parent) :
 	AbstrProto(MOD_FILE, net, clientId, parent)
 {
     _fileName = new QString;
+    _localFileName = new QString;
     _cd = new QString("/");
     _f = new QFile;
 }
@@ -16,10 +16,10 @@ File::File(Network *net, qint16 clientId, QObject *parent) :
 File::~File()
 {
     delete _fileName;
+    delete _localFileName;
     delete _f;
     delete _cd;
 }
-
 
 void File::onDataReceived()
 {
@@ -53,7 +53,7 @@ void File::onDataReceived()
         qDebug() << 4+fileNameSize << arr.size();
         qDebug() << "FMOD_DOWNINFO:" << *_fileName << _fileSize;
 
-        _f->setFileName("testfile.dat");
+        _f->setFileName(*_localFileName);
         if (!_f->open(QIODevice::WriteOnly))
         {
             return;
@@ -80,6 +80,7 @@ void File::onDataReceived()
         if (_receivedSize>=_fileSize)
         {
             qDebug() << "File received: " << *_fileName;
+            emit fileReceived(*_fileName);
             _f->close();
         } else
         {
@@ -150,10 +151,11 @@ void File::requestDir()
     sendData(arr);
 }
 
-void File::requestFile(QString &file)
+void File::requestFile(QString &remoteFile, QString &localFile)
 {
-    qDebug() << "admin request file" << *_cd+file;
-    QByteArray arr,fname=(*_cd+file).toUtf8();
+    qDebug() << "admin request file" << *_cd+remoteFile;
+    *_localFileName = localFile;
+    QByteArray arr,fname=(*_cd+remoteFile).toUtf8();
     arr.append(FMOD_DOWNREQ);
     arr.append(toBytes((quint16)fname.size()));
     arr.append(fname);

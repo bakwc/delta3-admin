@@ -2,42 +2,50 @@
 #include "ui_fileform.h"
 #include <QIcon>
 #include <QInputDialog>
+#include <QString>
+#include <QMessageBox>
 
 FileForm::FileForm(delta3::File *file, QWidget *parent) :
     QWidget(parent),
-	file_(file),
+    _file(file),
     ui(new Ui::FileForm)
 {
      ui->setupUi(this);
 
-     connect(file_,SIGNAL(dir(QVector<QStringList>)),
+     _dialog = new QFileDialog(this);
+
+     connect(_file,SIGNAL(dir(QVector<QStringList>)),
              this,SLOT(onDirListReceived(QVector<QStringList>)));
 
      connect(this,SIGNAL(requestDir()),
-             file_,SLOT(requestDir()));
+             _file,SLOT(requestDir()));
 
-     connect(this,SIGNAL(requestFile(QString&)),
-            file_,SLOT(requestFile(QString&)));
+     connect(this,SIGNAL(requestFile(QString&,QString&)),
+            _file,SLOT(requestFile(QString&,QString&)));
 
      connect(this, SIGNAL(command(delta3::File::FileMode,QString,QString)),
-             file_, SLOT(onCommand(delta3::File::FileMode,QString,QString)));
+             _file, SLOT(onCommand(delta3::File::FileMode,QString,QString)));
 
-     connect(this, SIGNAL(setDirUp()), file_, SLOT(setDirUp()));
+     connect(this, SIGNAL(setDirUp()), _file, SLOT(setDirUp()));
 
      connect(this, SIGNAL(setCurrentDir(const QString&)),
-             file_, SLOT(setCurrentDir(const QString&)));
+             _file, SLOT(setCurrentDir(const QString&)));
 
      connect(this, SIGNAL(openDir(const QString&)),
-            file_, SLOT(openDir(const QString&)));
+            _file, SLOT(openDir(const QString&)));
 
-     connect(file_, SIGNAL(dirChanged(QString&)),this, SLOT(onDirChanged(QString&)));
+     connect(_file, SIGNAL(dirChanged(QString&)),
+             this, SLOT(onDirChanged(QString&)));
+
+     connect(_file, SIGNAL(fileReceived(QString)),
+             this, SLOT(onFileReceived()));
 
      //connect(file_, SIGNAL(ready(QString&)), SLOT(onDataReceived(QString&)));
      //connect(this, SIGNAL(ready(QString&)), file_, SLOT(onReady(QString&)));
 
 	 setAttribute(Qt::WA_DeleteOnClose);
 
-     this->setWindowTitle(tr("File Browser - ")+file_->getClientCaption());
+     this->setWindowTitle(tr("File Browser - ")+_file->getClientCaption());
 
 
      ui->lineEdit->setText("/");
@@ -45,7 +53,7 @@ FileForm::FileForm(delta3::File *file, QWidget *parent) :
 
      QAction* act = new QAction("Rename", this);
      connect(act, SIGNAL(triggered()), SLOT(rename()));
-     menu_.addAction(act);
+     _menu.addAction(act);
 }
 
 
@@ -87,14 +95,6 @@ void FileForm::onDirListReceived(const QVector<QStringList> &dir)
 }
 
 
-void FileForm::on_pushButton_clicked()
-{
-    QString absDir=ui->lineEdit->text();
-    emit setCurrentDir(absDir);
-    emit requestDir();
-}
-
-
 void FileForm::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
 {
     if (item->whatsThis()=="folder")
@@ -104,26 +104,21 @@ void FileForm::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
         else if (item->text()=="..")
         {
             emit setDirUp();
-            /*
-            if (_cd.count("/")>1)
-            {
-                _cd.chop(1);
-                auto n=_cd.lastIndexOf("/");
-                qDebug() << n;
-                _cd=_cd.left(n+1);
-            }*/
         }
         else
             emit openDir(item->text());
-            //_cd+=item->text()+"/";
-
-        //ui->lineEdit->setText(_cd);
         emit requestDir();
     } if (item->whatsThis()=="file")
     {
-        QString fname=item->text();
-        qDebug() << "request sended" << fname;
-        emit requestFile(fname);
+
+        QString remoteFileName=item->text();
+        QString localFileName=_dialog->getSaveFileName
+                (this,tr("Save file as"),remoteFileName,tr("All Files (*)"));
+        if (!localFileName.isEmpty())
+        {
+            qDebug() << "request sended" << remoteFileName;
+            emit requestFile(remoteFileName, localFileName);
+        }
     }
 }
 
@@ -133,8 +128,8 @@ void FileForm::on_listWidget_customContextMenuRequested(const QPoint &pos)
     if (ui->listWidget->selectedItems().isEmpty())
         return;
 
-    menu_.move(QCursor::pos());
-    menu_.show();
+    _menu.move(QCursor::pos());
+    _menu.show();
 }
 
 
@@ -148,7 +143,19 @@ void FileForm::rename()
     }
 }
 
+void FileForm::onFileReceived()
+{
+    QMessageBox::information(0, tr("Finished"), tr("File received!"));
+}
+
 void FileForm::onDirChanged(QString &cd)
 {
     ui->lineEdit->setText(cd);
+}
+
+void FileForm::on_buttonChangeDir_clicked()
+{
+    QString absDir=ui->lineEdit->text();
+    emit setCurrentDir(absDir);
+    emit requestDir();
 }
