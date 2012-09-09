@@ -20,13 +20,14 @@ public:
 protected slots:
     void onDataReceived();
 
-private:
-    QTcpServer *proxyServer_;
-    QTcpSocket *socket_;
-
 private slots:
     void slotReadyRead();
     void slotNewConnection();
+
+private:
+    QTcpServer *proxyServer_;
+    QTcpSocket *socket_;
+    qint32 _clients;
 };
 
 }
