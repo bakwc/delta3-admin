@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QHostAddress>
 
+//бессмысленный коммент
+
 class Client: public QObject
 {
     Q_OBJECT
